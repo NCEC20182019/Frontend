@@ -1,0 +1,16 @@
+div.map-container{
+    height: 400px;
+    width: 400px;
+    position: relative;
+    display: inline-block;
+
+        
+        agm-map{
+            height:100%;
+    }
+}
+
+:host {
+    display: block;
+    background: white;
+}

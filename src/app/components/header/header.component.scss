@@ -1,0 +1,27 @@
+mat-toolbar{
+    background: rgba(106, 131, 241, 0.116);
+
+    span{
+        margin: 10px 50px;
+        font-size: 24px;
+    }
+    span:hover{
+        cursor: pointer;
+    }
+
+    .active-link{
+        background: rgba(192, 160, 216, 0.493);
+        border-radius: 10px;
+    }
+
+    a{
+        color: azure;
+    }
+
+    #loginBT{
+        position: relative;
+        right: 0;
+        margin: 10px;
+    }
+}
+
