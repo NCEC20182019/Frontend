@@ -20,7 +20,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { EventlistComponent } from './components/eventlist/eventlist.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { EventViewComponent } from './components/event-view/event-view.component';
-import { OverlayComponent } from './services/overlay/overlay.component';
+import { OverlayComponent } from './components/overlay/overlay.component';
 
 
 @NgModule({

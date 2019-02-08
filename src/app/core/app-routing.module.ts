@@ -9,15 +9,24 @@ import { CalendarComponent } from '../components/calendar/calendar.component';
 const routes: Routes = [
   {
     path: '', pathMatch: 'full',
-    redirectTo: 'events'
+    redirectTo: 'app/events'
   },
   {
-    path: 'events',
-    component: EventlistComponent,
-  },
-  {
-    path: 'events/:id',
-    component: EventViewComponent,
+    path: "app",
+    children:[
+      {
+        path: '', pathMatch: 'full',
+        redirectTo: 'app/events'
+      },
+      {
+        path: 'events',
+        component: EventlistComponent,
+      },
+      {
+        path: 'events/:id',
+        component: EventViewComponent,
+      },
+    ]
   },
   {
     path: '**',
