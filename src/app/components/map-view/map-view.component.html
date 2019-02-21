@@ -1,4 +1,7 @@
-<div class="map-view">
-  <app-eventlist></app-eventlist>
-  <app-map></app-map>
+<div class="map-view-outter">
+  <div *ngIf="!spinner" class="map-view">
+    <app-map (redirect)="redirectTo(event)" [Events]="Events"></app-map>
+    <app-eventlist [Events]="Events"></app-eventlist>
+  </div>
+  <mat-spinner *ngIf="spinner" id="spinner"></mat-spinner>
 </div>

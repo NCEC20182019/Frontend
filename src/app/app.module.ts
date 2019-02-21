@@ -66,7 +66,8 @@ import { OverlayComponent } from './components/overlay/overlay.component';
   ],
   bootstrap: [AppComponent],
   entryComponents: [ 
-    MapComponent
+    MapComponent,
+    LoginFormComponent
   ]
 })
 export class AppModule { }

@@ -10,7 +10,7 @@ import { LoginFormComponent } from '../login-form/login-form.component';
 })
 export class HeaderComponent implements OnInit {
 
-  private Title: string = "No-name project";
+  private Title: string = "Lemmeknow";
   private navLinks = [{relativePath: 'map', label: "Map View"},
                       {relativePath: 'calendar', label: "Calendar View"}];
 

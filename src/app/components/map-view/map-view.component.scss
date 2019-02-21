@@ -1,10 +1,44 @@
-app-eventlist{
-    display: block;
-    width: 30%;
-    border: 1px solid black;
-    height: 400px;
-    position: relative;
-    top: 0px;
-    float: left;
-    margin: 0px 10px;
-}
+// app-eventlist{
+//     display: block;
+//     width: 30%;
+//     border: 1px solid black;
+//     height: 400px;
+//     position: relative;
+//     top: 0px;
+//     float: left;
+//     margin: 0px 10px;
+// }
+mat-spinner{
+    // display: flex;
+    // align-items: center;
+    // justify-content: center; 
+    margin-left: auto;
+    margin-right: auto;
+    top: 410px;   
+    // position: fixed;                 
+ }
+
+ app-eventlist{
+    display: table-row;
+    position: absolute;
+ }
+
+ app-map{
+     display: block;
+     position: absolute;
+
+    float: right;
+ }
+
+ .map-view-outter{
+     width: 100%;
+     height:100%;
+    //  display: flex;
+ }
+
+ .map-view{
+    width: 100%;
+    height:100%;
+    // display: flex;
+ }
+

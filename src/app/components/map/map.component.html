@@ -1,5 +1,34 @@
-<div class="map-container">
-    <agm-map [latitude]="latitude" [longitude]="longitude">
+<div class="map-container" id="map-container">
+    <agm-map *ngIf="eventList" (mapClick)="onChooseLocation($event)"
+                               id="map" 
+                               [latitude]="currentMarker ? currentMarker.ltd : (userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0].location.latitude" 
+                               [longitude]="currentMarker ? currentMarker.lng : (userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0].location.longitude" 
+                               [zoom]='zoom'
+                               >
+            <agm-marker *ngFor="let event of eventList" 
+                        [latitude]="event.location.latitude" 
+                        [longitude]="event.location.longitude">
+                <agm-info-window [routerLink]="event.id">
+                    <span> {{ event.title }} </span>
+                </agm-info-window>
+            </agm-marker>
+
+            <agm-marker *ngIf="userLocation.ltd != 0 || userLocation.lng != 0" 
+                        [latitude]="userLocation.ltd" 
+                        [longitude]="userLocation.lng"
+                        [iconUrl]="userMarker.url">
+                <agm-info-window>
+                    <b>Gothca!</b>
+                </agm-info-window>
+            </agm-marker>
+
+            <agm-marker *ngIf="currentMarker"
+                        [latitude]="currentMarker.ltd"
+                        [longitude]="currentMarker.lng">
+                <agm-info-window>
+                    You placed this marker
+                </agm-info-window>
+            </agm-marker>
     </agm-map>
 </div>
 

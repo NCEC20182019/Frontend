@@ -2,9 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IEvent } from '../IEvent';
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ComponentPortal } from '@angular/cdk/portal';
+// import { MapOverlayService } from 'src/app/services/map.overlay';
 import { Overlay } from '@angular/cdk/overlay';
 import { MapComponent } from '../map/map.component';
-import { ComponentPortal } from '@angular/cdk/portal';
 
 @Component({
   selector: 'app-event-view',
@@ -15,8 +16,7 @@ export class EventViewComponent implements OnInit {
 
   private currentEvent: IEvent;
 
-
-  constructor(private dataService: DataService, private route: ActivatedRoute, private overlay: Overlay) { }
+  constructor(private dataService: DataService, /*private mapOverlay: MapOverlayService,*/ private route: ActivatedRoute, private overlay: Overlay) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -25,11 +25,7 @@ export class EventViewComponent implements OnInit {
   }
 
   getCurrentEvent(_id){
-    this.dataService.getEvents().subscribe(
-      (events: IEvent[]) => {
-        this.currentEvent = events.filter( (x) => x.id === _id )[0];
-      }
-    )
+    this.dataService.getEvent(_id);
   }
 
   mapView(){

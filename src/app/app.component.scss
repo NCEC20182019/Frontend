@@ -6,17 +6,21 @@ div{
     #content{
         height: 815px;
         width: 100%;
+        // display: flex;
     }
 }
 
 app-footer{
-    position: relative;
+    display: flex;
+    position: fixed;
     bottom: 0px;
     width: 100%;
 }
 
 app-header{
+    display: flex;
     position: relative;
     top: 0px;
     width: 100%;
 }
+

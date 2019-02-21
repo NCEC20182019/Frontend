@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
+import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IEvent } from '../IEvent';
 import { MatTableDataSource, MatTable, MatSort, MatPaginator } from '@angular/material';
+import { Observable, from, of } from 'rxjs';
+import { repeat, skipWhile} from 'rxjs/Operators';
 
 @Component({
   selector: 'app-eventlist',
@@ -10,51 +11,31 @@ import { MatTableDataSource, MatTable, MatSort, MatPaginator } from '@angular/ma
   styleUrls: ['./eventlist.component.scss']
 })
 export class EventlistComponent implements OnInit {
-  //Basic properties that component must include  
-  public Events: IEvent[] = [];
+  @Input() Events: Observable<IEvent[]>;
+  @Input() INITIAL_DELAY: number;
 
   //Properties for MatTable be working
   public dataSource = new MatTableDataSource<IEvent>();
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator
-  public columnsToDisplay: String[] = ['name', 'type', 'link', 'redirect']
-
-  eventsReady = new EventEmitter();
-
-  //Trying to complete data flow between components (with event emitter)
-  // @Output() public sendRoute = new EventEmitter();
+  public columnsToDisplay: String[] = ['redirect']
 
   /**
    * data: Service, which does an http request for list of Events
    * route: Thing for components communication (literally for proper routing)
    * router: Thing that completes routing within this very component  */
-  constructor(private data: DataService, private router: Router, private route: ActivatedRoute) { }
+  constructor() { }
   
   //Init method
   ngOnInit() {
-    this.getEvents();
-    // this.sendRoute.emit(this.route);
+    this.Events.subscribe((data: IEvent[]) => this.createTable(data))
+    // setTimeout(() => this.createTable(), this.INITIAL_DELAY)
   }
 
-  //Method of filling our Events prop with data
-  getEvents(){
-    this.data.getEvents().subscribe(
-      (_events: IEvent[]) => {
-        this.Events = _events;
-        this.createTable();
-      }
-    )
-  }
-
-  createTable(){
-    this.dataSource = new MatTableDataSource<IEvent>(this.Events);
+  createTable(data){
+    this.dataSource = new MatTableDataSource<IEvent>(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  //Method of redirecting to single Event page
-  redirectTo(_id){
-    this.router.navigate([_id], { relativeTo: this.route })
   }
 }

@@ -1,6 +1,6 @@
 <div>
   <img src="{{ currentEvent.pic }}">
-  <span>{{ currentEvent.name }} type of {{ currentEvent.type }}: <a href="{{ currentEvent.link }}"> {{ currentEvent.link }} </a></span>
+  <span>{{ currentEvent.title }} type of {{ currentEvent.type }}: <a href="{{ currentEvent.resource_uri }}"> {{ currentEvent.resource_uri }} </a></span>
   <button mat-stroked-button (click)="mapView()"> Show on map </button>
   <button mat-stroked-button> Show on calendar </button>
 </div>

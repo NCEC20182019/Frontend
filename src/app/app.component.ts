@@ -6,11 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Frontend';
+  title = 'lemmeknow';
   currentRoute: any;
-
-  event(_event){
-    this.currentRoute = _event;
-    console.log('НУ ТАК ВОТ ЖЕ ОНО');
-  }
 }

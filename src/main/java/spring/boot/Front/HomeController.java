@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
   private static final Logger log = Logger.getLogger(FrontApplication.class);
 
-  @GetMapping({"/","/app/**"})
+  @GetMapping({"/", "/app/**"})
   public static String index(){
     return "forward:/index.html";
   }
