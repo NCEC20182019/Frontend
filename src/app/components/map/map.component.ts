@@ -39,7 +39,7 @@ export class MapComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.userLocation.ltd = position.coords.latitude;
         this.userLocation.lng = position.coords.longitude;
-        // console.log(this.userLocation);
+        console.log(this.userLocation);
       });
     }
   }
@@ -47,5 +47,10 @@ export class MapComponent implements OnInit {
   onChooseLocation(event){
     this.currentMarker =  {ltd: event.coords.lat,
                            lng: event.coords.lng}
+  }
+
+  openWindow(infoWindow){
+    console.log(infoWindow)
+    infoWindow.open();
   }
 }

@@ -8,6 +8,11 @@
 //     float: left;
 //     margin: 0px 10px;
 // }
+
+map-view{
+   height: 100%;
+}
+
 mat-spinner{
     // display: flex;
     // align-items: center;
@@ -19,15 +24,22 @@ mat-spinner{
  }
 
  app-eventlist{
-    display: table-row;
-    position: absolute;
+    display: block;
+    position: static;
+
+    width: 25%;
+    height: 100%;
  }
 
  app-map{
      display: block;
-     position: absolute;
+     position: static;
 
-    float: right;
+     width: 75%;
+     height: 100%;
+
+
+     float: right;
  }
 
  .map-view-outter{

@@ -11,25 +11,36 @@
 //     width: 150px;
 //     margin: 15px;
 // }
+
 div.eventlist{
     display: block;
-    position: absolute;
-    height: 841px;
+    height: 100%;
+    width: 100%;
 
     box-shadow: 0px 0px 10px rgba(0,0,0, 0.5);
 
-    right: -1920px;
+    background: white;
 
     table{
-        width: 420px;
-        min-width: 300px;
+        width: 100%;
     }
+
+    .header{
+        font-size: 12pt;
+    }
+
     mat-paginator{
-        width: 420px;
-        min-width: 300px;
-
-        position: absolute;
-
+        width: 100%;
         bottom: 0;
+    }
+}
+
+.link{
+    font-variant: all-petite-caps;
+    text-decoration: underline;
+    font-size: 14pt;
+
+    &:hover{
+        cursor: pointer;
     }
 }

@@ -1,7 +1,7 @@
 <div *ngIf="Events" class="eventlist">
   <table mat-table matSort [dataSource]="dataSource">
 
-    <ng-container matColumnDef="title">
+    <ng-container matColumnDef="redirect">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let event"> {{event.title}} </td>
     </ng-container>
@@ -17,10 +17,10 @@
         <a href="{{event.source_uri}}"> {{event.source_uri}} </a> </td>
     </ng-container>
 
-    <ng-container matColumnDef="redirect">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef> Title </th>
+    <ng-container matColumnDef="title">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef class="header"> Events </th>
         <td mat-cell *matCellDef="let event"> 
-          <button mat-flat-button (click)="redirectTo(event.id)"> {{ event.title }} </button>
+          <span routerLink="{{event.id}}" class="link"> {{ event.title }} </span>
         </td>
       </ng-container>
   

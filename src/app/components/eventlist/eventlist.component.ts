@@ -19,7 +19,7 @@ export class EventlistComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator
-  public columnsToDisplay: String[] = ['redirect']
+  public columnsToDisplay: String[] = ['title']
 
   /**
    * data: Service, which does an http request for list of Events

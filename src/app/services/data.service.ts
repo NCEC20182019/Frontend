@@ -27,4 +27,12 @@ export class DataService {
         'Access-Control-Allow-Origin': '*' 
     })});
   }
+
+  getRandomPic(): Observable<any>{
+    return this.http.get<any>("https://picsum.photos/200/300/?random",   //Put the url in
+    { headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Access-Control-Allow-Origin': '*' 
+  })});
+  }
 }

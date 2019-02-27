@@ -1,24 +1,26 @@
 div{
-    #container{
-        width: 100%;
-        height: 100%;
-    }
-    #content{
-        height: 815px;
-        width: 100%;
-        // display: flex;
-    }
+    display: block;
+}
+
+#container{
+    width: 100%;
+    height: 100%;
+}
+
+#content{
+    height: 87%;
+    width: 100%;
 }
 
 app-footer{
-    display: flex;
+    display: block;
     position: fixed;
     bottom: 0px;
     width: 100%;
 }
 
 app-header{
-    display: flex;
+    display: block;
     position: relative;
     top: 0px;
     width: 100%;
