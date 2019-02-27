@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { Observable } from "rxjs";
 import { ILocation } from '../ilocation';
 import { IEvent } from '../ievent';
@@ -10,8 +10,9 @@ import { IEvent } from '../ievent';
 })
 export class MapComponent implements OnInit {
 
-  @Input() Events: Observable<IEvent[]>;
-  eventList: IEvent[];
+  @Input() Events: Observable<any>;
+  @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
+  eventList: IEvent[] = [];
 
   userLocation: ILocation = {
     ltd: 0,
@@ -32,7 +33,6 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.Events.subscribe((data) => {
       this.eventList = data;
-      // console.log(data);
     })
 
     if (navigator.geolocation) {
@@ -47,5 +47,9 @@ export class MapComponent implements OnInit {
   onChooseLocation(event){
     this.currentMarker =  {ltd: event.coords.lat,
                            lng: event.coords.lng}
+  }
+
+  onClick(){
+    this.markerPlaced.emit(this.currentMarker);
   }
 }

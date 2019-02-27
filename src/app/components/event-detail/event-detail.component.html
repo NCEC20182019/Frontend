@@ -1,0 +1,46 @@
+<mat-card>
+    <form #eventForm="ngForm" (ngSubmit)="save()">
+      <mat-card-header>
+        <mat-card-title><h2>{{event.id ? 'Edit' : 'Add'}} event</h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <input type="hidden" name="id" [(ngModel)]="event.id" #id>
+        <mat-form-field>
+          <input matInput placeholder="Event Title" [(ngModel)]="event.title" required name="name">
+        </mat-form-field><br/>
+        <mat-form-field>
+          <input matInput placeholder="Event Description" [(ngModel)]="event.description" required name="description">
+        </mat-form-field><br/>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker1" placeholder="Event Start Date" [(ngModel)]="event.date_start" name="date_start"> 
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field><br/>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker2" placeholder="Event End Date" [(ngModel)]="event.date_end" name="date_end"> 
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field><br/>
+        <mat-form-field>
+            <input matInput placeholder="Event source url" [(ngModel)]="event.source_url" required name="source_url">
+        </mat-form-field><br/>
+        <mat-form-field>
+            <input matInput placeholder="Event Type" [(ngModel)]="event.type" required name="type">
+        </mat-form-field><br/>
+        <mat-form-field>
+          <input matInput placeholder="Name Location" [(ngModel)]="name_location" required name="name_location">
+      </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="!eventForm.form.valid">Save</button>
+        <button mat-raised-button color="secondary" (click)="remove(event.id)"
+                *ngIf="event.id" type="button">Delete</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        <div id="map">
+          <app-map  (markerPlaced)="onMarkerPlaced($event)" [Events]="getEvent()" ></app-map>
+        </div>
+      </mat-card-footer>
+    </form>
+  </mat-card>

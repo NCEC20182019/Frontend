@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule, 
          MatFormFieldModule, MatCardModule, MatProgressSpinnerModule, MatInputModule,
-         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule  } from '@angular/material';
+         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDatepickerModule,MatNativeDateModule  } from '@angular/material';
 import {OverlayModule, OverlayContainer, FullscreenOverlayContainer} from '@angular/cdk/overlay';
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,8 @@ import { EventlistComponent } from './components/eventlist/eventlist.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { EventViewComponent } from './components/event-view/event-view.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
+import { EventDetailComponent } from './components/event-detail/event-detail.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { OverlayComponent } from './components/overlay/overlay.component';
     EventlistComponent,
     MapViewComponent,
     EventViewComponent,
-    OverlayComponent
+    OverlayComponent,
+    EventDetailComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -59,15 +62,20 @@ import { OverlayComponent } from './components/overlay/overlay.component';
     MatProgressSpinnerModule,
     MatInputModule,
     MatSnackBarModule,
-    OverlayModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    OverlayModule,
+    FormsModule
   ],
   providers: [
-    {provide: OverlayContainer, useClass: FullscreenOverlayContainer}
+    {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [ 
     MapComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    EventDetailComponent
   ]
 })
 export class AppModule { }
