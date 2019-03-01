@@ -31,10 +31,6 @@ export class HeaderComponent implements OnInit {
     this.bottomSheet.open(LoginFormComponent);
   }
 
-  openDetailForm(): void {
-    this.bottomSheet.open(EventDetailComponent);
-  }
-
   redirectHome(){
     this.router.navigate([''])
   }

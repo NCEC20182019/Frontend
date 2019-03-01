@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule, 
          MatFormFieldModule, MatCardModule, MatProgressSpinnerModule, MatInputModule,
-         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDatepickerModule,MatNativeDateModule  } from '@angular/material';
+         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDatepickerModule,MatNativeDateModule, MatDialogModule } from '@angular/material';
 import {OverlayModule, OverlayContainer, FullscreenOverlayContainer} from '@angular/cdk/overlay';
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +22,8 @@ import { MapViewComponent } from './components/map-view/map-view.component';
 import { EventViewComponent } from './components/event-view/event-view.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { EventDetailDialogComponent } from './components/event-detail-dialog/event-detail-dialog.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { FormsModule } from '@angular/forms';
     MapViewComponent,
     EventViewComponent,
     OverlayComponent,
-    EventDetailComponent
+    EventDetailComponent,
+    EventDetailDialogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -64,8 +66,10 @@ import { FormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDialogModule,
     OverlayModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
@@ -75,7 +79,7 @@ import { FormsModule } from '@angular/forms';
   entryComponents: [ 
     MapComponent,
     LoginFormComponent,
-    EventDetailComponent
+    EventDetailDialogComponent
   ]
 })
 export class AppModule { }

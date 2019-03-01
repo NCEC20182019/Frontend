@@ -15,6 +15,7 @@ export class MapComponent implements OnInit {
   eventList: IEvent[] = [];
 
   userLocation: ILocation = {
+    name: '',
     ltd: 0,
     lng: 0
   }
@@ -32,6 +33,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.Events.subscribe((data) => {
+      // console.log(data);
       this.eventList = data;
     })
 
@@ -45,8 +47,9 @@ export class MapComponent implements OnInit {
   }
 
   onChooseLocation(event){
-    this.currentMarker =  {ltd: event.coords.lat,
-                           lng: event.coords.lng}
+    this.currentMarker =  { ltd: event.coords.lat,
+                            lng: event.coords.lng,
+                            name: '' }
   }
 
   onClick(){
