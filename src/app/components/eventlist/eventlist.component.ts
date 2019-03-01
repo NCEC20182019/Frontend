@@ -1,9 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IEvent } from '../IEvent';
-import { MatTableDataSource, MatTable, MatSort, MatPaginator } from '@angular/material';
+import { IEvent } from '../ievent';
+import { MatTableDataSource, MatTable, MatSort, MatPaginator, MatBottomSheet } from '@angular/material';
 import { Observable, from, of } from 'rxjs';
 import { repeat, skipWhile} from 'rxjs/Operators';
+import {EventDetailComponent } from '../event-detail/event-detail.component'
 
 @Component({
   selector: 'app-eventlist',
@@ -25,7 +26,7 @@ export class EventlistComponent implements OnInit {
    * data: Service, which does an http request for list of Events
    * route: Thing for components communication (literally for proper routing)
    * router: Thing that completes routing within this very component  */
-  constructor() { }
+  constructor(private bottomSheet: MatBottomSheet) { }
   
   //Init method
   ngOnInit() {
@@ -37,5 +38,9 @@ export class EventlistComponent implements OnInit {
     this.dataSource = new MatTableDataSource<IEvent>(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  openBottomSheet(): void {
+    this.bottomSheet.open(EventDetailComponent);
   }
 }

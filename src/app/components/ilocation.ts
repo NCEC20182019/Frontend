@@ -1,4 +1,5 @@
 export interface ILocation{
-    ltd: Number;
-    lng: Number;
+    name: string;
+    ltd: number;
+    lng: number;
 }

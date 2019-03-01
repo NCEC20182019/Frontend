@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { Observable } from "rxjs";
 import { ILocation } from '../ilocation';
 import { IEvent } from '../ievent';
@@ -10,12 +10,12 @@ import { IEvent } from '../ievent';
 })
 export class MapComponent implements OnInit {
 
-
-  @Input() Events: Observable<IEvent[]>;
-  eventList: IEvent[];
-  show=true;
+  @Input() Events: Observable<any>;
+  @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
+  eventList: IEvent[] = [];
 
   userLocation: ILocation = {
+    name: '',
     ltd: 0,
     lng: 0
   }
@@ -38,6 +38,7 @@ export class MapComponent implements OnInit {
         event.pic = "https://picsum.photos/50/50/?random"
       });
       // console.log(data);
+      this.eventList = data;
     })
 
     if (navigator.geolocation) {
@@ -49,8 +50,12 @@ export class MapComponent implements OnInit {
   }
 
   onChooseLocation(event){
-    this.currentMarker =  {ltd: event.coords.lat,
-                           lng: event.coords.lng}
-      console.log(event);
-     }
+    this.currentMarker =  { ltd: event.coords.lat,
+                            lng: event.coords.lng,
+                            name: '' }
+  }
+
+  onClick(){
+    this.markerPlaced.emit(this.currentMarker);
+  }
 }

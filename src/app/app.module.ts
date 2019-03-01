@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule, 
          MatFormFieldModule, MatCardModule, MatProgressSpinnerModule, MatInputModule,
-         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule  } from '@angular/material';
+         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDatepickerModule,MatNativeDateModule, MatDialogModule } from '@angular/material';
 import {OverlayModule, OverlayContainer, FullscreenOverlayContainer} from '@angular/cdk/overlay';
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +22,9 @@ import { EventlistComponent } from './components/eventlist/eventlist.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { EventViewComponent } from './components/event-view/event-view.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
+import { EventDetailComponent } from './components/event-detail/event-detail.component';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { EventDetailDialogComponent } from './components/event-detail-dialog/event-detail-dialog.component';
 
 
 @NgModule({
@@ -38,7 +41,9 @@ import { OverlayComponent } from './components/overlay/overlay.component';
     EventlistComponent,
     MapViewComponent,
     EventViewComponent,
-    OverlayComponent
+    OverlayComponent,
+    EventDetailComponent,
+    EventDetailDialogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -61,15 +66,22 @@ import { OverlayComponent } from './components/overlay/overlay.component';
     MatProgressSpinnerModule,
     MatInputModule,
     MatSnackBarModule,
-    OverlayModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    OverlayModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
-    {provide: OverlayContainer, useClass: FullscreenOverlayContainer}
+    {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [ 
     MapComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    EventDetailDialogComponent
   ]
 })
 export class AppModule { }

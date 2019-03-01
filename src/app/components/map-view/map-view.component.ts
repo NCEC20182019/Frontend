@@ -27,7 +27,7 @@ export class MapViewComponent implements OnInit {
      this.Events = this.data.getEvents();
   }
 
-  //Method of redirecting to single Event page
+  /** Method of redirecting to single Event page */
   redirectTo(_id){
     console.log(_id);
     this.router.navigate([_id], { relativeTo: this.route })
