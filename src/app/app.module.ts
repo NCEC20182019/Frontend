@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
+import { AgmSnazzyInfoWindowModule } from "@agm/snazzy-info-window";
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule, 
@@ -43,6 +44,7 @@ import { OverlayComponent } from './components/overlay/overlay.component';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA5yLtG88oIAl-r1z5SOIK4mwpVXTQWk5Y'
     }),
+    AgmSnazzyInfoWindowModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

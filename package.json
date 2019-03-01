@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@agm/core": "^1.0.0-beta.5",
+    "@agm/snazzy-info-window": "1.0.0-beta.5",
     "@angular/animations": "~7.0.0",
     "@angular/cdk": "~7.1.1",
     "@angular/common": "~7.0.0",
@@ -25,10 +26,11 @@
     "@angular/router": "~7.0.0",
     "core-js": "^2.5.4",
     "geofire": "^4.1.2",
+    "hammerjs": "^2.0.8",
     "rxjs": "~6.3.3",
     "rxjs-observable-store": "^1.0.1",
-    "zone.js": "~0.8.26",
-    "hammerjs": "^2.0.8"
+    "snazzy-info-window": "^1.1.1",
+    "zone.js": "~0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",

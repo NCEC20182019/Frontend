@@ -4,6 +4,19 @@ agm-map{
     height: 100%;
 }
 
+agm-marker{
+    visibility: hidden;
+    transition: visibility 1s ease-in-out 2s;
+}
+
+img{
+    border-radius: 50px;
+}
+
+agm-snazzy-info-window{
+    border-radius: 50px;
+}
+
 #map-container{
     // display: flex;
     align-items: stretch;
