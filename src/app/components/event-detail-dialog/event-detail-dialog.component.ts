@@ -82,6 +82,6 @@ export class EventDetailDialogComponent implements OnInit{
     passEventToMap(){
       let n:IEvent[] =[];
       n.push(this.data?this.data:this.emptyEvent);
-      return from(n);
+      return of(n);
     }
 }

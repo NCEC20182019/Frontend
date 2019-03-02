@@ -13,3 +13,27 @@ div.cdk-overlay-pane{
     margin-bottom: auto;
     margin-top: auto;
 }
+
+div.cdk-overlay-pane{
+    width: 45%;
+}
+
+div.si-content-wrapper{
+    width: 75px;
+    margin: 0;
+}
+
+div.si-frame{
+    width: 75px;
+    margin: 0;
+}
+
+div.si-wrapper-top{
+    width: 75px;
+    margin: 0;
+}
+
+app-event-detail-dialog{
+    height: 100%;
+    width: 100%;
+}

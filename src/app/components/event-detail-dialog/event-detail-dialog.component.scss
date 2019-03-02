@@ -1,0 +1,32 @@
+#form{
+    display: inline-block;
+    float: left;
+}
+
+div#form{
+    width: 35%;
+    margin: 0;
+
+    mat-form-field{
+        width: 100%;
+    }
+}
+
+#buttons{
+    display: block;
+}
+
+#map{
+    height: 512.5px;
+    width: 62%;
+    display: inline-block;
+    padding-left: 15px;
+}
+
+
+app-map{
+    float: left;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}

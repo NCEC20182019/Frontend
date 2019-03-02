@@ -1,18 +1,15 @@
 <div class="map-container" id="map-container">
     <agm-map *ngIf="eventList" (mapClick)="onChooseLocation($event); onClick();"
                                id="map" 
-                               [latitude]="currentMarker ? currentMarker.ltd : (userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 0" 
-                               [longitude]="currentMarker ? currentMarker.lng : (userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 0" 
+                               [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 0" 
+                               [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 0" 
                                [zoom]='zoom'
                                >
-            <!-- <agm-marker *ngFor="let event of eventList"
+            <agm-marker *ngFor="let event of eventList"
                         [latitude]="event.location.latitude" 
-                        [longitude]="event.location.longitude"> -->
+                        [longitude]="event.location.longitude">
 
-                <agm-snazzy-info-window *ngFor="let event of eventList"
-                                        [latitude]="event.location.latitude" 
-                                        [longitude]="event.location.longitude"
-                                        #window{{event.id}}>
+                <agm-snazzy-info-window >
                     <ng-template>
                         <div [routerLink]="event.id">
                             <img [src]="event.pic">
@@ -20,7 +17,7 @@
                     </ng-template>
                 </agm-snazzy-info-window>
 
-            <!-- </agm-marker> -->
+            </agm-marker>
 
             <agm-info-window *ngFor="let event of eventList"
             [latitude]="event.location.latitude" 
