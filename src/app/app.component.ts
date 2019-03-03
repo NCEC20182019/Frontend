@@ -8,4 +8,8 @@ import { Component, Inject } from '@angular/core';
 export class AppComponent {
   title = 'lemmeknow';
   currentRoute: any;
+
+  onMarkerPlaced(event){
+    console.log(event)
+  }
 }

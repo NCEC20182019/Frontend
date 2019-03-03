@@ -1,6 +1,6 @@
 <div class="map-view-outter">
   <div *ngIf="!spinner" class="map-view">
-    <app-map (redirect)="redirectTo(event)" [Events]="Events"></app-map>
+    <app-map (redirect)="redirectTo(event)" [Events]="Events" (markerPlaced)="onMarkerPlaced($event)"></app-map>
     <app-eventlist [Events]="Events"></app-eventlist>
   </div>
   <mat-spinner *ngIf="spinner" id="spinner"></mat-spinner>

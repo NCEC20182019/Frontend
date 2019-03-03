@@ -40,6 +40,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
   ngOnDestroy(){
     this.sub.unsubscribe();
   }
@@ -73,10 +74,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(EventDetailDialogComponent, dialogConf);
 
     dialogRef.afterClosed().subscribe(result => {
-      this.event = result;
-      this.event.location = result.location;
-      console.log(this.event);
-      this.save();
+      if (result){
+        this.event = result;
+        this.event.location = result.location;
+        console.log(this.event);
+        this.save();
+      }
     });
   }
 }

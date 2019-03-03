@@ -53,9 +53,8 @@ export class MapComponent implements OnInit {
     this.currentMarker =  { ltd: event.coords.lat,
                             lng: event.coords.lng,
                             name: '' }
-  }
 
-  onClick(){
     this.markerPlaced.emit(this.currentMarker);
+    // console.log(this.currentMarker)
   }
 }

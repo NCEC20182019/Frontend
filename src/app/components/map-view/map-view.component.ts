@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IEvent } from '../ievent';
 import { DataService } from 'src/app/services/data.service';
 import { Observable } from "rxjs";
@@ -15,6 +15,7 @@ export class MapViewComponent implements OnInit {
   // @Output() INITIAL_DELAY: number = 850;
 
   private spinner: boolean = true;
+  markerPlaced = new EventEmitter();
 
   constructor(private data: DataService, private router: Router, private route: ActivatedRoute) {}
 
@@ -31,6 +32,10 @@ export class MapViewComponent implements OnInit {
   redirectTo(_id){
     console.log(_id);
     this.router.navigate([_id], { relativeTo: this.route })
+  }
+
+  onMarkerPlaced(event){
+    this.markerPlaced.emit(event);
   }
 
 }
