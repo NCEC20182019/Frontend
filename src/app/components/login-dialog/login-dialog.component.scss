@@ -1,0 +1,17 @@
+#form{
+    display: block;
+}
+
+div#form{
+    width: auto;
+    margin: 0;
+
+    mat-form-field{
+        width: 20vw;
+    }
+}
+
+#buttons{
+    display: block;
+    text-align: right;
+}

@@ -4,7 +4,7 @@
 }
 
 div#form{
-    width: 35%;
+    width: 15vw;
     margin: 0;
 
     mat-form-field{
@@ -13,12 +13,13 @@ div#form{
 }
 
 #buttons{
+    text-align: right;
     display: block;
 }
 
 #map{
     height: 512.5px;
-    width: 62%;
+    width: 25vw;
     display: inline-block;
     padding-left: 15px;
 }

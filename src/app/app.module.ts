@@ -16,7 +16,6 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SecurityComponent } from './components/security/security.component';
 import { ListComponent } from './components/list/list.component';
-import { LoginFormComponent } from './components/login-form/login-form.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EventlistComponent } from './components/eventlist/eventlist.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
@@ -25,6 +24,8 @@ import { OverlayComponent } from './components/overlay/overlay.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EventDetailDialogComponent } from './components/event-detail-dialog/event-detail-dialog.component';
+import { LoginComponent } from './components/login/login.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 
 
 @NgModule({
@@ -36,14 +37,15 @@ import { EventDetailDialogComponent } from './components/event-detail-dialog/eve
     NotFoundComponent,
     SecurityComponent,
     ListComponent,
-    LoginFormComponent,
     FooterComponent,
     EventlistComponent,
     MapViewComponent,
     EventViewComponent,
     OverlayComponent,
     EventDetailComponent,
-    EventDetailDialogComponent
+    EventDetailDialogComponent,
+    LoginComponent,
+    LoginDialogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -80,8 +82,8 @@ import { EventDetailDialogComponent } from './components/event-detail-dialog/eve
   bootstrap: [AppComponent],
   entryComponents: [ 
     MapComponent,
-    LoginFormComponent,
-    EventDetailDialogComponent
+    EventDetailDialogComponent,
+    LoginDialogComponent
   ]
 })
 export class AppModule { }

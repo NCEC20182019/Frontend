@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { LoginFormComponent } from '../login-form/login-form.component';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
 
 @Component({
@@ -25,10 +24,6 @@ export class HeaderComponent implements OnInit {
 
   redirect(){
     this.router.navigate(['./login']);
-  }
-
-  openBottomSheet(): void {
-    this.bottomSheet.open(LoginFormComponent);
   }
 
   redirectHome(){
