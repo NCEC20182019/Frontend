@@ -21,6 +21,7 @@
         <th mat-header-cell mat-sort-header *matHeaderCellDef class="header"> Events </th>
         <td mat-cell *matCellDef="let event"> 
           <span routerLink="{{event.id}}" class="link"> {{ event.title }} </span>
+          <app-event-detail [title]="'Edit'" [event]="event"></app-event-detail>
         </td>
       </ng-container>
   

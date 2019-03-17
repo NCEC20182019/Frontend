@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <span (click)="redirectHome()"> {{Title}} </span>
 
-  <app-event-detail [title]="'Add'"></app-event-detail>
+  <app-event-detail [title]="'Add'" [event]="emptyEvent"></app-event-detail>
   <app-login></app-login>
 
 </mat-toolbar>

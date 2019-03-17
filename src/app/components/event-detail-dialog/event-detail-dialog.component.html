@@ -1,6 +1,7 @@
 <div  id="form">
   <h1 mat-dialog-title>{{isExist ? 'Edit' : 'Add'}} event</h1>
   <div mat-dialog-content [formGroup]="form">
+    <input hidden formControlName="id">
     <mat-form-field>
       <input matInput placeholder="Event Title" formControlName="title">
     </mat-form-field><br />
@@ -14,7 +15,7 @@
       <input matInput type="datetime-local" placeholder="Event End Date" formControlName="date_end">
     </mat-form-field><br />
     <mat-form-field>
-      <input matInput placeholder="Event source url" formControlName="source_url">
+      <input matInput placeholder="Event source url" formControlName="source_uri">
     </mat-form-field><br />
     <mat-form-field>
       <input matInput placeholder="Event Type" formControlName="type">

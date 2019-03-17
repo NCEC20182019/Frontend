@@ -5,6 +5,8 @@ import { ILocation } from '../ilocation';
 import { IEvent } from '../ievent';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UrlHandlingStrategy } from '@angular/router';
+import * as moment from 'moment';
+import { Url } from "url";
 
 @Component({
   selector: 'app-event-detail-dialog',
@@ -24,10 +26,10 @@ export class EventDetailDialogComponent implements OnInit{
   emptyEvent: IEvent ={
     title:"",
     description:"",
-    date_end:'',
-    date_start:'',
+    date_end: moment().format("YYYY-MM-DDTkk:mm"),
+    date_start: moment().format("YYYY-MM-DDTkk:mm"),
     type:'',
-    source_uri:{},
+    source_uri: {},
     location:{name:"",lng:0,ltd:0},
     pic:'',
     id:0
@@ -40,13 +42,14 @@ export class EventDetailDialogComponent implements OnInit{
       this.isExist = data.id ? true: false;
 
       this.form = this.fb.group({
-        title: [this.data.title, Validators.required],
-        description: [this.data.description, Validators.required],
-        date_start: [this.data.date_start, Validators.required],
-        date_end: [this.data.date_end, Validators.required],
-        source_url: [this.data.source_uri,Validators.required],
-        type: [this.data.type,Validators.required],
-        name_location: [this.data.location.name,Validators.required]
+        id: [data.id],
+        title: [data.title, Validators.required],
+        description: [data.description, Validators.required],
+        date_start: [data.date_start, Validators.required],
+        date_end: [data.date_end, Validators.required],
+        source_uri: [typeof data.source_uri==='string'?this.data.source_uri:"",Validators.required],
+        type: [data.type,Validators.required],
+        name_location: [data.location.name,Validators.required]
     });
     }
 

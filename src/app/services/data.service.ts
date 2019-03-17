@@ -8,6 +8,7 @@ import { IEvent } from '../components/ievent';
   providedIn: 'root'
 })
 export class DataService {
+  // private _eventsUri = "http://192.168.1.7:8092/event/"; // -- Integration URL
   private _eventsUri = "http://localhost:8092/event/"; // -- Integration URL
   // private _eventsUri = "https://7678acb1-b897-4f74-a317-63ae18c493fe.mock.pstmn.io/events"; // -- Mock server
 

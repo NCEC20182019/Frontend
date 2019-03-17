@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, Input, Optional } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
@@ -6,6 +6,7 @@ import { ILocation } from '../ilocation';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { EventDetailDialogComponent } from '../event-detail-dialog/event-detail-dialog.component';
 import { IEvent } from '../ievent';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-event-detail',
@@ -16,38 +17,29 @@ import { IEvent } from '../ievent';
 export class EventDetailComponent implements OnInit, OnDestroy {
 
   @Input() title: string;
-  event:IEvent;
-  sub:Subscription;
+  @Input() event:IEvent;
+  //sub:Subscription;
   eventObs: Observable<any> = new Observable();
   //name_location:string;
 
   constructor(private route: ActivatedRoute,
               private dialog: MatDialog,
-              private dataService: DataService) { }
+              private dataService: DataService) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.eventObs = this.dataService.getEvent(id);
-        this.eventObs.subscribe((event: any) => {
-          if (event) {
-            this.event = event;
-          } else {
-            console.log(`Event with id '${id}' not found!`);
-          }
-        });
-      }
-    });
+    if(this.event)
+    {
+      this.event.date_start = moment(this.event.date_start.toString()).format("YYYY-MM-DDTkk:mm");
+      this.event.date_end = moment(this.event.date_end.toString()).format("YYYY-MM-DDTkk:mm");
+    }
   }
   
   ngOnDestroy(){
-    this.sub.unsubscribe();
+    //this.sub.unsubscribe();
   }
 
   save(){
     let eventToSend = {}
-    console.log('save ',this.event);
     if(this.event && this.event.location) {
       eventToSend = {
         title: this.event.title,
@@ -58,11 +50,18 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         type: this.event.type,
         name_location: this.event.location.name
        };
-      if(this.event.id)
-        this.dataService.updateEvent(eventToSend,this.event.id);
-      else
+      if(this.event.id){  
+        console.log('update: ', this.event);
+        this.dataService.updateEvent(eventToSend,this.event.id).subscribe();
+      }
+      else {
+        console.log('save: ', this.event);
         this.dataService.addEvent(eventToSend).subscribe();
+      }    
     }
+  }
+  delete(id: number){
+    this.dataService.deleteEvent(id).subscribe();
   }
 
   openDialog(): void {
@@ -74,10 +73,14 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(EventDetailDialogComponent, dialogConf);
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result){
+      if(typeof result ==='number')
+      {
+        this.delete(result);
+      }
+      else if (result){        
         this.event = result;
         this.event.location = result.location;
-        console.log(this.event);
+        //console.log(this.event);
         this.save();
       }
     });
