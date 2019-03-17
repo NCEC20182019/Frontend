@@ -1,0 +1,23 @@
+<div  id="form">
+  <h1 mat-dialog-title>Login</h1>
+  <div mat-dialog-content [formGroup]="form">
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field><br />
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> <br />
+    <mat-form-field>
+      <input matInput placeholder="Password" formControlName="password" type="password" #password>
+    </mat-form-field><br />
+    <mat-form-field>
+      <input matInput placeholder="Repeat password" formControlName="repeat_password" type="password" #repeat_password>
+    </mat-form-field><br />
+  </div>
+</div>
+<div mat-dialog-actions id="buttons">
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button mat-primary [disabled]="!form.valid" (click)="save()">Submit</button>
+</div>

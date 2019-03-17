@@ -1,0 +1,16 @@
+a{
+    display: inline-block;
+
+    &#link{
+        color: #1b1bd1;
+        margin: 0px 20px;
+        text-decoration: underline;
+        text-decoration-color: #1b1bd1;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    
+}
