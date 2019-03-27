@@ -12,21 +12,21 @@ import * as moment from 'moment';
 })
 export class HeaderComponent implements OnInit {
 
-  private Title: string = "Lemmeknow";
-  private navLinks = [{relativePath: 'map', label: "Map View"},
-                      {relativePath: 'calendar', label: "Calendar View"}];
+  private Title = 'Lemmeknow';
+  private navLinks = [{relativePath: 'map', label: 'Map View'},
+                      {relativePath: 'calendar', label: 'Calendar View'}];
 
-  emptyEvent:IEvent = {
-    title:"",
-    description:"",
-    date_end: moment().format("YYYY-MM-DDTkk:mm"),
-    date_start: moment().format("YYYY-MM-DDTkk:mm"),
-    type:"",
-    source_uri:{},
-    location:{name:"",lng:0,ltd:0},
-    pic:"",
-    id:0
-  }
+  emptyEvent: IEvent = {
+    title: '',
+    description: '',
+    date_end: moment().format('YYYY-MM-DDTkk:mm'),
+    date_start: moment().format('YYYY-MM-DDTkk:mm'),
+    type: '',
+    source_uri: {},
+    location: {name: '', lng: 0, ltd: 0},
+    pic: '',
+    id: 0
+  };
 
   constructor(private router: Router, private bottomSheet: MatBottomSheet,
               private route: ActivatedRoute) { }
@@ -36,11 +36,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  redirect(){
+  redirect() {
     this.router.navigate(['./login']);
   }
 
-  redirectHome(){
-    this.router.navigate([''])
+  redirectHome() {
+    this.router.navigate(['']);
   }
 }

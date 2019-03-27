@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 import { ILocation } from '../ilocation';
 import { IEvent } from '../ievent';
 
@@ -18,28 +18,28 @@ export class MapComponent implements OnInit {
     name: '',
     ltd: 0,
     lng: 0
-  }
+  };
 
   private userMarker = {
     url: '../../../assets/blue-marker.png',
-  }
+  };
 
   private currentMarker: ILocation;
 
   private zoom = 12;
 
-  
+
   constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
     this.Events.subscribe((data) => {
       this.eventList = data;
       this.eventList.forEach(event => {
-        event.pic = "https://picsum.photos/50/50/?random"
+        event.pic = 'https://picsum.photos/50/50/?random';
       });
       // console.log(data);
       this.eventList = data;
-    })
+    });
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -49,10 +49,10 @@ export class MapComponent implements OnInit {
     }
   }
 
-  onChooseLocation(event){
+  onChooseLocation(event) {
     this.currentMarker =  { ltd: event.coords.lat,
                             lng: event.coords.lng,
-                            name: '' }
+                            name: '' };
 
     this.markerPlaced.emit(this.currentMarker);
     // console.log(this.currentMarker)

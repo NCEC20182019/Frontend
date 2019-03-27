@@ -1,8 +1,8 @@
 <div class="map-container" id="map-container">
     <agm-map *ngIf="eventList" (mapClick)="onChooseLocation($event)"
                                id="map" 
-                               [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 0" 
-                               [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 0" 
+                               [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 51.6720400" 
+                               [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 39.1843000" 
                                [zoom]='zoom'
                                >
             <agm-marker *ngFor="let event of eventList"
