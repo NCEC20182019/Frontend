@@ -77,7 +77,7 @@ testem.log
 .DS_Store
 Thumbs.db
 /.idea
-/.mvn
+#/.mvn
 /e2e
 /.idea
 /node_modules
