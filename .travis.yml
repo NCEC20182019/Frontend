@@ -20,6 +20,7 @@ env:
   - REMOTEHOST=142.93.98.12
 before_install:
   - npm install --save rxjs@6.3.3
+  - npm rebuild node-sass --force
   - chmod +x mvnw
   - openssl aes-256-cbc -K $encrypted_d5d12f438e3d_key -iv $encrypted_d5d12f438e3d_iv
     -in deploy.enc -out deploy -d
