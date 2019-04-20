@@ -52,6 +52,7 @@ node/
 *.launch
 .settings/
 *.sublime-workspace
+*.iml
 
 # IDE - VSCode
 .vscode/*
@@ -79,7 +80,6 @@ Thumbs.db
 /.idea
 #/.mvn
 /e2e
-/.idea
 /node_modules
 /target
 
