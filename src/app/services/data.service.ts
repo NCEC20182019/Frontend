@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/Operators';
 import { IEvent } from '../components/ievent';
 
 @Injectable({
@@ -9,7 +8,7 @@ import { IEvent } from '../components/ievent';
 })
 export class DataService {
   // private _eventsUri = 'http://192.168.1.7:8092/event/'; // -- Integration URL
-  private _eventsUri = 'http://localhost:8092/event/'; // -- Integration URL
+  private _eventsUri = '/event/'; // -- Integration URL
   // private _eventsUri = "https://7678acb1-b897-4f74-a317-63ae18c493fe.mock.pstmn.io/events"; // -- Mock server
   private _userService = 'http://localhost:8090/signin';
 
