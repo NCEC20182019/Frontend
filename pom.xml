@@ -34,6 +34,34 @@
       <version>5.2.0</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- SECURITY -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-jose</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security.oauth.boot</groupId>
+      <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+      <version>2.1.2.RELEASE</version>
+    </dependency>
+
+    <!-- REACTIVE -->
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectreactor</groupId>
+      <artifactId>reactor-spring</artifactId>
+      <version>1.0.1.RELEASE</version>
+    </dependency>
+
   </dependencies>
 
   <build>

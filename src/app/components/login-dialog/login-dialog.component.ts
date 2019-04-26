@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { HttpClient } from '@angular/common/http';
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-login-dialog',
@@ -11,7 +13,8 @@ export class LoginDialogComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder,
+  constructor(private dataService: DataService,
+    private fb: FormBuilder,
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data) {
 
@@ -26,6 +29,8 @@ export class LoginDialogComponent implements OnInit {
 
   save() {
     let dataToPass = this.form.value;
+
+    this.dataService.loginUser(dataToPass);
 
     this.dialogRef.close(dataToPass);
   }
