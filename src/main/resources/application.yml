@@ -1,0 +1,29 @@
+server:
+  port: 8090
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          front:
+            authorizationGrantType: authorization_code
+            clientId: client_service
+            clientSecret: clientsecret
+            redirectUriTemplate: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          front:
+            token-uri: http://localhost:9999/auth/oauth/token
+            authorizationUri: http://localhost:9999/auth/oauth/authorize
+            user-info-uri: http://localhost:9999/auth/user/me
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: notification_service
+#      client-secret: pin
+#      accessTokenUri: http://localhost:9999/auth/oauth/token
+#      userAuthorizationUri: http://localhost:9999/auth/oauth/authorize
+##      registered-redirect-uri: http://localhost:8090
+#    resource:
+#      user-info-uri: http://localhost:9999/auth/user/me

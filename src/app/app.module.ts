@@ -26,6 +26,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EventDetailDialogComponent } from './components/event-detail-dialog/event-detail-dialog.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { UserPageComponent } from './components/user-page/user-page.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
     EventDetailComponent,
     EventDetailDialogComponent,
     LoginComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    UserPageComponent
   ],
   imports: [
     AgmCoreModule.forRoot({

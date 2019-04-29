@@ -21,7 +21,8 @@ export class MapViewComponent implements OnInit {
 
   ngOnInit() {
     this.getEvents();
-    this.Events.subscribe(() => this.spinner=false)
+    this.Events.subscribe(() => this.spinner=false,
+                          () => this.spinner=false);
   }
 
   getEvents(){
