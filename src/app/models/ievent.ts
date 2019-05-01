@@ -5,7 +5,7 @@ export interface IEvent{
     id: Number;
     title: String;
     type: String;
-    source_uri: Url;
+    source_uri: String;
     description: String;
     location: ILocation;
     date_start: String;

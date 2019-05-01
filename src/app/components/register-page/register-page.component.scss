@@ -1,0 +1,26 @@
+#form{
+    display: block;
+    box-shadow: 0px 0px 10px rgba(0,0,0, 0.5);
+    border-radius: 5px;
+    padding: 10px;
+    width: 25vw;
+    margin: 0;
+    background: white;
+
+    position: relative;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    top: 20vh;
+
+    mat-form-field{
+        width: 20vw;
+    }
+
+    h2{
+        display: block;
+        text-shadow: 1px white;
+    }
+}
+

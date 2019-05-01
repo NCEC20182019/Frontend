@@ -7,17 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.client.WebClient;
-
 import java.util.Map;
 
 @Controller
 public class HomeController {
   private static String serviceUrl = "http://localhost:9999/auth";
 
-  @GetMapping({"/", "/app/**"})
+  @GetMapping({"/", "/app/**", "/login"})
   public static String index(){
     return "forward:/index.html";
   }
+
+
 
   @PostMapping("/signin")
   public static String login(@RequestBody Map<String, String> credentials) {

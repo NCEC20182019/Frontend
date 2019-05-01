@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from '../components/not-found/not-found.component';
-import { EventlistComponent } from '../components/eventlist/eventlist.component';
 import { EventViewComponent } from '../components/event-view/event-view.component'
-import { MapComponent } from '../components/map/map.component';
-import { CalendarComponent } from '../components/calendar/calendar.component';
 import { MapViewComponent } from '../components/map-view/map-view.component';
+import { LoginPageComponent } from "../components/login-page/login-page.component";
+import { RegisterPageComponent } from "../components/register-page/register-page.component";
 
 const routes: Routes = [
   {
@@ -13,12 +12,20 @@ const routes: Routes = [
     redirectTo: 'app/events'
   },
   {
+    path: 'app/login',
+    component: LoginPageComponent
+  },
+  {
+    path: 'app/register',
+    component: RegisterPageComponent
+  },
+  {
     path: 'app/events',
-    component: MapViewComponent,
+    component: MapViewComponent
   },
   {
     path: 'app/events/:id',
-    component: EventViewComponent,
+    component: EventViewComponent
   },
   {
     path: '**',

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
-import { IEvent } from '../ievent';
+import { IEvent } from '../../models/ievent';
 import * as moment from 'moment';
 
 @Component({
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     date_end: moment().format('YYYY-MM-DDTkk:mm'),
     date_start: moment().format('YYYY-MM-DDTkk:mm'),
     type: '',
-    source_uri: {},
+    source_uri: '',
     location: {name: '', lng: 0, ltd: 0},
     pic: '',
     id: 0

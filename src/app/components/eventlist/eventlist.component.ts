@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 //import { Router, ActivatedRoute } from '@angular/router';
-import { IEvent } from '../ievent';
+import { IEvent } from '../../models/ievent';
 import { MatTableDataSource, MatTable, MatSort, MatPaginator, MatBottomSheet } from '@angular/material';
 import { Observable, from, of } from 'rxjs';
 //import { repeat, skipWhile} from 'rxjs/Operators';

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription, Observable, of, from } from 'rxjs';
-import { ILocation } from '../ilocation';
-import { IEvent } from '../ievent';
+import { ILocation } from '../../models/ilocation';
+import { IEvent } from '../../models/ievent';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UrlHandlingStrategy } from '@angular/router';
 import * as moment from 'moment';
@@ -29,7 +29,7 @@ export class EventDetailDialogComponent implements OnInit {
     date_end: moment().format('YYYY-MM-DDTkk:mm'),
     date_start: moment().format('YYYY-MM-DDTkk:mm'),
     type: '',
-    source_uri: {},
+    source_uri: '',
     location: { name: '', lng: 0, ltd: 0 },
     pic: '',
     id: 0

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { IEvent } from '../ievent';
+import { IEvent } from '../../models/ievent';
 import { DataService } from 'src/app/services/data.service';
 import { Observable } from "rxjs";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,7 +26,7 @@ export class MapViewComponent implements OnInit {
   }
 
   getEvents(){
-     this.Events = this.data.getEvents();
+     this.Events = this.data.getMockEvents();
   }
 
   /** Method of redirecting to single Event page */
