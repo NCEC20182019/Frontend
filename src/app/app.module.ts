@@ -27,6 +27,9 @@ import { EventDetailDialogComponent } from './components/event-detail-dialog/eve
 import { LoginComponent } from './components/login/login.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginPageComponent } from './components/login-page/login-page.component';
 
 
 @NgModule({
@@ -47,7 +50,9 @@ import { UserPageComponent } from './components/user-page/user-page.component';
     EventDetailDialogComponent,
     LoginComponent,
     LoginDialogComponent,
-    UserPageComponent
+    UserPageComponent,
+    RegisterPageComponent,
+    LoginPageComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -79,7 +84,8 @@ import { UserPageComponent } from './components/user-page/user-page.component';
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
-    MatDatepickerModule
+    MatDatepickerModule,
+    CookieService
   ],
   bootstrap: [AppComponent],
   entryComponents: [ 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { IEvent } from '../ievent';
+import { IEvent } from '../../models/ievent';
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ComponentPortal } from '@angular/cdk/portal';

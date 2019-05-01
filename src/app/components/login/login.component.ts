@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -10,9 +11,14 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit() {
+  }
+
+  redirect(){
+    this.router.navigate(["./app/login"]);
   }
 
   openDialog(): void {

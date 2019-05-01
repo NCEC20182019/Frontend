@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ILocation } from '../ilocation';
-import { IEvent } from '../ievent';
+import { ILocation } from '../../models/ilocation';
+import { IEvent } from '../../models/ievent';
 
 @Component({
   selector: 'app-map',
@@ -37,7 +37,7 @@ export class MapComponent implements OnInit {
       this.eventList.forEach(event => {
         event.pic = 'https://picsum.photos/50/50/?random';
       });
-      // console.log(data);
+      console.log(data);
       this.eventList = data;
     });
 

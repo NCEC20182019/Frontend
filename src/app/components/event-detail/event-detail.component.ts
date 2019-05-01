@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, Output, Input, Optional } from '@angular/
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
-import { ILocation } from '../ilocation';
+import { ILocation } from '../../models/ilocation';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { EventDetailDialogComponent } from '../event-detail-dialog/event-detail-dialog.component';
-import { IEvent } from '../ievent';
+import { IEvent } from '../../models/ievent';
 import * as moment from 'moment';
 
 @Component({

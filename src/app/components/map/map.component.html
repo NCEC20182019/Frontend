@@ -6,10 +6,11 @@
                                [zoom]='zoom'
                                >
             <agm-marker *ngFor="let event of eventList"
-                        [latitude]="event.location.latitude" 
-                        [longitude]="event.location.longitude">
+                        [latitude]="event.location.ltd" 
+                        [longitude]="event.location.lng">
 
-                <agm-snazzy-info-window >
+                <agm-snazzy-info-window [latitude]="event.location.ltd" 
+                                        [longitude]="event.location.lng">
                     <ng-template>
                         <div [routerLink]="event.id">
                             <img [src]="event.pic">

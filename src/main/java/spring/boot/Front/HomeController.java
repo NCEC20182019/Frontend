@@ -19,10 +19,12 @@ public class HomeController {
   private static String serviceUrl = "http://localhost:9999/auth";
   private static Object Map;
 
-  @GetMapping({"/", "/app/**"})
+  @GetMapping({"/", "/app/**", "/login"})
   public static String index(){
     return "forward:/index.html";
   }
+
+
 
   @PostMapping("/signin")
   public static String login(@RequestBody Map<String, String> credentials) {

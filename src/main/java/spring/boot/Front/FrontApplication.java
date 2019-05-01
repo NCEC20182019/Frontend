@@ -26,7 +26,7 @@ public class FrontApplication extends WebSecurityConfigurerAdapter {
     http
       .logout().logoutSuccessUrl("/").and()
       .authorizeRequests()
-        .antMatchers("/index.html", "/", "/signin").permitAll()
+        .antMatchers("/index.html", "/", "/signin", "/login").permitAll()
         .antMatchers("/app/events/1").authenticated()
         .anyRequest().permitAll()
       .and()
