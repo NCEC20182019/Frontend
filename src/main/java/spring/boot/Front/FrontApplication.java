@@ -7,10 +7,6 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
 @EnableZuulProxy
