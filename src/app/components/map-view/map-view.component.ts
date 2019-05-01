@@ -26,7 +26,7 @@ export class MapViewComponent implements OnInit {
   }
 
   getEvents(){
-     this.Events = this.data.getMockEvents();
+     this.Events = this.data.getEvents();
   }
 
   /** Method of redirecting to single Event page */
