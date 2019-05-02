@@ -8,10 +8,9 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class DataService {
-  // private _eventsUri = 'http://192.168.1.7:8092/event/'; // -- Integration URL
-  private _eventsUri = 'http://localhost:8092/event/'; // -- Integration URL
   // private _eventsUri = "https://7678acb1-b897-4f74-a317-63ae18c493fe.mock.pstmn.io/events"; // -- Mock server
-  private _userService = 'http://localhost:9999/auth';
+  private _eventsUri = 'http://lemmeknow.tk:8092/event/'; // -- Integration URL
+  private _userService = 'http://lemmeknow.tk:9999/auth';
 
   constructor(private http: HttpClient) { }
 
