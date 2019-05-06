@@ -27,7 +27,7 @@ export class DataService {
 
   httpGetEvents() {
     let count = 0;
-    let patch: IEvent[];
+    let patch: IEvent[] = [];
     this.http.get<IEvent[]>(this._eventsUri,
       {
         headers: new HttpHeaders({
