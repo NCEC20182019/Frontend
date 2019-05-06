@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 
 import {  AuthenticationService } from '../../services/authentication.service';
 import { MatSnackBar } from '@angular/material';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login-page',
@@ -23,7 +24,8 @@ export class LoginPageComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private cookieService: CookieService
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) { 
@@ -58,6 +60,7 @@ export class LoginPageComponent implements OnInit {
             .subscribe(
                 data => {
                     this.router.navigate([this.returnUrl]);
+                    this.cookieService.set("token", data);
                 },
                 error => {
                     this.snackBar.open("Auth failed", "Close", {duration: 3000});

@@ -1,0 +1,43 @@
+<div class="filter-block">
+  <span>Отфильтруй свои события</span> 
+  <img src='../../../assets/outline_close_black_18dp.png' (click)="closeEm()">
+  <div class="date-filter">
+    <span>Даты:</span>
+    <ul>
+      <li>
+      <mat-form-field>
+        <input matInput (dateInput)="changeMinDate($event)" (dateChange)="changeMinDate($event)"
+               [matDatepicker]="picker1" [min]="minDate" [max]="maxDate" 
+               placeholder="Дата начала поисков">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field>
+          <input matInput (dateInput)="changeMaxDate($event)" (dateChange)="changeMaxDate($event)"
+              [matDatepicker]="picker2" [min]="minDate" [max]="maxDate" 
+              placeholder="Дата конца поисков">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </li>
+    </ul>
+  </div>
+
+  <div class="type-filter">
+    <span>Типы:</span>
+    <ul>
+      <li><mat-checkbox color="primary">Фильмы</mat-checkbox></li>
+      <li><mat-checkbox color="primary">Театры</mat-checkbox></li>
+      <li><mat-checkbox color="primary">Спросить какие еще могут быть</mat-checkbox></li>
+      <li><mat-checkbox color="primary">Просто пустой</mat-checkbox></li>
+    </ul>
+  </div>
+
+  <div class="place-filter">
+      <mat-checkbox #coordFilter (click)="coordFilterChange(coordFilter.checked)" color="primary">Фильтровать по месту на карте</mat-checkbox>
+  </div>
+
+  <button mat-raised-button color="primary">Показать</button>
+</div>

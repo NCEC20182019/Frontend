@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { IEvent } from '../../models/ievent';
 import { DataService } from 'src/app/services/data.service';
 import { Observable } from "rxjs";
@@ -11,18 +11,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MapViewComponent implements OnInit {
 
-  @Output() Events: Observable<IEvent[]>;
+  @Output() filter;
+  @Output() Events: IEvent[];
   // @Output() INITIAL_DELAY: number = 850;
 
   private spinner: boolean = true;
+  private Filter: boolean = false;
   markerPlaced = new EventEmitter();
 
   constructor(private data: DataService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.getEvents();
-    this.Events.subscribe(() => this.spinner=false,
-                          () => this.spinner=false);
   }
 
   getEvents(){
@@ -39,4 +39,22 @@ export class MapViewComponent implements OnInit {
     this.markerPlaced.emit(event);
   }
 
+  spinnerCheck(){
+    setTimeout(() => {
+      this.spinner = false
+    }, 5000);
+    this.spinner = this.Events.length !== 0;
+  }
+
+  onFilter(){
+    this.Filter = true;
+  }
+  
+  onFilterClose(){
+    this.Filter = false;
+  }
+
+  changeCoordFilter(event){
+    this.filter = event;
+  }
 }

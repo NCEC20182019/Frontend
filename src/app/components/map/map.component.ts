@@ -10,9 +10,9 @@ import { IEvent } from '../../models/ievent';
 })
 export class MapComponent implements OnInit {
 
-  @Input() Events: Observable<any>;
+  @Input() Events: IEvent[];
+  @Input() filter: boolean;
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
-  eventList: IEvent[] = [];
 
   userLocation: ILocation = {
     name: '',
@@ -32,13 +32,8 @@ export class MapComponent implements OnInit {
   constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
-    this.Events.subscribe((data) => {
-      this.eventList = data;
-      this.eventList.forEach(event => {
+    this.Events.forEach(event => {
         event.pic = 'https://picsum.photos/50/50/?random';
-      });
-      console.log(data);
-      this.eventList = data;
     });
 
     if (navigator.geolocation) {

@@ -8,6 +8,16 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class DataService {
+  private Events: IEvent[];
+
+  getEvents(): IEvent[]{
+    this.httpGetEvents();
+    return this.Events;
+  }
+
+  addLocalEvents(events: IEvent[]){
+    this.Events.concat(events);
+  }
   // private _eventsUri = 'http://192.168.1.7:8092/event/'; // -- Integration URL
   private _eventsUri = 'http://localhost:8092/event/'; // -- Integration URL
   // private _eventsUri = "https://7678acb1-b897-4f74-a317-63ae18c493fe.mock.pstmn.io/events"; // -- Mock server
@@ -15,13 +25,25 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getEvents(): Observable<IEvent[]> {
-    return this.http.get<IEvent[]>(this._eventsUri,
+  httpGetEvents() {
+    let count = 0;
+    let patch: IEvent[];
+    this.http.get<IEvent[]>(this._eventsUri,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         })
+      }).subscribe((data)=>{
+        data.forEach(event => {
+          count++;
+          patch.push(event);
+          if(count === 200){
+            this.addLocalEvents(patch);
+            count = 0;
+            patch = [];
+          }
+        });
       });
   }
 

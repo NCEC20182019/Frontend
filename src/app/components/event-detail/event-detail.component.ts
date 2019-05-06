@@ -7,6 +7,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { EventDetailDialogComponent } from '../event-detail-dialog/event-detail-dialog.component';
 import { IEvent } from '../../models/ievent';
 import * as moment from 'moment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-event-detail',
@@ -22,9 +23,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   eventObs: Observable<any> = new Observable();
   // name_location:string;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
     if (this.event) {
@@ -82,5 +85,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         this.save();
       }
     });
+  }
+
+  currentUser(): boolean{
+    return !!this.cookieService.get("token");
   }
 }

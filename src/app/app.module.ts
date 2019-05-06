@@ -6,13 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule, 
          MatFormFieldModule, MatCardModule, MatProgressSpinnerModule, MatInputModule,
-         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDatepickerModule,MatNativeDateModule, MatDialogModule } from '@angular/material';
+         MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, 
+         MatDatepickerModule,MatNativeDateModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
 import {OverlayModule, OverlayContainer, FullscreenOverlayContainer} from '@angular/cdk/overlay';
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SecurityComponent } from './components/security/security.component';
 import { ListComponent } from './components/list/list.component';
@@ -20,7 +20,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { EventlistComponent } from './components/eventlist/eventlist.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { EventViewComponent } from './components/event-view/event-view.component';
-import { OverlayComponent } from './components/overlay/overlay.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EventDetailDialogComponent } from './components/event-detail-dialog/event-detail-dialog.component';
@@ -30,6 +29,8 @@ import { UserPageComponent } from './components/user-page/user-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { FilterComponent } from './components/filter/filter.component';
+import { FilterButtonComponent } from './components/filter-button/filter-button.component';
 
 
 @NgModule({
@@ -37,7 +38,6 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     AppComponent,
     HeaderComponent,
     MapComponent,
-    CalendarComponent,
     NotFoundComponent,
     SecurityComponent,
     ListComponent,
@@ -45,14 +45,15 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     EventlistComponent,
     MapViewComponent,
     EventViewComponent,
-    OverlayComponent,
     EventDetailComponent,
     EventDetailDialogComponent,
     LoginComponent,
     LoginDialogComponent,
     UserPageComponent,
     RegisterPageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    FilterComponent,
+    FilterButtonComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -70,6 +71,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     MatTabsModule,
     MatButtonModule,
     MatBottomSheetModule,
+    MatCheckboxModule,
     MatFormFieldModule,
     MatCardModule,
     MatProgressSpinnerModule,

@@ -21,9 +21,9 @@
             </agm-marker>
 
             <agm-info-window *ngFor="let event of eventList"
-            [latitude]="event.location.latitude" 
-            [longitude]="event.location.longitude"
-            [hidden]="show">
+                            [latitude]="event.location.latitude" 
+                            [longitude]="event.location.longitude"
+                            [hidden]="show">
                 <div [routerLink]="event.id">
                     <img [src]="event.pic">
                 </div>
@@ -45,6 +45,15 @@
                     You placed this marker
                 </agm-info-window>
             </agm-marker>
+
+            <agm-circle *ngIf="filter"  
+                [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 51.6720400" 
+                [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 39.1843000" 
+                [radius]="5000"
+                [fillColor]="'red'"
+                [circleDraggable]="true"
+                [editable]="true">
+            </agm-circle>
 
             <!-- <agm-snazzy-info-window [isOpen]="true" [latitude]="51.673858" [longitude]="7.815982" [closeWhenOthersOpen]="true">
                   My first Snazzy Info Window!
