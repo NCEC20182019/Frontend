@@ -1,21 +1,31 @@
 server:
   port: 8090
 
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          front:
-            authorizationGrantType: authorization_code
-            clientId: client_service
-            clientSecret: clientsecret
-            redirectUriTemplate: "{baseUrl}/login/oauth2/code/{registrationId}"
-        provider:
-          front:
-            token-uri: http://localhost:9999/auth/oauth/token
-            authorizationUri: http://localhost:9999/auth/oauth/authorize
-            user-info-uri: http://localhost:9999/auth/user/me
+#spring:
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          front:
+#            authorizationGrantType: client_credentials
+#            clientId: client_service
+#            clientSecret: clientsecret
+#            redirectUriTemplate: "{baseUrl}/login/oauth2/code/{registrationId}"
+#        provider:
+#          front:
+#            token-uri: http://localhost:9999/auth/oauth/token
+#            authorizationUri: http://localhost:9999/auth/oauth/authorize
+#            user-info-uri: http://localhost:9999/auth/user/me
+
+security:
+  oauth2:
+    client:
+      client-id: client_service
+      client-secret: clientsecret
+      access-token-uri: http://localhost:9999/auth/oauth/token
+      user-authorization-uri: http://localhost:9999/auth/oauth/authorize
+    resource:
+      user-info-uri: http://localhost:9999/auth/user/me
 
 #zuul:
 #  routes:

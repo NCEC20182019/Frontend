@@ -8,7 +8,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class DataService {
-  private Events: IEvent[];
+  private Events: IEvent[] = [];
 
   getEvents(): IEvent[]{
     this.httpGetEvents();
