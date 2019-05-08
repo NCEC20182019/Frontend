@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, Renderer2 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, Renderer2, ViewChild } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ILocation } from '../../models/ilocation';
 import { IEvent } from '../../models/ievent';
+import { AgmCircle } from '@agm/core';
 
 @Component({
   selector: 'app-map',
@@ -13,6 +14,8 @@ export class MapComponent implements OnInit {
   @Input() Events: IEvent[];
   @Input() filter: boolean;
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
+  @ViewChild('coordFilter') myCircle: AgmCircle;
+  @Input() filterSubmit = false;
 
   userLocation: ILocation = {
     name: '',
@@ -29,7 +32,7 @@ export class MapComponent implements OnInit {
   private zoom = 12;
 
 
-  constructor(private renderer: Renderer2) { }
+  constructor() { }
 
   ngOnInit() {
     this.Events.forEach(event => {
@@ -51,5 +54,12 @@ export class MapComponent implements OnInit {
 
     this.markerPlaced.emit(this.currentMarker);
     // console.log(this.currentMarker)
+  }
+
+  getBounds(){
+    console.log("Getbounds called")
+    this.myCircle.getBounds().then((bounds) => {
+      console.log(bounds);
+    })
   }
 }

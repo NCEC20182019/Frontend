@@ -19,18 +19,25 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>('http://localhost:8090/signin', { username, password })
-      .pipe(map(user => {
+  login(username: string, password: string): Observable<any> {
+    let user = {
+      username: username,
+      token: 'sas',
+      firstName: '',
+      lastName: ''
+    }
+    return this.http.post<any>('/signin', { username, password })
+      // .pipe(map(token => {
+        // console.log(token);
+        // user.token = token;
         // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
+        // if (user && user.token) {
+        //   // store user details and jwt token in local storage to keep user logged in between page refreshes
+        //   localStorage.setItem('currentUser', JSON.stringify(user));
+        //   this.currentUserSubject.next(user);
+        // }
 
-        return user;
-      }));
+      // }));
   }
 
   logout() {

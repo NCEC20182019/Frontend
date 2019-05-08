@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { IEvent } from '../../models/ievent';
 import { DataService } from 'src/app/services/data.service';
 import { Observable } from "rxjs";
 import { Router, ActivatedRoute } from '@angular/router';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-map-view',
@@ -11,13 +12,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MapViewComponent implements OnInit {
 
-  @Output() filter;
+  @ViewChild('app-map') mapCmp: MapComponent;
+
+  private filter: boolean;
+  @Output() coordFilter;
   @Output() Events: IEvent[];
   // @Output() INITIAL_DELAY: number = 850;
 
+  @Output() private filterSubmit = false;
   private spinner: boolean = true;
-  private Filter: boolean = false;
   markerPlaced = new EventEmitter();
+
 
   constructor(private data: DataService, private router: Router, private route: ActivatedRoute) {}
 
@@ -26,7 +31,7 @@ export class MapViewComponent implements OnInit {
   }
 
   getEvents(){
-     this.Events = this.data.getEvents();
+     this.Events = this.data.getMockEvents();
   }
 
   /** Method of redirecting to single Event page */
@@ -47,14 +52,19 @@ export class MapViewComponent implements OnInit {
   }
 
   onFilter(){
-    this.Filter = true;
+    this.filter = true;
   }
   
   onFilterClose(){
-    this.Filter = false;
+    this.filter = false;
   }
 
   changeCoordFilter(event){
-    this.filter = event;
+    this.coordFilter = event;
+  }
+
+  onFilterSubmit(){
+    console.log("Submit caught");
+    this.mapCmp.getBounds();
   }
 }

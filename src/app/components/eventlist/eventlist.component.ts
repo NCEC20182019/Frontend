@@ -5,6 +5,7 @@ import { MatTableDataSource, MatTable, MatSort, MatPaginator, MatBottomSheet } f
 import { Observable, from, of } from 'rxjs';
 //import { repeat, skipWhile} from 'rxjs/Operators';
 import {EventDetailComponent } from '../event-detail/event-detail.component';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-eventlist',
@@ -12,8 +13,7 @@ import {EventDetailComponent } from '../event-detail/event-detail.component';
   styleUrls: ['./eventlist.component.scss']
 })
 export class EventlistComponent implements OnInit {
-  @Input() Events: Observable<IEvent[]>;
-  @Input() INITIAL_DELAY: number;
+  @Input() Events: IEvent[];
 
   // Properties for MatTable be working
   public dataSource = new MatTableDataSource<IEvent>();
@@ -26,11 +26,13 @@ export class EventlistComponent implements OnInit {
    * data: Service, which does an http request for list of Events
    * route: Thing for components communication (literally for proper routing)
    * router: Thing that completes routing within this very component  */
-  constructor(private bottomSheet: MatBottomSheet) { }
+  constructor(
+    private bottomSheet: MatBottomSheet
+    ) { }
 
   // Init method
   ngOnInit() {
-    this.Events.subscribe((data: IEvent[]) => this.createTable(data));
+    this.createTable(this.Events);
     // setTimeout(() => this.createTable(), this.INITIAL_DELAY)
   }
 

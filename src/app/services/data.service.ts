@@ -15,8 +15,8 @@ export class DataService {
     return this.Events;
   }
 
-  addLocalEvents(events: IEvent[]){
-    this.Events.concat(events);
+  addLocalEvents(events){
+    this.Events.push(events);
   }
   // private _eventsUri = 'http://192.168.1.7:8092/event/'; // -- Integration URL
   private _eventsUri = 'http://lemmeknow.tk:8092/event/'; // -- Integration URL
@@ -43,12 +43,13 @@ export class DataService {
             count = 0;
             patch = [];
           }
+          setTimeout(() => this.addLocalEvents(patch), 300);
         });
       });
   }
 
-  getMockEvents(): Observable<IEvent[]>{
-    return of([
+  getMockEvents(): IEvent[]{
+    return [
       {
         id: 1,
         title: "title1",
@@ -60,8 +61,8 @@ export class DataService {
         pic: "",
         location: {
           name: 'loc1',
-          ltd: 0,
-          lng: 0
+          ltd: 50.6720400,
+          lng: 38.1843000
         }
       },
       {
@@ -75,8 +76,8 @@ export class DataService {
         pic: "",
         location: {
           name: 'loc2',
-          ltd: 10,
-          lng: 10
+          ltd: 52.6000000,
+          lng: 37.7000000
         }
       },
       {
@@ -94,7 +95,7 @@ export class DataService {
           lng: 100
         }
       },
-    ]);
+    ];
   }
 
   getEvent(_id): Observable<IEvent> {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -24,28 +25,26 @@ public class HomeController {
 
 
   @PostMapping("/signin")
+  @ResponseBody
   public static String login(@RequestBody Map<String, String> credentials) {
-//    String uri = serviceUrl + "/oauth/token" + "?" +
-//      String.format("%s=%s&%s=%s&%s=%s",
-//        "grant_type", "password",
-//        "username", credentials.get("username"),
-//        "password", credentials.get("password"));
-    String uri = serviceUrl + "/oauth/token";
-    Mono<Map> front = WebClient.create().post()
+   String uri = serviceUrl + "/oauth/token" + "?" +
+     String.format("%s=%s&%s=%s&%s=%s",
+       "grant_type", "password",
+       "username", credentials.get("username"),
+       "password", credentials.get("password"));
+    // String uri = serviceUrl + "/oauth/token";
+    Object token = WebClient.create().post()
       .uri(uri)
       .accept(MediaType.APPLICATION_JSON)
-      .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction
-        .clientRegistrationId("front"))
-      .header("Authorization","Basic " +
-        Base64.getEncoder().encodeToString(String.format("%s:%s", credentials.get("username"), credentials.get("password")).getBytes()))
+      // .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction
+      // .clientRegistrationId("front"))
+      .header("Authorization", "Basic " +
+        Base64.getEncoder().encodeToString(String.format("%s:%s", "client_service", "clientsecret").getBytes()))
       .retrieve()
-      .bodyToMono(Map.class);
-
-    String token = front
+      .bodyToMono(Map.class)
       .block()
-      .get("ACCESS_TOKEN")
-      .toString();
+      .get("access_token");
 
-    return token;
+    return (String)token;
   }
 }

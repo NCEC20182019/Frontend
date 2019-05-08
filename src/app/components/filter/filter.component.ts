@@ -12,7 +12,10 @@ export class FilterComponent implements OnInit {
 
   @Output() close = new EventEmitter();
   @Output() coordFilterEvent = new EventEmitter();
+  @Output() submit = new EventEmitter();
+
   coordFilter: boolean = false;
+
 
   constructor() { 
     this.minDate = new Date();
@@ -39,5 +42,10 @@ export class FilterComponent implements OnInit {
   coordFilterChange(checked: boolean){
     this.coordFilter = !checked;
     this.coordFilterEvent.emit(this.coordFilter);
+  }
+
+  onSubmit(){
+    console.log("Submit emit")
+    this.submit.emit();
   }
 }

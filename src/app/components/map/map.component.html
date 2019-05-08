@@ -1,11 +1,12 @@
 <div class="map-container" id="map-container">
-    <agm-map *ngIf="eventList" (mapClick)="onChooseLocation($event)"
+    <agm-map (mapClick)="onChooseLocation($event)"
                                id="map" 
                                [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 51.6720400" 
                                [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 39.1843000" 
                                [zoom]='zoom'
                                >
-            <agm-marker *ngFor="let event of eventList"
+
+            <agm-marker *ngFor="let event of Events"
                         [latitude]="event.location.ltd" 
                         [longitude]="event.location.lng">
 
@@ -20,7 +21,7 @@
 
             </agm-marker>
 
-            <agm-info-window *ngFor="let event of eventList"
+            <agm-info-window *ngFor="let event of Events"
                             [latitude]="event.location.latitude" 
                             [longitude]="event.location.longitude"
                             [hidden]="show">
@@ -46,7 +47,7 @@
                 </agm-info-window>
             </agm-marker>
 
-            <agm-circle *ngIf="filter"  
+            <agm-circle #coordFilter *ngIf="filter"  
                 [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 51.6720400" 
                 [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 39.1843000" 
                 [radius]="5000"

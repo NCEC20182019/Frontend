@@ -35,8 +35,8 @@ export class LoginPageComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required, Validators.email],
-            password: ['', Validators.required]
+            username: [''],
+            password: ['']
         });
 
         // get return url from route parameters or default to '/'
@@ -56,14 +56,17 @@ export class LoginPageComponent implements OnInit {
 
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
-            .pipe(first())
             .subscribe(
-                data => {
+              (token) => {
+                    console.log(token);
                     this.router.navigate([this.returnUrl]);
-                    this.cookieService.set("token", data);
+                    this.cookieService.set("token", token);
+                    this.snackBar.open("Auth completed", "Close", {duration: 3000});
+
                 },
-                error => {
-                    this.snackBar.open("Auth failed", "Close", {duration: 3000});
+              (error) => {
+                  console.log(error);
+                  this.snackBar.open("Auth failed", "Close", {duration: 3000});
                     this.loading = false;
                 });
     }
