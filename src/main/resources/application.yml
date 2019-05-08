@@ -28,14 +28,23 @@ security:
       user-info-uri: http://localhost:9999/auth/user/me
 
 
-#zuul:
-#  routes:
-#    events:
-#      path: /event/**
-#      url: http://localhost:8092/event
-#    notifications:
-#      path: /notifications/**
-#      url: http://localhost:8093/notifications
+zuul:
+  routes:
+    events:
+      path: /event/**
+      url: http://lemmeknow.tk:8092/event
+    notifications:
+      path: /notifications/**
+      url: http://lemmeknow.tk:8093/notifications
+    parser:
+      path: /parser/**
+      url: http://lemmeknow.tk:8094/parser
+    scheduler:
+      path: /scheduler/**
+      url: http://lemmeknow.tk:8095/scheduler
+    security:
+      path: /auth/**
+      url: http://lemmeknow.tk:9999/auth
 
 
 #security:
