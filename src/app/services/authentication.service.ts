@@ -4,13 +4,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../models/user';
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -20,12 +23,12 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Observable<any> {
-    let user = {
-      username: username,
-      token: 'sas',
-      firstName: '',
-      lastName: ''
-    }
+    // let user = {
+    //   username: username,
+    //   token: 'sas',
+    //   firstName: '',
+    //   lastName: ''
+    // }
     return this.http.post<any>('/signin', { username, password })
       // .pipe(map(token => {
         // console.log(token);
@@ -42,7 +45,8 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    // localStorage.removeItem('currentUser');
+    // this.currentUserSubject.next(null);
+    this.cookieService.delete("token");
   }
 }

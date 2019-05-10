@@ -14,7 +14,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { SecurityComponent } from './components/security/security.component';
 import { ListComponent } from './components/list/list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EventlistComponent } from './components/eventlist/eventlist.component';
@@ -31,15 +30,16 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { FilterButtonComponent } from './components/filter-button/filter-button.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 @NgModule({
-  declarations: [
+  declarations:
+  [
     AppComponent,
     HeaderComponent,
     MapComponent,
     NotFoundComponent,
-    SecurityComponent,
     ListComponent,
     FooterComponent,
     EventlistComponent,
@@ -53,7 +53,8 @@ import { FilterButtonComponent } from './components/filter-button/filter-button.
     RegisterPageComponent,
     LoginPageComponent,
     FilterComponent,
-    FilterButtonComponent
+    FilterButtonComponent,
+    LogoutComponent
   ],
   imports: [
     AgmCoreModule.forRoot({

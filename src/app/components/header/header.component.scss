@@ -21,10 +21,10 @@ mat-toolbar{
         color: azure;
     }
 
-    #loginBT{
+    .logBT{
         position: relative;
         right: 0;
-        margin: 10px;
+        margin-left: auto;
     }
 
     app-login{

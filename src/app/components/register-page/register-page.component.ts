@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { PasswordValidation} from "../equalto.validator";
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -33,12 +34,15 @@ export class RegisterPageComponent implements OnInit {
 
   ngOnInit() {
       this.registerForm = this.formBuilder.group({
-          firstName: ['', Validators.required],
-          lastName: ['', Validators.required],
-          username: ['', Validators.required, Validators.email],
-          password: ['', [Validators.required, Validators.minLength(6)]],
-          repeatPassword: ['', [Validators.required, Validators.minLength(6)]]
-      });
+          firstName: ['',[ Validators.required]],
+          lastName: ['', [ Validators.required]],
+          username: ['', [ Validators.required, Validators.email]],
+          password: ['', [ Validators.required, Validators.minLength(6)]],
+          repeatPassword: ['', [ Validators.required, Validators.minLength(6)]]
+      },
+        {
+          validator: PasswordValidation.MatchPassword
+        });
   }
 
   // convenience getter for easy access to form fields
@@ -58,7 +62,6 @@ export class RegisterPageComponent implements OnInit {
           .subscribe(
               data => {
                     this.snackBar.open("Registration succeed", 'Close', {duration: 3000});
-                    console.log(data);
                     this.router.navigate(['/app/login']);
               },
               error => {

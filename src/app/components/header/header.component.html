@@ -2,6 +2,8 @@
   <span (click)="redirectHome()"> {{Title}} </span>
 
   <app-event-detail [title]="'Add'" [event]="emptyEvent"></app-event-detail>
-  <app-login></app-login>
+  <app-login *ngIf="!getToken()" class="logBT"></app-login>
+  <app-logout *ngIf="getToken()" class="logBT"></app-logout>
+
 
 </mat-toolbar>

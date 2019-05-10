@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {  AuthenticationService } from '../../services/authentication.service';
 import { MatSnackBar } from '@angular/material';
@@ -35,8 +34,8 @@ export class LoginPageComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: [''],
-            password: ['']
+            username: ['', [ Validators.required, Validators.email]],
+            password: ['', [ Validators.required]]
         });
 
         // get return url from route parameters or default to '/'
@@ -55,19 +54,17 @@ export class LoginPageComponent implements OnInit {
         }
 
         this.loading = true;
+        console.log("Submitted");
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .subscribe(
               (token) => {
-                    console.log(token);
                     this.router.navigate([this.returnUrl]);
                     this.cookieService.set("token", token);
-                    this.snackBar.open("Auth completed", "Close", {duration: 3000});
-
                 },
               (error) => {
-                  console.log(error);
-                  this.snackBar.open("Auth failed", "Close", {duration: 3000});
+                  // console.log(error);
+                  this.snackBar.open("Bad credentials", "Close", {duration: 3000});
                     this.loading = false;
-                });
-    }
+                }
+            )}
 }

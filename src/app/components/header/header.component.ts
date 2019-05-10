@@ -4,6 +4,7 @@ import { MatBottomSheet } from '@angular/material';
 import { EventDetailComponent } from '../event-detail/event-detail.component';
 import { IEvent } from '../../models/ievent';
 import * as moment from 'moment';
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-header',
@@ -28,8 +29,11 @@ export class HeaderComponent implements OnInit {
     id: 0
   };
 
-  constructor(private router: Router, private bottomSheet: MatBottomSheet,
-              private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private bottomSheet: MatBottomSheet,
+    private route: ActivatedRoute,
+    private cookieService: CookieService) { }
 
   @Input() public currentRoute: ActivatedRoute;
 
@@ -42,5 +46,9 @@ export class HeaderComponent implements OnInit {
 
   redirectHome() {
     this.router.navigate(['']);
+  }
+
+  getToken(){
+    return this.cookieService.get("token");
   }
 }
