@@ -35,7 +35,7 @@ public class HomeController {
     // String uri = serviceUrl + "/oauth/token";
     String encoding = "Basic " +
       Base64.getEncoder().encodeToString(String.format("%s:%s", "client_service", "clientsecret").getBytes());
-    Object token = WebClient.create().post()
+    Map tokenInfo = WebClient.create().post()
       .uri(uri)
       .accept(MediaType.APPLICATION_JSON)
       // .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction
@@ -44,9 +44,10 @@ public class HomeController {
       .header("Content-Type", "application/x-www-form-urlencoded")
       .retrieve()
       .bodyToMono(Map.class)
-      .block()
-      .get("access_token");
+      .block();
 
-    return String.format("{\"token\" : \"%s\"}",(String)token);
+    return String.format("{\"token\" : \"%s\"," +
+      "\"time\" : %s," +
+      "\"refresh\" \"%s\"}", tokenInfo.get("access_token"), tokenInfo.get("expires_in"), tokenInfo.get("refresh_token"));
   }
 }

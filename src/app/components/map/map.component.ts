@@ -14,7 +14,7 @@ export class MapComponent implements OnInit {
   @Input() Events: IEvent[];
   @Input() filter: boolean;
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
-  @ViewChild('coordFilter') myCircle: AgmCircle;
+  @ViewChild('coordFilter') myCircle;
   @Input() filterSubmit = false;
 
   userLocation: ILocation = {
@@ -57,9 +57,17 @@ export class MapComponent implements OnInit {
   }
 
   getBounds(){
-    console.log("Getbounds called")
-    this.myCircle.getBounds().then((bounds) => {
-      console.log(bounds);
-    })
+    if(this.myCircle) {
+      let center: ILocation;
+      center.ltd = this.myCircle.nativeElement.attributes.latitude.value;
+      center.lng = this.myCircle.nativeElement.attributes.longitude.value;
+      let radius: number = this.myCircle.nativeElement.attributes.radius.value;
+      return {
+        center: center,
+        radius: radius
+      }
+    }else{
+      return null;
+    }
   }
 }

@@ -10,8 +10,9 @@ import { User } from '../models/user';
 export class DataService {
   private Events: IEvent[] = [];
 
-  getEvents(): IEvent[]{
-    this.httpGetEvents();
+  getEvents(first: number, count: number, sort: number, filter){
+    this.Events = [];
+    this.httpGetEvents(first, count, sort, filter);
     return this.Events;
   }
 
@@ -24,26 +25,19 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  httpGetEvents() {
-    let count = 0;
-    let patch: IEvent[] = [];
-    this.http.get<IEvent[]>(this._eventsUri,
+  httpGetEvents(first: number, count: number, sort: number, filter) {
+    this.http.post<IEvent[]>(this._eventsUri, {first, count, sort, filter},
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         })
       }).subscribe((data)=>{
-        data.forEach(event => {
-          count++;
-          patch.push(event);
-          if(count === 200){
-            this.addLocalEvents(patch);
-            count = 0;
-            patch = [];
-          }
-          setTimeout(() => this.addLocalEvents(patch), 300);
-        });
+          this.addLocalEvents(data);
+        },
+      (error) => {
+        console.log(error);
+        this.httpGetAllEvents();
       });
   }
 
@@ -150,5 +144,20 @@ export class DataService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     })});
+  }
+
+  private httpGetAllEvents() {
+    this.http.get<IEvent[]>(this._eventsUri,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        })
+      }).subscribe((data)=>{
+        this.addLocalEvents(data);
+      },
+      (error) => {
+        console.log(error);
+      })
   }
 }

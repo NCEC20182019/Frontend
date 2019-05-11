@@ -23,7 +23,6 @@ import { EventDetailComponent } from './components/event-detail/event-detail.com
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EventDetailDialogComponent } from './components/event-detail-dialog/event-detail-dialog.component';
 import { LoginComponent } from './components/login/login.component';
-import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -48,7 +47,6 @@ import { LogoutComponent } from './components/logout/logout.component';
     EventDetailComponent,
     EventDetailDialogComponent,
     LoginComponent,
-    LoginDialogComponent,
     UserPageComponent,
     RegisterPageComponent,
     LoginPageComponent,
@@ -94,7 +92,6 @@ import { LogoutComponent } from './components/logout/logout.component';
   entryComponents: [ 
     MapComponent,
     EventDetailDialogComponent,
-    LoginDialogComponent
   ]
 })
 export class AppModule { }

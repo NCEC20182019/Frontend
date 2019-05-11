@@ -57,9 +57,13 @@ export class LoginPageComponent implements OnInit {
         console.log("Submitted");
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .subscribe(
-              (token) => {
+              (data: {token: string, time: number, refresh: string}) => {
                     this.router.navigate([this.returnUrl]);
-                    this.cookieService.set("token", token);
+                    this.cookieService.set("token", data.token);
+                    this.cookieService.set("refresh", data.refresh);
+                    setTimeout(() => {
+                      this.authenticationService.refreshTokens();
+                    }, data.time - 100)
                 },
               (error) => {
                   // console.log(error);

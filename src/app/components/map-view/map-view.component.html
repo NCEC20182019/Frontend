@@ -1,10 +1,11 @@
 <app-filter-button (filter)="onFilter()"></app-filter-button>
 
 <div class="map-view-outter">
-  <div *ngIf="Events" class="map-view">
-    <app-map (redirect)="redirectTo(event)" [Events]="Events" [filter]="coordFilter" [filterSubmit]="filterSubmit" (markerPlaced)="onMarkerPlaced($event)"></app-map>
-    <app-filter *ngIf="filter" (close)="onFilterClose()" (coordFilterEvent)="changeCoordFilter($event)" (submit)="onFilterSubmit()"></app-filter>
-    <app-eventlist *ngIf="!filter" [Events]="Events"></app-eventlist>
+  <div *ngIf="Events.length" class="map-view">
+    <app-map #map (redirect)="redirectTo($event)" [Events]="Events" [filter]="coordFilter" [filterSubmit]="filterSubmit" (markerPlaced)="onMarkerPlaced($event)"></app-map>
+    <app-filter #filter *ngIf="filter" (close)="onFilterClose()" (coordFilterEvent)="changeCoordFilter($event)" (submit)="onFilterSubmit($event)"></app-filter>
+    <app-eventlist #eventlist *ngIf="!filter" [Events]="Events" (pageChanged)="onPageChanged($event)" [isFiltering]="!filterFormIsEmpty()" (filterCleared)="onFilterCleared()"></app-eventlist>
   </div>
-  <mat-spinner *ngIf="!Events" id="spinner"></mat-spinner>
+  <mat-spinner *ngIf="!Events.length" id="spinner"></mat-spinner>
 </div>
+

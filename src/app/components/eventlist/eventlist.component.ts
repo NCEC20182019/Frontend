@@ -14,6 +14,9 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class EventlistComponent implements OnInit {
   @Input() Events: IEvent[];
+  @Input() isFiltering;
+  @Output() pageChanged = new EventEmitter();
+  @Output() filterCleared = new EventEmitter();
 
   // Properties for MatTable be working
   public dataSource = new MatTableDataSource<IEvent>();
@@ -39,11 +42,19 @@ export class EventlistComponent implements OnInit {
   createTable(data) {
     this.dataSource = new MatTableDataSource<IEvent>(data);
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
     // this.dataSource.data update
   }
 
   openBottomSheet(): void {
     this.bottomSheet.open(EventDetailComponent);
+  }
+
+  onPageChanged(event){
+    this.pageChanged.emit(event);
+  }
+
+  clearFilter() {
+    this.filterCleared.emit();
   }
 }
