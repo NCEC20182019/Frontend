@@ -2,7 +2,7 @@
 
 <div class="map-view-outter">
   <div *ngIf="Events" class="map-view">
-    <app-map (redirect)="redirectTo(event)" [Events]="Events" [filter]="filter" (markerPlaced)="onMarkerPlaced($event)"></app-map>
+    <app-map (redirect)="redirectTo($event)" [Events]="Events" [filter]="filter" (markerPlaced)="onMarkerPlaced($event)"></app-map>
     <app-filter *ngIf="Filter" (close)="onFilterClose()" (coordFilterEvent)="changeCoordFilter($event)"></app-filter>
     <app-eventlist *ngIf="!Filter" [Events]="Events"></app-eventlist>
   </div>
