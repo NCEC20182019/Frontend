@@ -13,15 +13,15 @@ spring:
             redirectUriTemplate: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           front:
-            token-uri: http://localhost:9999/auth/oauth/token
-            authorizationUri: http://localhost:9999/auth/oauth/authorize
-            user-info-uri: http://localhost:9999/auth/user/me
+            token-uri: /auth/oauth/token
+            authorizationUri: /auth/oauth/authorize
+            user-info-uri: /auth/user/me
 
 zuul:
   routes:
     events:
-      path: /event/**
-      url: http://lemmeknow.tk:8092/event
+      path: /events/**
+      url: http://lemmeknow.tk:8092/events
     notifications:
       path: /notifications/**
       url: http://lemmeknow.tk:8093/notifications

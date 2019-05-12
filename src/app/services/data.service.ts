@@ -18,10 +18,10 @@ export class DataService {
   addLocalEvents(events: IEvent[]){
     this.Events.concat(events);
   }
-  private _eventsUri = 'http://192.168.1.7:8092/event/'; // -- Integration URL
+  private _eventsUri = '/events'; // -- Integration URL
   // private _eventsUri = 'http://lemmeknow.tk:8092/event/'; // -- Integration URL
   // private _eventsUri = "https://7678acb1-b897-4f74-a317-63ae18c493fe.mock.pstmn.io/events"; // -- Mock server
-  private _userService = 'http://lemmeknow.tk:9999/auth';
+  private _userService = '/auth';
 
   constructor(private http: HttpClient) { }
 
@@ -119,7 +119,7 @@ export class DataService {
 
   /** PUT: update the event on eventService */
   updateEvent(event, id) {
-    return this.http.put(this._eventsUri + 'update/' + id, event,
+    return this.http.put(this._eventsUri + '/update/' + id, event,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export class DataService {
   }
   /** POST: add a new event to eventService */
   addEvent(event) {
-    return this.http.post(this._eventsUri + 'create', event,
+    return this.http.post(this._eventsUri + '/create', event,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -140,11 +140,11 @@ export class DataService {
 
   /** DELETE: delete event from eventService */
   deleteEvent(_id) {
-    return this.http.delete(this._eventsUri + 'delete/' + _id);
+    return this.http.delete(this._eventsUri + '/delete/' + _id);
   }
 
   registerUser(user: User){
-    return this.http.put('http://localhost:9999/auth/user/put', user, 
+    return this.http.put(this._userService + '/user/put', user,
     {
       headers: new HttpHeaders({
       'Content-Type': 'application/json',
