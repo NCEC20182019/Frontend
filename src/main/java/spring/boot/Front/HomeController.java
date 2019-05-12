@@ -48,6 +48,6 @@ public class HomeController {
 
     return String.format("{\"token\" : \"%s\"," +
       "\"time\" : %s," +
-      "\"refresh\" \"%s\"}", tokenInfo.get("access_token"), tokenInfo.get("expires_in"), tokenInfo.get("refresh_token"));
+      "\"refresh\": \"%s\"}", tokenInfo.get("access_token"), tokenInfo.get("expires_in"), tokenInfo.get("refresh_token"));
   }
 }

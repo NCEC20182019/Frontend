@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -8,6 +8,8 @@ import {CookieService} from "ngx-cookie-service";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+  private _usersUri = 'http://localhost:9999/auth/';
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -52,5 +54,20 @@ export class AuthenticationService {
 
   refreshTokens() {
     //TODO
+  }
+
+  setCurrentUser(token: String) {
+    this.http.get(this._usersUri + "user/me",
+      {
+              headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + token
+              })
+            }
+          )
+      .subscribe((data) =>{
+        console.log(data);
+        })
   }
 }

@@ -9,3 +9,71 @@ height: 250px;
     }
 }
 
+.event-title{
+  margin: 0;
+  font-size: xx-large;
+  font-weight: 400;
+  text-shadow: 0 1px 0 white;
+  padding-top: 10px;
+}
+
+.location-date{
+  margin-bottom: 0;
+  font-size: x-large;
+  font-weight: 400;
+  text-shadow: 0 1px 0 white;
+}
+
+.description{
+  margin: 30px auto;
+  max-height: 30%;
+  overflow-y: auto;
+  width: 90%;
+  text-align: justify;
+}
+
+app-map{
+  width: 98%;
+  height: 300px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.event-info{
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
+  background: white;
+  box-shadow: 0 0 7px rgba(0,0,0,0.4);
+  display: inline-block;
+}
+
+.live-actions {
+  display: inline-block;
+  height: 100%;
+  width: 30%;
+  background: white;
+  box-shadow: 0 0 7px rgba(0,0,0,0.4);
+}
+
+#main{
+  height: 100%;
+}
+h4{
+  margin: 0;
+  font-weight: bold;
+  text-shadow: 0 1px 0 white;
+  padding: 0;
+}
+
+.live-actions-span{
+  margin-right: auto;
+  margin-left: auto;
+  width: auto;
+  display: table !important;
+}
+
+.left-text{
+  padding-left: 10px;
+}

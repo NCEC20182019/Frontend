@@ -16,8 +16,10 @@ export class MapComponent implements OnInit {
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
   @ViewChild('coordFilter') myCircle;
   @Input() filterSubmit = false;
+  @Input() center: String;
 
   userLocation: ILocation = {
+    id: null,
     name: '',
     ltd: 0,
     lng: 0
@@ -48,9 +50,12 @@ export class MapComponent implements OnInit {
   }
 
   onChooseLocation(event) {
-    this.currentMarker =  { ltd: event.coords.lat,
-                            lng: event.coords.lng,
-                            name: '' };
+    this.currentMarker =  {
+      id: null,
+      ltd: event.coords.lat,
+      lng: event.coords.lng,
+      name: ''
+    };
 
     this.markerPlaced.emit(this.currentMarker);
     // console.log(this.currentMarker)
@@ -68,6 +73,24 @@ export class MapComponent implements OnInit {
       }
     }else{
       return null;
+    }
+  }
+
+  whereToCenter() {
+    if(this.center){
+      if(this.center === 'event'){
+        return {ltd: this.Events[0].location.ltd,
+                lng: this.Events[0].location.lng}
+      }else if(this.center === 'user'){
+        return {ltd: this.userLocation.ltd,
+                lng: this.userLocation.lng}
+      }else if(this.center === 'city'){
+        return {ltd:  51.6720400,
+                lng:  39.1843000}
+      }
+    }else{
+      return {ltd: (this.userLocation.ltd || this.userLocation.lng) ? this.userLocation.ltd : this.Events[0] ? this.Events[0].location.ltd : 51.6720400,
+              lng: (this.userLocation.ltd || this.userLocation.lng) ? this.userLocation.lng : this.Events[0] ? this.Events[0].location.lng : 39.1843000}
     }
   }
 }

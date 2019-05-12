@@ -48,12 +48,13 @@ export class MapViewComponent implements OnInit {
   }
 
   getEvents(){
-    if(this.eventlistCmp) {
-      this.Events = this.dataService.getEvents(this.eventlistCmp.paginator.pageIndex * this.eventlistCmp.paginator.pageSize + 1,
-        this.eventlistCmp.paginator.pageSize, 1, this.filterForm);
-    }else{
-      this.Events = this.dataService.getEvents(1,100, 1, this.filterForm);
-    }
+    // if(this.eventlistCmp) {
+    //   this.Events = this.dataService.getEvents(this.eventlistCmp.paginator.pageIndex * this.eventlistCmp.paginator.pageSize + 1,
+    //     this.eventlistCmp.paginator.pageSize, 1, this.filterForm);
+    // }else{
+    //   this.Events = this.dataService.getEvents(1,100, 1, this.filterForm);
+    // }
+    this.Events = this.dataService.getMockEvents();
   }
 
   /** Method of redirecting to single Event page */

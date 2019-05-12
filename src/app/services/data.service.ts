@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, from } from 'rxjs';
 import { IEvent } from '../models/ievent';
 import { User } from '../models/user';
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private Events: IEvent[] = [];
+  public Events: IEvent[] = [];
 
   getEvents(first: number, count: number, sort: number, filter){
     this.Events = [];
@@ -45,17 +46,18 @@ export class DataService {
     return [
       {
         id: 1,
-        title: "title1",
-        type: "String",
-        source_uri: 'http://www.site1.com',
-        description: "String",
-        date_start: "0.0.0",
-        date_end: "1.1.1",
-        pic: "",
+        title: "Фестиваль волшебных шаров — Воронеж",
+        description: "Настоящее волшебство окутает стадион «Динамо» 1 июня: в этот вечер здесь пройдет сказочный фестиваль, на котором сотни волшебных шаров в руках гостей в один миг засияют разноцветными огоньками, создав вокруг особую завораживающую атмосферу.\n\nКроме волшебных шаров с заходом солнца жителей города ждет захватывающее световое представление и выступление музыкальных виртуозов с чарующими композициями.\n\nКстати, волшебные шары по окончании фестиваля зрители смогут забрать с собой: они будут озарять светом дом, еще долго напоминая о чудесном событии. \n\nНачало в 21:00.\n\nСтоимость входа: 100₽ (волшебные шары приобретаются на территории фестиваля).",
+        date_start: "2019-06-01T18:00:00.000+0000",
+        date_end: "2019-06-01T19:30:00.000+0000",
+        source_uri: "https://vk.com/event65334589",
+        type: "Другое",
+        pic: '',
         location: {
-          name: 'loc1',
-          ltd: 50.6720400,
-          lng: 38.1843000
+          id: 15,
+          name: "Фестиваль волшебных шаров — Воронеж",
+          ltd: 51.63344192504883,
+          lng: 39.2305793762207,
         }
       },
       {
@@ -68,6 +70,7 @@ export class DataService {
         date_end: "1.1.1",
         pic: "",
         location: {
+          id: 1,
           name: 'loc2',
           ltd: 52.6000000,
           lng: 37.7000000
@@ -83,6 +86,7 @@ export class DataService {
         date_end: "1.1.1",
         pic: "",
         location: {
+          id: 2,
           name: 'loc3',
           ltd: 100,
           lng: 100
@@ -91,14 +95,24 @@ export class DataService {
     ];
   }
 
-  getEvent(_id): Observable<IEvent> {
-    return this.http.get<IEvent>(this._eventsUri + _id,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        })
+  getEvent(_id): IEvent {
+    if(!this.Events.length){
+      this.Events = this.getMockEvents(); //TODO
+    }
+    let event = this.Events.find((x) => x.id === _id);
+    if(!event) {
+      this.http.get<IEvent>(this._eventsUri + _id,
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          })
+        }).subscribe((data) =>{
+          return data;
       });
+    }else {
+      return event;
+    }
   }
 
   getRandomPic(): Observable<any> {

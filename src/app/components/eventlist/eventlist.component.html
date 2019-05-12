@@ -20,8 +20,7 @@
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef class="header"> Events <button [disabled]="!isFiltering" mat-button (click)="clearFilter()" class="clear-filter"> Clear filter </button></th>
         <td mat-cell *matCellDef="let event"> 
-          <span routerLink="{{event.id}}" class="link"> {{ event.title }} </span>
-          <app-event-detail [title]="'Edit'" [event]="event"></app-event-detail>
+          <span [routerLink]="event.id"  class="link"> {{ event.title }} </span>
         </td>
       </ng-container>
   

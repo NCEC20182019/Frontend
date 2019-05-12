@@ -61,12 +61,13 @@ export class LoginPageComponent implements OnInit {
                     this.router.navigate([this.returnUrl]);
                     this.cookieService.set("token", data.token);
                     this.cookieService.set("refresh", data.refresh);
+                    this.authenticationService.setCurrentUser(data.token);
                     setTimeout(() => {
                       this.authenticationService.refreshTokens();
                     }, data.time - 100)
                 },
               (error) => {
-                  // console.log(error);
+                  console.log(error);
                   this.snackBar.open("Bad credentials", "Close", {duration: 3000});
                     this.loading = false;
                 }
