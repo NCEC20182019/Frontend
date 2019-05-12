@@ -10,7 +10,7 @@ export class SubscriptionService {
 
   constructor(private http: HttpClient) { }
 
-  private notificationUri = 'http://192.168.1.7:8093/notifications';
+  private notificationUri = 'http://localhost:8093/notifications';
 
   private headers = {
     headers: new HttpHeaders({

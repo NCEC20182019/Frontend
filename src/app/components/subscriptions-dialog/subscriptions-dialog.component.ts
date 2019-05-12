@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import {Subscription} from "../../models/subscription";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-subscriptions-dialog',
@@ -17,7 +18,6 @@ export class SubscriptionsDialogComponent implements OnInit {
   typeSubs = [];
   areaSubs: Subscription[] = [];
 
-  hiddenSub = true;
   forDelete = [];
   forToggle: any[] = [];
   forAreasUpdate = new Set();
@@ -25,7 +25,8 @@ export class SubscriptionsDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<SubscriptionsDialogComponent>,
-    private subscriptionService: SubscriptionService) {
+    private subscriptionService: SubscriptionService,
+    private route: ActivatedRoute) {
 
     this.form = this.fb.group({
       subscriptions: new FormArray([]),
@@ -35,7 +36,9 @@ export class SubscriptionsDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscriptionService.getSubscriptions(1).subscribe(
+    const user_id = this.route.snapshot.paramMap.get('id');
+    // TODO remove user_id mockup
+    this.subscriptionService.getSubscriptions(user_id ? user_id : 1).subscribe(
       (subs) => {
         subs.forEach((sub) => {
           if (sub.eventId) {
@@ -47,7 +50,7 @@ export class SubscriptionsDialogComponent implements OnInit {
            }
         });
         this.addCheckboxes();
-        console.log("init areaSubs", this.areaSubs);
+        // console.log("init areaSubs", this.areaSubs);
       }
     );
   }
@@ -73,12 +76,12 @@ export class SubscriptionsDialogComponent implements OnInit {
     // unsubscribe form subs
     if (this.forDelete.length > 0) {
       console.log("forDelete", this.forDelete);
-      // this.subscriptionService.deleteSubscriptions(this.forDelete);
+      this.subscriptionService.deleteSubscriptions(this.forDelete);
     }
     // toggle subs
     if (this.forToggle.length > 0) {
       console.log("forToggle", this.forToggle);
-      // this.subscriptionService.toggleSubscriptions(this.forToggle);
+      this.subscriptionService.toggleSubscriptions(this.forToggle);
     }
     // update areas
     if (this.forAreasUpdate.size > 0) {
