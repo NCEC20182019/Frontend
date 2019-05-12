@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AgmCoreModule } from '@agm/core';
-import { AgmSnazzyInfoWindowModule } from "@agm/snazzy-info-window";
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule, 
          MatFormFieldModule, MatCardModule, MatProgressSpinnerModule, MatInputModule,
          MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, 
-         MatDatepickerModule,MatNativeDateModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
+         MatDatepickerModule,MatNativeDateModule, MatDialogModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 import {OverlayModule, OverlayContainer, FullscreenOverlayContainer} from '@angular/cdk/overlay';
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,11 +30,12 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { FilterComponent } from './components/filter/filter.component';
 import { FilterButtonComponent } from './components/filter-button/filter-button.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
+import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/subscriptions-dialog.component';
 
 
 @NgModule({
-  declarations:
-  [
+  declarations: [
     AppComponent,
     HeaderComponent,
     MapComponent,
@@ -52,7 +53,9 @@ import { LogoutComponent } from './components/logout/logout.component';
     LoginPageComponent,
     FilterComponent,
     FilterButtonComponent,
-    LogoutComponent
+    LogoutComponent,
+    SubscriptionsComponent,
+    SubscriptionsDialogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -79,6 +82,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatIconModule,
     OverlayModule,
     FormsModule,
     ReactiveFormsModule
@@ -89,9 +93,11 @@ import { LogoutComponent } from './components/logout/logout.component';
     CookieService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ 
+  entryComponents: [
     MapComponent,
     EventDetailDialogComponent,
+    LoginDialogComponent,
+    SubscriptionsDialogComponent
   ]
 })
 export class AppModule { }

@@ -22,17 +22,16 @@ security:
     client:
       client-id: client_service
       client-secret: clientsecret
-      access-token-uri: http://localhost:9999/auth/oauth/token
-      user-authorization-uri: http://localhost:9999/auth/oauth/authorize
+      access-token-uri: /auth/oauth/token
+      user-authorization-uri: /auth/oauth/authorize
     resource:
-      user-info-uri: http://localhost:9999/auth/user/me
-
+      user-info-uri: /auth/user/me
 
 zuul:
   routes:
     events:
-      path: /event/**
-      url: http://lemmeknow.tk:8092/event
+      path: /events/**
+      url: http://lemmeknow.tk:8092/events
     notifications:
       path: /notifications/**
       url: http://lemmeknow.tk:8093/notifications

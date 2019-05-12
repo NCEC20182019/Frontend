@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Your Subscriptions</h1>
+<div mat-dialog-content [formGroup]="form">
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Subs">
+        <ng-template matTabContent>
+          <ng-container formArrayName="subscriptions">            
+            <div *ngFor="let sub of eventSubs; let i = index">
+              <div *ngIf="!isHidden(sub.id)"> 
+                <mat-checkbox [formControlName]="i" (change)="onToggle(sub.id, $event)">{{sub.name}}</mat-checkbox>
+                <mat-icon (click)="deleteSub(sub.id)">delete</mat-icon>
+              </div>
+            </div>
+          </ng-container>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Types">
+      <ng-template matTabContent>
+        <ng-container formArrayName="types">
+          <div *ngFor="let sub of typeSubs; let i = index">
+            <div *ngIf="!isHidden(sub.id)">
+              <mat-checkbox [formControlName]="i" (change)="onToggle(sub.id, $event)">{{sub.name}}  {{sub.type}}</mat-checkbox>
+              <mat-icon (click)="deleteSub(sub.id)">delete</mat-icon>
+            </div>
+          </div>
+          </ng-container>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Areas">
+      <ng-template matTabContent>
+        <app-map [areas]="areaSubs" (areaChange)="changeAreasOnMap($event)"></app-map>
+        <ng-container formArrayName="areas">
+          <div class="areaCheckbox">
+            <div *ngFor="let ar of areaSubs; let i = index">
+              <div *ngIf="!isHidden(ar.id)">
+                <mat-checkbox style="margin-right: 8px" [formControlName]="i" (change)="onToggle(ar.id, $event)"></mat-checkbox><a style="cursor: pointer" (click)="showArea(ar.id)" title="show area">{{ar.name}}</a>
+                <mat-icon (click)="deleteSub(ar.id)">delete</mat-icon>
+              </div>
+            </div>
+          </div>
+          </ng-container>
+      </ng-template>
+    </mat-tab>    
+  </mat-tab-group>  
+</div> 
+<div mat-dialog-actions id="buttons">
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button mat-primary (click)="save()">Save</button>
+</div>

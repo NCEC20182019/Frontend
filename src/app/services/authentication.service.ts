@@ -8,7 +8,7 @@ import {CookieService} from "ngx-cookie-service";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private _usersUri = 'http://localhost:9999/auth/';
+  private _usersUri = '/auth';
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
@@ -57,7 +57,7 @@ export class AuthenticationService {
   }
 
   setCurrentUser(token: String) {
-    this.http.get(this._usersUri + "user/me",
+    this.http.get(this._usersUri + "/user/me",
       {
               headers: new HttpHeaders({
                 'Content-Type': 'application/json',

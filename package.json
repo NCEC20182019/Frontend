@@ -30,14 +30,14 @@
     "help": "^3.0.2",
     "moment": "^2.24.0",
     "ngx-cookie-service": "^2.1.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.12.0",
     "rxjs": "~6.3.3",
     "rxjs-observable-store": "^1.0.1",
     "snazzy-info-window": "^1.1.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.13.3",
+    "@angular-devkit/build-angular": "^0.13.9",
     "@angular/cli": "~7.3.3",
     "@angular/compiler-cli": "^7.2.6",
     "@angular/language-service": "~7.0.0",

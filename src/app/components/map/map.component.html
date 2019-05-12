@@ -46,7 +46,7 @@
                 </agm-info-window>
             </agm-marker>
 
-            <agm-circle #coordFilter *ngIf="filter"  
+            <agm-circle #coordFilter *ngIf="filter"
                 [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd  : 51.6720400"
                 [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : 39.1843000"
                 [radius]="5000"
@@ -55,6 +55,20 @@
                 [editable]="true">
             </agm-circle>
 
+            <div *ngFor="let ar of areas; let i = index">
+                <agm-circle
+                *ngIf="ar.enabled"
+                [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius * 1000"
+                [fillColor]="'red'"
+                [circleDraggable]="false"
+                [editable]="true"
+                (radiusChange)="onCircleChangeRadius(ar.id, $event)"
+                (centerChange)="onCircleChangeCenter(ar.id, $event)">
+                    <agm-info-window [isOpen]="true">
+                        {{ar.name}}
+                    </agm-info-window>
+                </agm-circle>
+            </div>
             <!-- <agm-snazzy-info-window [isOpen]="true" [latitude]="51.673858" [longitude]="7.815982" [closeWhenOthersOpen]="true">
                   My first Snazzy Info Window!
               </agm-snazzy-info-window> -->
