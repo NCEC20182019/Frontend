@@ -45,6 +45,8 @@ zuul:
       path: /auth/**
       url: http://lemmeknow.tk:9999/auth
 
+zuul.include-debug-header: true
+
 
 #security:
 #  oauth2:
