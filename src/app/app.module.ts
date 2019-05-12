@@ -96,7 +96,6 @@ import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/
   entryComponents: [
     MapComponent,
     EventDetailDialogComponent,
-    LoginDialogComponent,
     SubscriptionsDialogComponent
   ]
 })
