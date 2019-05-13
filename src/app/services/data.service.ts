@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, from } from 'rxjs';
 import { IEvent } from '../models/ievent';
 import { User } from '../models/user';
-import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +10,24 @@ import {el} from "@angular/platform-browser/testing/src/browser_util";
 export class DataService {
   public Events: IEvent[] = [];
 
-  getEvents(first: number, count: number, sort: number, filter){
+  getEvents(sort: number, filter){
     this.Events = [];
-    this.httpGetEvents(first, count, sort, filter);
+    this.httpGetEvents(sort, filter);
     return this.Events;
   }
 
   addLocalEvents(events){
     this.Events.push(events);
   }
-  // private _eventsUri = 'http://192.168.1.7:8092/event/'; // -- Integration URL
-  private _eventsUri = '/events'; // -- Integration URL
-  private _usersUri = '/auth';
+
+  private _eventsUri = 'http://lemmeknow.tk/events'; // -- Integration URL
+  private _usersUri = 'http://lemmeknow.tk/auth';
+  // private _usersUri = 'http://localhost:9999/auth';
 
   constructor(private http: HttpClient) { }
 
-  httpGetEvents(first: number, count: number, sort: number, filter) {
-    this.http.post<IEvent[]>(this._eventsUri, {first, count, sort, filter},
+  httpGetEvents(sort: number, filter) {
+    this.http.post<IEvent[]>(this._eventsUri, {sort, filter},
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -45,6 +45,7 @@ export class DataService {
   getMockEvents(): IEvent[]{
     return [
       {
+        owner_id: 1,
         id: 1,
         title: "Фестиваль волшебных шаров — Воронеж",
         description: "Настоящее волшебство окутает стадион «Динамо» 1 июня: в этот вечер здесь пройдет сказочный фестиваль, на котором сотни волшебных шаров в руках гостей в один миг засияют разноцветными огоньками, создав вокруг особую завораживающую атмосферу.\n\nКроме волшебных шаров с заходом солнца жителей города ждет захватывающее световое представление и выступление музыкальных виртуозов с чарующими композициями.\n\nКстати, волшебные шары по окончании фестиваля зрители смогут забрать с собой: они будут озарять светом дом, еще долго напоминая о чудесном событии. \n\nНачало в 21:00.\n\nСтоимость входа: 100₽ (волшебные шары приобретаются на территории фестиваля).",
@@ -61,6 +62,7 @@ export class DataService {
         }
       },
       {
+        owner_id: 4,
         id: 2,
         title: "title2",
         type: "String",
@@ -77,6 +79,7 @@ export class DataService {
         }
       },
       {
+        owner_id: null,
         id: 3,
         title: "title3",
         type: "String",

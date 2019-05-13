@@ -5,33 +5,36 @@ import { map } from 'rxjs/operators';
 
 import { User } from '../models/user';
 import {CookieService} from "ngx-cookie-service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private _usersUri = '/auth';
+  // private _usersUri = 'http://localhost:9999/auth'; // - Local
+  private _usersUri = 'http://lemmeknow.tk/auth'; // - Prod
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
+  private returnUrl;
+
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService) {
+    public cookieService: CookieService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || './';
   }
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string): Observable<any> {
-    // let user = {
-    //   username: username,
-    //   token: 'sas',
-    //   firstName: '',
-    //   lastName: ''
-    // }
+  login(username: string, password: string): any {
     return this.http.post<any>('/signin', { username, password })
+  }
       // .pipe(map(token => {
         // console.log(token);
         // user.token = token;
@@ -43,31 +46,24 @@ export class AuthenticationService {
         // }
 
       // }));
-  }
 
   logout() {
     // remove user from local storage to log user out
-    // localStorage.removeItem('currentUser');
-    // this.currentUserSubject.next(null);
     this.cookieService.delete("token");
+    this.cookieService.delete("refresh");
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+    this.router.navigate(["./app/login"]);
   }
 
   refreshTokens() {
     //TODO
   }
 
-  setCurrentUser(token: String) {
-    this.http.get(this._usersUri + "/user/me",
-      {
-              headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + token
-              })
-            }
-          )
-      .subscribe((data) =>{
-        console.log(data);
-        })
+  setCurrentUser(user: User, token: string, refresh: string) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+    this.cookieService.set("token", token);
+    this.cookieService.set("refresh", refresh);
   }
 }

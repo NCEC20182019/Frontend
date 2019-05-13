@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { EventDetailComponent } from '../event-detail/event-detail.component';
 import { IEvent } from '../../models/ievent';
 import * as moment from 'moment';
 import {CookieService} from "ngx-cookie-service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-header',
@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
                       {relativePath: 'calendar', label: 'Calendar View'}];
 
   emptyEvent: IEvent = {
+    owner_id: null,
     title: '',
     description: '',
     date_end: moment().format('YYYY-MM-DDTkk:mm'),
@@ -31,9 +32,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private bottomSheet: MatBottomSheet,
-    private route: ActivatedRoute,
-    private cookieService: CookieService) { }
+    private authService: AuthenticationService) { }
 
   @Input() public currentRoute: ActivatedRoute;
 
@@ -48,7 +47,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  getToken(){
-    return this.cookieService.get("token");
+  loggedIn(){
+    return this.authService.currentUserValue;
   }
 }

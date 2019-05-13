@@ -1,9 +1,8 @@
 <mat-toolbar color="primary">
   <span (click)="redirectHome()"> {{Title}} </span>
 
-  <app-event-detail [title]="'Add'" [event]="emptyEvent"></app-event-detail>
-  <app-login *ngIf="!getToken()" class="logBT"></app-login>
-  <app-logout *ngIf="getToken()" class="logBT"></app-logout>
+  <app-login *ngIf="!loggedIn()" class="logBT"></app-login>
+  <app-logout *ngIf="loggedIn()" class="logBT"></app-logout>
 
   <app-subscriptions ></app-subscriptions>
 

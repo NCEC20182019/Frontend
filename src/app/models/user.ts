@@ -1,7 +1,8 @@
+import {IRole} from "./irole";
+
 export class User {
-  // id: number;
+  id: number;
   username: string;
-  firstName: string;
-  lastName: string;
-  token: string;
+  email: string;
+  roles: IRole[]
 }

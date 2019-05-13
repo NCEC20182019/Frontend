@@ -14,14 +14,11 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ListComponent } from './components/list/list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EventlistComponent } from './components/eventlist/eventlist.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { EventViewComponent } from './components/event-view/event-view.component';
-import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { EventDetailDialogComponent } from './components/event-detail-dialog/event-detail-dialog.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
@@ -40,13 +37,10 @@ import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/
     HeaderComponent,
     MapComponent,
     NotFoundComponent,
-    ListComponent,
     FooterComponent,
     EventlistComponent,
     MapViewComponent,
     EventViewComponent,
-    EventDetailComponent,
-    EventDetailDialogComponent,
     LoginComponent,
     UserPageComponent,
     RegisterPageComponent,
@@ -95,7 +89,6 @@ import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/
   bootstrap: [AppComponent],
   entryComponents: [
     MapComponent,
-    EventDetailDialogComponent,
     SubscriptionsDialogComponent
   ]
 })

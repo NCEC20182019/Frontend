@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {  AuthenticationService } from '../../services/authentication.service';
 import { MatSnackBar } from '@angular/material';
-import { CookieService } from 'ngx-cookie-service';
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-login-page',
@@ -16,7 +16,7 @@ export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;
     loading = false;
     submitted = false;
-    returnUrl: string;
+    returnUrl: string = "/";
 
     constructor(
         private formBuilder: FormBuilder,
@@ -24,7 +24,6 @@ export class LoginPageComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private snackBar: MatSnackBar,
-        private cookieService: CookieService
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) { 
@@ -37,39 +36,34 @@ export class LoginPageComponent implements OnInit {
             username: ['', [ Validators.required, Validators.email]],
             password: ['', [ Validators.required]]
         });
-
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     // convenience getter for easy access to form fields
     get f() { return this.loginForm.controls; }
 
     onSubmit() {
-        this.submitted = true;
+      this.submitted = true;
 
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
+      // stop here if form is invalid
+      if (this.loginForm.invalid) {
+        return;
+      }
+
+      this.loading = true;
+      this.authenticationService.login(this.f.username.value, this.f.password.value)
+        .subscribe(
+        (data: {token: string, time: number, refresh: string, user: User}) => {
+          this.authenticationService.setCurrentUser(data.user, data.token , data.refresh);
+          this.router.navigate([this.returnUrl]);
+          setTimeout(() => {
+            this.authenticationService.refreshTokens();
+          }, data.time - 100);
+        },
+        (error) => {
+          this.loading = false;
+          console.log(error);
+          this.snackBar.open("Bad credentials", "Close", {duration: 3000})
         }
-
-        this.loading = true;
-        console.log("Submitted");
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
-            .subscribe(
-              (data: {token: string, time: number, refresh: string}) => {
-                    this.router.navigate([this.returnUrl]);
-                    this.cookieService.set("token", data.token);
-                    this.cookieService.set("refresh", data.refresh);
-                    this.authenticationService.setCurrentUser(data.token);
-                    setTimeout(() => {
-                      this.authenticationService.refreshTokens();
-                    }, data.time - 100)
-                },
-              (error) => {
-                  console.log(error);
-                  this.snackBar.open("Bad credentials", "Close", {duration: 3000});
-                    this.loading = false;
-                }
-            )}
+      );
+    }
 }
