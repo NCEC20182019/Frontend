@@ -59,7 +59,7 @@
                 *ngIf="ar.enabled"
                 [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius * 1000"
                 [fillColor]="'red'"
-                [circleDraggable]="false"
+                [circleDraggable]="true"
                 [editable]="true"
                 (radiusChange)="onCircleChangeRadius(ar.id, $event)"
                 (centerChange)="onCircleChangeCenter(ar.id, $event)">

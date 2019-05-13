@@ -59,6 +59,9 @@ export class MapComponent implements OnInit {
     // console.log(this.currentMarker)
     // console.log(this.circle);
   }
+  mockup(event){
+    console.log(event);
+  }
   onCircleChangeRadius(arId, $event) {
     // const index = this.emitAreas.findIndex(a => a.arId === arId);
     // if (index >= 0) {
@@ -72,17 +75,13 @@ export class MapComponent implements OnInit {
     //   });
     // }
 
-
-      console.log("trigger change radius", $event);
-      const radius = typeof $event === 'number' ? $event : null;
-      this.areaChange.emit({
-        arId: arId,
-        ltd: null,
-        lng: null,
-        radius: radius
-      });
-
-    // console.log(this.emitAreas);
+    const r = typeof $event === 'number' ? $event : null;
+    this.areaChange.emit({
+      arId: arId,
+      ltd: null,
+      lng: null,
+      radius: r
+    });
   }
   onCircleChangeCenter(arId, $event) {
     // const index = this.emitAreas.findIndex(a => a.arId === arId);

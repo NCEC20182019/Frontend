@@ -1,44 +1,51 @@
 <h1 mat-dialog-title>Your Subscriptions</h1>
-<div mat-dialog-content [formGroup]="form">
+<div mat-dialog-content class="dialog-content"> <!--[formGroup]="form"-->
   <mat-tab-group animationDuration="0ms">
     <mat-tab label="Subs">
         <ng-template matTabContent>
-          <ng-container formArrayName="subscriptions">            
-            <div *ngFor="let sub of eventSubs; let i = index">
-              <div *ngIf="!isHidden(sub.id)"> 
-                <mat-checkbox [formControlName]="i" (change)="onToggle(sub.id, $event)">{{sub.name}}</mat-checkbox>
-                <mat-icon (click)="deleteSub(sub.id)">delete</mat-icon>
-              </div>
+            <div *ngFor="let sub of eventSubs;">
+                <mat-slide-toggle style="margin-right: 8px" [aria-label]="sub.name" [checked]="sub.enabled" (change)="onToggle(sub.id, $event)"></mat-slide-toggle>
+                <a href="/app/events/{{sub.eventId}}">{{sub.name}}</a>
+                <mat-icon style="cursor: pointer" (click)="deleteSub(sub)">delete</mat-icon>
             </div>
-          </ng-container>
         </ng-template>
     </mat-tab>
     <mat-tab label="Types">
       <ng-template matTabContent>
-        <ng-container formArrayName="types">
-          <div *ngFor="let sub of typeSubs; let i = index">
-            <div *ngIf="!isHidden(sub.id)">
-              <mat-checkbox [formControlName]="i" (change)="onToggle(sub.id, $event)">{{sub.name}}  {{sub.type}}</mat-checkbox>
-              <mat-icon (click)="deleteSub(sub.id)">delete</mat-icon>
-            </div>
-          </div>
-          </ng-container>
+        <mat-form-field *ngIf="typeList.length !== 0">
+          <mat-select placeholder="Create new subscriptions" multiple (selectionChange)="onNewTypeSelect($event)">
+            <!--<mat-select-trigger>-->
+              <!--{{typesToSubscribe.value ? typesToSubscribe.value[0] : ''}}-->
+              <!--<span *ngIf="typesToSubscribe.value?.length > 1" class="example-additional-selection">-->
+                <!--(+{{typesToSubscribe.value.length - 1}} {{typesToSubscribe.value?.length === 2 ? 'other' : 'others'}})-->
+              <!--</span>-->
+            <!--</mat-select-trigger>-->
+            <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngFor="let sub of typeSubs; let i = index">
+          <mat-slide-toggle style="margin-right: 8px" [disabled]="!sub.id" [aria-label]="sub.name" [checked]="sub.enabled" (change)="onToggle(sub, $event)"></mat-slide-toggle>
+          {{sub.type}}
+          <mat-icon style="cursor: pointer" (click)="deleteSub(sub)">delete</mat-icon>
+        </div>
       </ng-template>
     </mat-tab>
     <mat-tab label="Areas">
-      <ng-template matTabContent>
-        <app-map [areas]="areaSubs" (areaChange)="changeAreasOnMap($event)"></app-map>
-        <ng-container formArrayName="areas">
-          <div class="areaCheckbox">
-            <div *ngFor="let ar of areaSubs; let i = index">
-              <div *ngIf="!isHidden(ar.id)">
-                <mat-checkbox style="margin-right: 8px" [formControlName]="i" (change)="onToggle(ar.id, $event)"></mat-checkbox><a style="cursor: pointer" (click)="showArea(ar.id)" title="show area">{{ar.name}}</a>
-                <mat-icon (click)="deleteSub(ar.id)">delete</mat-icon>
+
+        <ng-template matTabContent>
+          <div class="areaTab">
+            <span class="mat-hint hint">Для создания новой области - кликните по карте, и введите название!</span>
+          <app-map [areas]="areaSubs" (areaChange)="changeAreasOnMap($event)"></app-map>
+            <div class="areaSubList">
+              <div *ngFor="let sub of areaSubs">
+                <mat-slide-toggle style="margin-right: 8px" [disabled]="!sub.id" [aria-label]="sub.name" [checked]="sub.enabled" (change)="onToggle(sub, $event)"></mat-slide-toggle>
+                {{sub.name}}
+                <mat-icon (click)="deleteSub(sub)">delete</mat-icon>
               </div>
             </div>
           </div>
-          </ng-container>
-      </ng-template>
+        </ng-template>
+
     </mat-tab>    
   </mat-tab-group>  
 </div> 
