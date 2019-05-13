@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ILocation } from '../../models/ilocation';
 import { IEvent } from '../../models/ievent';
 import {AgmCircle} from "@agm/core";
+import {Subscription} from "../../models/subscription";
 
 @Component({
   selector: 'app-map',
@@ -13,10 +14,9 @@ export class MapComponent implements OnInit {
 
   @Input() Events: IEvent[];
   @Input() filter: boolean;
-  @Input() areas: any[];
+  @Input() areas: Subscription[];
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
-  @Output() areaChange: EventEmitter<any> = new EventEmitter();
-  private emitAreas: any[] = [];
+  @Output() areaChange: EventEmitter<Subscription[]> = new EventEmitter();
 
   userLocation: ILocation = {
     name: '',
@@ -59,52 +59,65 @@ export class MapComponent implements OnInit {
     // console.log(this.currentMarker)
     // console.log(this.circle);
   }
-  mockup(event){
-    console.log(event);
-  }
-  onCircleChangeRadius(arId, $event) {
-    // const index = this.emitAreas.findIndex(a => a.arId === arId);
-    // if (index >= 0) {
-    //   this.emitAreas[index].radius = typeof $event === 'number' ? $event: null;
-    // } else {
-    //   this.emitAreas.push({
-    //     arId: arId,
-    //     ltd: null,
-    //     lng: null,
-    //     radius: typeof $event === 'number' ? $event: null
-    //   });
-    // }
 
-    const r = typeof $event === 'number' ? $event : null;
-    this.areaChange.emit({
-      arId: arId,
-      ltd: null,
-      lng: null,
-      radius: r
-    });
-  }
-  onCircleChangeCenter(arId, $event) {
-    // const index = this.emitAreas.findIndex(a => a.arId === arId);
-    // if (index >= 0) {
-    //   this.emitAreas[index].ltd = $event.lat ? $event.lat : null;
-    //   this.emitAreas[index].lng = $event.lng ? $event.lng : null;
-    // } else {
-    //   this.emitAreas.push({
-    //     arId: arId,
-    //     ltd: $event.lat ? $event.lat : null,
-    //     lng: $event.lng ? $event.lng : null,
-    //     radius: null
-    //   });
-    // }
-
-    //console.log("trigger change center", $event);
-    this.areaChange.emit({
-      arId: arId,
-      ltd: $event.lat ? $event.lat : null,
-      lng: $event.lng ? $event.lng : null,
-      radius: null
+  onCreateArea($event) {
+    this.areas.push({
+      id: null,
+      userId: null,
+      eventId: null,
+      type: null,
+      radius: 1,
+      latitude: $event.coords.lat,
+      longitude: $event.coords.lng,
+      enabled: true,
+      name: null
     });
 
-    // console.log(this.emitAreas);
   }
+
+  // onCircleChangeRadius(arId, $event) {
+  //   // const index = this.emitAreas.findIndex(a => a.arId === arId);
+  //   // if (index >= 0) {
+  //   //   this.emitAreas[index].radius = typeof $event === 'number' ? $event: null;
+  //   // } else {
+  //   //   this.emitAreas.push({
+  //   //     arId: arId,
+  //   //     ltd: null,
+  //   //     lng: null,
+  //   //     radius: typeof $event === 'number' ? $event: null
+  //   //   });
+  //   // }
+  //
+  //   const r = typeof $event === 'number' ? $event : null;
+  //   this.areaChange.emit({
+  //     arId: arId,
+  //     ltd: null,
+  //     lng: null,
+  //     radius: r
+  //   });
+  // }
+  // onCircleChangeCenter(arId, $event) {
+  //   // const index = this.emitAreas.findIndex(a => a.arId === arId);
+  //   // if (index >= 0) {
+  //   //   this.emitAreas[index].ltd = $event.lat ? $event.lat : null;
+  //   //   this.emitAreas[index].lng = $event.lng ? $event.lng : null;
+  //   // } else {
+  //   //   this.emitAreas.push({
+  //   //     arId: arId,
+  //   //     ltd: $event.lat ? $event.lat : null,
+  //   //     lng: $event.lng ? $event.lng : null,
+  //   //     radius: null
+  //   //   });
+  //   // }
+  //
+  //   //console.log("trigger change center", $event);
+  //   this.areaChange.emit({
+  //     arId: arId,
+  //     ltd: $event.lat ? $event.lat : null,
+  //     lng: $event.lng ? $event.lng : null,
+  //     radius: null
+  //   });
+  //
+  //   // console.log(this.emitAreas);
+  // }
 }

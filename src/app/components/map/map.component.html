@@ -1,8 +1,8 @@
 <div class="map-container" id="map-container">
-    <agm-map (mapClick)="onChooseLocation($event)"
+    <agm-map (mapClick)="onChooseLocation($event); onCreateArea($event)"
                                id="map" 
-                               [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : Events ? Events[0].location.latitude : 51.6720400" 
-                               [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : Events ? Events[0].location.longitude : 39.1843000" 
+                               [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : Events ? Events[0].location.ltd : 51.6720400"
+                               [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : Events ? Events[0].location.lng : 39.1843000"
                                [zoom]="zoom"
                                >
             <agm-marker *ngFor="let event of Events"
@@ -21,8 +21,8 @@
             </agm-marker>
 
             <agm-info-window *ngFor="let event of Events"
-                            [latitude]="event.location.latitude" 
-                            [longitude]="event.location.longitude"
+                            [latitude]="event.location.ltd"
+                            [longitude]="event.location.lng"
                             [hidden]="show">
                 <div [routerLink]="event.id">
                     <img [src]="event.pic">
@@ -46,23 +46,21 @@
             </agm-marker>
 
             <agm-circle *ngIf="filter"  
-                [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : Events ? Events[0].location.latitude : 51.6720400" 
-                [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : Events ? Events[0].location.longitude : 39.1843000" 
+                [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : Events ? Events[0].location.ltd : 51.6720400"
+                [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : Events ? Events[0].location.lng : 39.1843000"
                 [radius]="5000"
                 [fillColor]="'red'"
                 [circleDraggable]="true"
                 [editable]="true">
             </agm-circle>
 
-            <div *ngFor="let ar of areas; let i = index">
+            <div *ngFor="let ar of areas;">
                 <agm-circle
                 *ngIf="ar.enabled"
                 [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius * 1000"
                 [fillColor]="'red'"
                 [circleDraggable]="true"
-                [editable]="true"
-                (radiusChange)="onCircleChangeRadius(ar.id, $event)"
-                (centerChange)="onCircleChangeCenter(ar.id, $event)">
+                [editable]="true">
                     <agm-info-window [isOpen]="true">
                         {{ar.name}}
                     </agm-info-window>

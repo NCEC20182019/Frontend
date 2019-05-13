@@ -48,4 +48,8 @@ export class SubscriptionService {
   getTypes() {
     return this.http.get<{id: number, type: string}[]>(this.eventUri + '/types', this.headers);
   }
+
+  updatesAndCreate(subs: any[]) {
+    return this.http.post(this.notificationUri + '/update/and/create', subs, this.headers);
+  }
 }

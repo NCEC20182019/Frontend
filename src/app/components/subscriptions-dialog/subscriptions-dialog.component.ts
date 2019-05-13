@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import {MatDialogRef, MatSelectChange, MatSnackBar} from '@angular/material';
+import {MatDialogRef, MatSelectChange, MatSnackBar, MatTabChangeEvent} from '@angular/material';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import {Subscription} from "../../models/subscription";
 import {ActivatedRoute} from "@angular/router";
@@ -25,12 +25,11 @@ export class SubscriptionsDialogComponent implements OnInit {
   // typesToSubscribe = new FormControl();
   typeList: string[] = [];
 
-  forDelete = [];
   forToggle: any[] = [];
-  forAreasUpdate = new Set();
-  forCreateArea: Subscription[] = [];
+  // forAreasUpdate = new Set();
+  // forCreateArea: Subscription[] = [];
 
-  radius = 0;
+  @ViewChild('tabGroup') tabGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -94,29 +93,41 @@ export class SubscriptionsDialogComponent implements OnInit {
     );
   }
 
-  save() {
-    // unsubscribe form subs
-    if (this.forDelete.length > 0) {
-      // console.log("forDelete", this.forDelete);
-      this.subscriptionService.deleteSubscriptions(this.forDelete);
-    }
-    // toggle subs
-    if (this.forToggle.length > 0) {
-      // console.log("forToggle", this.forToggle);
-      this.subscriptionService.toggleSubscriptions(this.forToggle);
-    }
-    // update areas
-    if (this.forAreasUpdate.size > 0) {
-      this.subscriptionService.updateAreas(this.areaSubs.
-        filter((v, i) => this.forAreasUpdate.has(i))
-      );
-      // console.log("forAreasUpdate", this.areaSubs.
-      //   filter((v, i) => this.forAreasUpdate.has(i))
-      // );
+  save(currentTab) {
+    if (currentTab === 'Types') {
+      this.subscriptionService.updatesAndCreate(this.typeSubs).subscribe();
     }
 
+    if (currentTab === 'Areas') {
+      this.subscriptionService.updatesAndCreate(this.areaSubs).subscribe();
+    }
+
+    if (currentTab === 'Events')
+    {
+      this.subscriptionService.updatesAndCreate(this.eventSubs).subscribe();
+    }
+    // unsubscribe form subs
+    // if (this.forDelete.length > 0) {
+    //   // console.log("forDelete", this.forDelete);
+    //   this.subscriptionService.deleteSubscriptions(this.forDelete);
+    // }
+    // // toggle subs
+    // if (this.forToggle.length > 0) {
+    //   // console.log("forToggle", this.forToggle);
+    //   this.subscriptionService.toggleSubscriptions(this.forToggle);
+    // }
+    // // update areas
+    // if (this.forAreasUpdate.size > 0) {
+    //   this.subscriptionService.updateAreas(this.areaSubs.
+    //     filter((v, i) => this.forAreasUpdate.has(i))
+    //   );
+    //   // console.log("forAreasUpdate", this.areaSubs.
+    //   //   filter((v, i) => this.forAreasUpdate.has(i))
+    //   // );
+    // }
+
     // save new typeSubs
-    this.close();
+    // this.close();
   }
 
   deleteSub(sub) {
@@ -149,21 +160,30 @@ export class SubscriptionsDialogComponent implements OnInit {
       duration: 2000,
     });
   }
+
   onToggle(sub, $event) {
     if (sub.id) {
       if (sub.radius) {
         this.areaSubs[this.areaSubs.findIndex( a => a.id === sub.id)].enabled = $event.checked;
       }
-      const obj = {subId: sub.id, isEnable: $event.checked};
-      const index = this.forToggle.findIndex(o => o.subId === obj.subId);
-      if ( index < 0) {
-        this.forToggle.push(obj);
-      } else {
-        this.forToggle.splice(index);
+      if (sub.type) {
+        this.typeSubs[this.typeSubs.findIndex( t => t.id === sub.id)].enabled = $event.checked;
       }
+      if (sub.eventId) {
+        this.eventSubs[this.eventSubs.findIndex( e => e.id === sub.id)].enabled = $event.checked;
+      }
+
+      // const obj = {subId: sub.id, isEnable: $event.checked};
+      // const index = this.forToggle.findIndex(o => o.subId === obj.subId);
+      // if ( index < 0) {
+      //   this.forToggle.push(obj);
+      // } else {
+      //   this.forToggle.splice(index);
+      // }
     }
     // console.log("forToggle: ", this.forToggle);
   }
+
   onNewTypeSelect($event: MatSelectChange){
     // console.log($event);
     $event.value.forEach(t => {
@@ -175,20 +195,26 @@ export class SubscriptionsDialogComponent implements OnInit {
     // console.log(this.typeList);
   }
 
-  changeAreasOnMap($event) {
-    const index = this.areaSubs.findIndex(a => a.id === $event.arId);
-    // if exist
-    if (index >= 0) {
-      // console.log("input", $event);
-      this.areaSubs[index].latitude = $event.ltd ? $event.ltd : this.areaSubs[index].latitude;
-      this.areaSubs[index].longitude = $event.lng ? $event.lng : this.areaSubs[index].longitude;
-      this.areaSubs[index].radius = $event.radius ? $event.radius : this.areaSubs[index].radius;
-
-      this.forAreasUpdate.add(index);
-
-      // console.log("after", this.areaSubs[index]);
-      // console.log("radius", this.radius);
-    }
+  changeAreasOnMap($event: Subscription[]) {
+    this.areaSubs = $event.map(ar => {
+      if (!ar.userId) {
+        ar.userId = this.userId;
+      }
+      return ar;
+    });
+    // const index = this.areaSubs.findIndex(a => a.id === $event.arId);
+    // // if exist
+    // if (index >= 0) {
+    //   // console.log("input", $event);
+    //   this.areaSubs[index].latitude = $event.ltd ? $event.ltd : this.areaSubs[index].latitude;
+    //   this.areaSubs[index].longitude = $event.lng ? $event.lng : this.areaSubs[index].longitude;
+    //   this.areaSubs[index].radius = $event.radius ? $event.radius : this.areaSubs[index].radius;
+    //
+    //   this.forAreasUpdate.add(index);
+    //
+    //   // console.log("after", this.areaSubs[index]);
+    //   // console.log("radius", this.radius);
+    // }
   }
   /**Determines whether the id is in the forDelete array
    * @returns true if id is include
@@ -199,8 +225,16 @@ export class SubscriptionsDialogComponent implements OnInit {
   //   }
   // }
 
+  tabChanged (tabChangeEvent: MatTabChangeEvent) {
+    console.log('tabChangeEvent => ', tabChangeEvent);
+    console.log('index => ', tabChangeEvent.index);
+  }
+
   close() {
     this.dialogRef.close();
   }
 
+  onEnter(i, value: string) {
+        this.areaSubs[i].name = value;
+  }
 }

@@ -1,55 +1,62 @@
 <h1 mat-dialog-title>Your Subscriptions</h1>
 <div mat-dialog-content class="dialog-content"> <!--[formGroup]="form"-->
-  <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Subs">
-        <ng-template matTabContent>
-            <div *ngFor="let sub of eventSubs;">
-                <mat-slide-toggle style="margin-right: 8px" [aria-label]="sub.name" [checked]="sub.enabled" (change)="onToggle(sub.id, $event)"></mat-slide-toggle>
-                <a href="/app/events/{{sub.eventId}}">{{sub.name}}</a>
-                <mat-icon style="cursor: pointer" (click)="deleteSub(sub)">delete</mat-icon>
-            </div>
-        </ng-template>
+  <mat-tab-group #tabGroup animationDuration="0ms" (selectedTabChange)="tabChanged($event)">
+    <mat-tab label="Events">
+      <ng-template matTabContent>
+        <div *ngFor="let sub of eventSubs;">
+          <mat-slide-toggle style="margin-right: 8px" [aria-label]="sub.name" [checked]="sub.enabled"
+                            (change)="onToggle(sub.id, $event)"></mat-slide-toggle>
+          <a href="/app/events/{{sub.eventId}}">{{sub.name}}</a>
+          <mat-icon style="cursor: pointer" (click)="deleteSub(sub)">delete</mat-icon>
+        </div>
+        <button mat-raised-button mat-primary (click)="save('Events')">Save</button>
+      </ng-template>
     </mat-tab>
     <mat-tab label="Types">
       <ng-template matTabContent>
         <mat-form-field *ngIf="typeList.length !== 0">
           <mat-select placeholder="Create new subscriptions" multiple (selectionChange)="onNewTypeSelect($event)">
             <!--<mat-select-trigger>-->
-              <!--{{typesToSubscribe.value ? typesToSubscribe.value[0] : ''}}-->
-              <!--<span *ngIf="typesToSubscribe.value?.length > 1" class="example-additional-selection">-->
-                <!--(+{{typesToSubscribe.value.length - 1}} {{typesToSubscribe.value?.length === 2 ? 'other' : 'others'}})-->
-              <!--</span>-->
+            <!--{{typesToSubscribe.value ? typesToSubscribe.value[0] : ''}}-->
+            <!--<span *ngIf="typesToSubscribe.value?.length > 1" class="example-additional-selection">-->
+            <!--(+{{typesToSubscribe.value.length - 1}} {{typesToSubscribe.value?.length === 2 ? 'other' : 'others'}})-->
+            <!--</span>-->
             <!--</mat-select-trigger>-->
             <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <div *ngFor="let sub of typeSubs; let i = index">
-          <mat-slide-toggle style="margin-right: 8px" [disabled]="!sub.id" [aria-label]="sub.name" [checked]="sub.enabled" (change)="onToggle(sub, $event)"></mat-slide-toggle>
-          {{sub.type}}
-          <mat-icon style="cursor: pointer" (click)="deleteSub(sub)">delete</mat-icon>
+        <div *ngFor="let sub of typeSubs">
+          <mat-slide-toggle style="margin-right: 8px" [disabled]="!sub.id" [aria-label]="sub.name"
+                            [checked]="sub.enabled" (change)="onToggle(sub, $event)"></mat-slide-toggle>
+          <span [ngClass]="{'newSub': !sub.id}">{{sub.type}}</span>
+          <mat-icon [ngClass]="{'newSub': !sub.id}" style="cursor: pointer" (click)="deleteSub(sub)">delete</mat-icon>
         </div>
+        <button mat-raised-button mat-primary (click)="save('Types')">Save</button>
       </ng-template>
     </mat-tab>
     <mat-tab label="Areas">
-
-        <ng-template matTabContent>
-          <div class="areaTab">
-            <span class="mat-hint hint">Для создания новой области - кликните по карте, и введите название!</span>
+      <ng-template matTabContent>
+        <div class="areaTab">
+          <span class="mat-hint hint">Для создания новой области - кликните по карте, и введите название!</span>
           <app-map [areas]="areaSubs" (areaChange)="changeAreasOnMap($event)"></app-map>
-            <div class="areaSubList">
-              <div *ngFor="let sub of areaSubs">
-                <mat-slide-toggle style="margin-right: 8px" [disabled]="!sub.id" [aria-label]="sub.name" [checked]="sub.enabled" (change)="onToggle(sub, $event)"></mat-slide-toggle>
-                {{sub.name}}
-                <mat-icon (click)="deleteSub(sub)">delete</mat-icon>
+          <div class="areaSubList">
+            <div *ngFor="let sub of areaSubs; let i = index">
+              <mat-slide-toggle style="margin-right: 8px" [disabled]="!sub.id" [aria-label]="sub.name"
+                                [checked]="sub.enabled" (change)="onToggle(sub, $event)"></mat-slide-toggle>
+              <span [ngClass]="{'newSub': !sub.id}">{{sub.name}}</span>
+              <div *ngIf="!sub.name">
+                <input matInput placeholder="Enter subs name" #box (keyup.enter)="onEnter(i, box.value)">
               </div>
+              <mat-icon [ngClass]="{'newSub': !sub.id}" (click)="deleteSub(sub)">delete</mat-icon>
             </div>
           </div>
-        </ng-template>
+        </div>
+        <button mat-raised-button mat-primary (click)="save('Areas')">Save</button>
+      </ng-template>
 
-    </mat-tab>    
-  </mat-tab-group>  
-</div> 
+    </mat-tab>
+  </mat-tab-group>
+</div>
 <div mat-dialog-actions id="buttons">
   <button mat-raised-button (click)="close()">Cancel</button>
-  <button mat-raised-button mat-primary (click)="save()">Save</button>
 </div>

@@ -9,7 +9,6 @@ app-map{
   display: inline-block;
   margin-left: 10px;
   width: 150px;
-  height: 500px;
 }
 
 .areaSubList mat-icon {
@@ -17,7 +16,7 @@ app-map{
 }
 
 .areaTab {
-  width: 100%;
+  //width: 100%;
   //height: 100%;
   //overflow: hidden;
 }
@@ -30,4 +29,8 @@ app-map{
 .dialog-content {
   height: 100%;
   overflow: hidden;
+}
+.newSub {
+  background-color: #3f51b5;
+  color: white;
 }
