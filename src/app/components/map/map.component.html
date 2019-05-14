@@ -5,33 +5,32 @@
                                [longitude]="whereToCenter().lng"
                                [zoom]='zoom'
                                >
+            <ng-container *ngFor="let event of Events">
+              <agm-marker *ngIf="event.location"
+                          [latitude]="event.location.latitude"
+                          [longitude]="event.location.longitude">
 
-            <agm-marker *ngFor="let event of Events"
-                        [latitude]="event.location.ltd" 
-                        [longitude]="event.location.lng">
+                  <agm-snazzy-info-window [latitude]="event.location.latitude"
+                                          [longitude]="event.location.longitude">
+                      <ng-template>
+                          <div [routerLink]="event.id">
+                              <img [src]="event.pic">
+                          </div>
+                      </ng-template>
+                  </agm-snazzy-info-window>
 
-                <agm-snazzy-info-window [latitude]="event.location.ltd" 
-                                        [longitude]="event.location.lng">
-                    <ng-template>
-                        <div [routerLink]="event.id">
-                            <img [src]="event.pic">
-                        </div>
-                    </ng-template>
-                </agm-snazzy-info-window>
+              </agm-marker>
 
-            </agm-marker>
+              <agm-info-window *ngIf="event.location" [latitude]="event.location.latitude" [longitude]="event.location.longitude">
+                  <div [routerLink]="event.id">
+                      <img [src]="event.pic">
+                  </div>
+              </agm-info-window>
+            </ng-container>
 
-            <agm-info-window *ngFor="let event of Events"
-                            [latitude]="event.location.ltd"
-                            [longitude]="event.location.lng">
-                <div [routerLink]="event.id">
-                    <img [src]="event.pic">
-                </div>
-            </agm-info-window>
-
-            <agm-marker *ngIf="userLocation.ltd != 0 || userLocation.lng != 0"
-                        [latitude]="userLocation.ltd" 
-                        [longitude]="userLocation.lng"
+            <agm-marker *ngIf="userLocation.latitude != 0 || userLocation.longitude != 0"
+                        [latitude]="userLocation.latitude"
+                        [longitude]="userLocation.longitude"
                         [iconUrl]="userMarker.url">
                 <agm-info-window>
                     <b>Этот маркер - вы</b>
@@ -39,16 +38,16 @@
             </agm-marker>
 
             <agm-marker *ngIf="currentMarker"
-                        [latitude]="currentMarker.ltd"
-                        [longitude]="currentMarker.lng">
+                        [latitude]="currentMarker.latitude"
+                        [longitude]="currentMarker.longitude">
                 <agm-info-window>
                     Этот маркер поставили вы
                 </agm-info-window>
             </agm-marker>
 
             <agm-circle #coordFilter *ngIf="filter"
-                [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd  : 51.6720400"
-                [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : 39.1843000"
+                [latitude]="userLocation.latitude  ? userLocation.latitude  : 51.6720400"
+                [longitude]="userLocation.longitude ? userLocation.longitude : 39.1843000"
                 [radius]="5000"
                 [fillColor]="'red'"
                 [circleDraggable]="true"

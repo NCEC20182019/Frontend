@@ -8,7 +8,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class DataService {
-  public Events: IEvent[] = [];
+  public Events: IEvent[];
 
   getEvents(sort: number, filter){
     this.Events = [];
@@ -18,6 +18,7 @@ export class DataService {
 
   addLocalEvents(events){
     this.Events.push(events);
+    console.log('Все ивенты', this.Events);
   }
 
   private _eventsUri = '/events'; // -- Integration URL
@@ -104,7 +105,7 @@ export class DataService {
     }
     let event = this.Events.find((x) => x.id === _id);
     if(!event) {
-      this.http.get<IEvent>(this._eventsUri + _id,
+      this.http.get<IEvent>(this._eventsUri + '/' + _id,
         {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',

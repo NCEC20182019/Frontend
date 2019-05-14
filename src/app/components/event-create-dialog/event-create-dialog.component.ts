@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Subscription, Observable, of, from } from 'rxjs';
-import { ILocation } from '../../models/ilocation';
-import { IEvent } from '../../models/ievent';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UrlHandlingStrategy } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef, MatSnackBar} from '@angular/material';
+import {IEvent} from '../../models/ievent';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
+import {DataService} from "../../services/data.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-event-create-dialog',
@@ -16,13 +15,7 @@ export class EventCreateDialogComponent implements OnInit {
 
   form: FormGroup;
 
-  curCoords: ILocation = {
-    id: null,
-    name: '',
-    longitude: 0,
-    latitude: 0
-  };
-  emptyEvent: IEvent = {
+  newEvent: IEvent = {
     title: '',
     description: '',
     date_end: moment().format('YYYY-MM-DDTkk:mm'),
@@ -37,57 +30,55 @@ export class EventCreateDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private dataService: DataService,
     private dialogRef: MatDialogRef<EventCreateDialogComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private data: IEvent) {
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService) {  }
 
+  ngOnInit() {
     this.form = this.fb.group({
-      id: [data.id],
-      title: [data.title, Validators.required],
-      description: [data.description, Validators.required],
-      date_start: [data.date_start, Validators.required],
-      date_end: [data.date_end, Validators.required],
-      source_uri: [typeof data.source_uri === 'string' ? this.data.source_uri : '', Validators.required],
-      type: [data.type, Validators.required],
-      name_location: [data.location.name, Validators.required]
+      title: this.newEvent.title,
+      description: [this.newEvent.description, Validators.required],
+      date_start: [this.newEvent.date_start, Validators.required],
+      date_end: [this.newEvent.date_end, Validators.required],
+      source_uri: [this.newEvent.source_uri, Validators.required],
+      type: [this.newEvent.type, Validators.required],
+      name_location: [this.newEvent.location.name, Validators.required]
     });
   }
 
-  ngOnInit() {
-
+  openSnackBar(message: any, action?: string) {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+    });
   }
 
   save() {
-    const dataToPass: IEvent = this.form.value;
+    this.newEvent.title = this.form.value.title;
+    this.newEvent.description = this.form.value.description;
+    this.newEvent.date_start = this.form.value.date_start;
+    this.newEvent.date_end = this.form.value.date_end;
+    this.newEvent.source_uri = this.form.value.source_uri;
+    this.newEvent.type = this.form.value.type;
+    this.newEvent.location.name = this.form.value.name_location;
+    this.newEvent.owner_id = this.authService.currentUserValue.id;
 
-    dataToPass.location = {
-      id: null,
-      name: this.form.value.name_location,
-      longitude: this.curCoords.longitude,
-      latitude: this.curCoords.latitude
-    };
-
-    this.dialogRef.close(dataToPass);
+    if (this.newEvent.location.longitude && this.newEvent.location.latitude) {
+      this.dataService.addEvent(this.newEvent).subscribe();
+      this.close();
+    } else {
+      this.openSnackBar('Set the location of the event on the map!');
+      return;
+    }
   }
 
   close() {
     this.dialogRef.close();
   }
 
-  delete() {
-    this.dialogRef.close(this.data.id);
-  }
-
-  onMarkerPlaced(location: ILocation) {
-    console.log('onMarkerPlaced ', location);
-    this.curCoords = location;
-  }
-
-
-  passEventToMap() {
-    const n: IEvent[] = [];
-    // if data
-    n.push(this.data ? this.data : this.emptyEvent);
-    return of(n);
+  onMarkerPlaced(coords) {
+    this.newEvent.location.latitude = coords.latitude;
+    this.newEvent.location.longitude = coords.longitude;
   }
 
 }

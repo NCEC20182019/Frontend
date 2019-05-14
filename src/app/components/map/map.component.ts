@@ -12,7 +12,7 @@ import {Subscription} from "../../models/subscription";
 })
 export class MapComponent implements OnInit {
 
-  @Input() Events: IEvent[];
+  @Input() Events: IEvent[] = [];
   @Input() filter: boolean;
   @Input() areas: any[];
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
 
   @ViewChild('coordFilter') myCircle;
   @Input() filterSubmit = false;
-  @Input() center: String;
+  @Input() center: String = 'city';
 
   userLocation: ILocation = {
     id: null,
@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
     url: '../../../assets/blue-marker.png',
   };
 
-  private currentMarker: ILocation;
+  private currentMarker: any;
 
   private zoom = 12;
 
@@ -41,9 +41,11 @@ export class MapComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.Events.forEach(event => {
+    if (this.Events.length > 0) {
+      this.Events.forEach(event => {
         event.pic = 'https://picsum.photos/50/50/?random';
-    });
+      });
+    }
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -55,22 +57,18 @@ export class MapComponent implements OnInit {
 
   onChooseLocation(event) {
     this.currentMarker =  {
-      id: null,
       latitude: event.coords.lat,
       longitude: event.coords.lng,
-      name: ''
     };
 
     this.markerPlaced.emit(this.currentMarker);
-    // console.log(this.currentMarker)
-    // console.log(this.circle);
   }
 
   onCreateArea($event) {
     this.areas.push({
       id: null,
       userId: null,
-      radius: 1,
+      radius: 1000,
       latitude: $event.coords.lat,
       longitude: $event.coords.lng,
       enabled: true,
@@ -94,7 +92,7 @@ export class MapComponent implements OnInit {
 
   getBounds(){
     if(this.myCircle) {
-      let center: ILocation;
+      const center: any = {};
       center.latitude = this.myCircle.nativeElement.attributes.latitude.value;
       center.longitude = this.myCircle.nativeElement.attributes.longitude.value;
       let radius: number = this.myCircle.nativeElement.attributes.radius.value;
@@ -120,8 +118,8 @@ export class MapComponent implements OnInit {
                 lng:  39.1843000}
       }
     }else{
-      return {ltd: this.userLocation.latitude ? this.userLocation.latitude : this.Events[0] ? this.Events[0].location.latitude : 51.6720400,
-              lng: this.userLocation.longitude ? this.userLocation.longitude : this.Events[0] ? this.Events[0].location.longitude : 39.1843000}
+      return {ltd: this.userLocation.latitude ? this.userLocation.latitude : 51.6720400,
+              lng: this.userLocation.longitude ? this.userLocation.longitude :  39.1843000}
     }
   }
 }

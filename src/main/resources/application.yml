@@ -28,6 +28,11 @@ security:
       user-info-uri: /auth/user/me
 
 zuul:
+  add-host-header: true
+  include-debug-header: true
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 60000
   routes:
     events:
       path: /events/**
@@ -44,11 +49,7 @@ zuul:
     security:
       path: /auth/**
       url: http://localhost:9999/auth
-    signin:
-      path: /signin/**
-      url: http://localhost:8090/signin
 
-zuul.include-debug-header: true
 
 
 #security:
@@ -63,7 +64,6 @@ zuul.include-debug-header: true
 #      user-info-uri: http://localhost:9999/auth/user/me
 spring:
   level:
-    org:
-      springframework:
-        security: DEBUG
-        web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+

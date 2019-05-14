@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import {MatDialogRef, MatSelectChange, MatSnackBar, MatTabChangeEvent} from '@angular/material';
-import { SubscriptionService } from 'src/app/services/subscription.service';
-import {Subscription} from "../../models/subscription";
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatDialogRef, MatSelectChange, MatSnackBar} from '@angular/material';
+import {SubscriptionService} from 'src/app/services/subscription.service';
 import {ActivatedRoute} from "@angular/router";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-subscriptions-dialog',
@@ -32,7 +32,8 @@ export class SubscriptionsDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<SubscriptionsDialogComponent>,
     private subscriptionService: SubscriptionService,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar) {}
+    private snackBar: MatSnackBar,
+    private authService: AuthenticationService) {}
 
   ngOnInit() {
     this.loadSubscription();
@@ -43,8 +44,8 @@ export class SubscriptionsDialogComponent implements OnInit {
     this.typeSubs =[];
     this.areaSubs =[];
 
-    this.userId = parseInt(this.route.snapshot.paramMap.get('id')) ? parseInt(this.route.snapshot.paramMap.get('id')) : 1;
-    // TODO remove user_id mockup
+    this.userId = this.authService.currentUserValue.id;
+    //parseInt(this.route.snapshot.paramMap.get('id')) ? parseInt(this.route.snapshot.paramMap.get('id')) : 1;
     this.subscriptionService.getSubscriptions(this.userId).subscribe(
       (subs) => {
         subs.forEach((sub) => {

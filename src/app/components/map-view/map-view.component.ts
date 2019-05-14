@@ -30,7 +30,7 @@ export class MapViewComponent implements OnInit {
 
   private filter: boolean;
   @Output() coordFilter;
-  @Output() Events: IEvent[];
+  @Output() Events: IEvent[] = [];
 
   @Output() private filterSubmit = false;
   private spinner: boolean = true;
