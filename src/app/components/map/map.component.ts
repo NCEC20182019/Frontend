@@ -14,9 +14,9 @@ export class MapComponent implements OnInit {
 
   @Input() Events: IEvent[];
   @Input() filter: boolean;
-  @Input() areas: Subscription[];
+  @Input() areas: any[];
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
-  @Output() areaChange: EventEmitter<Subscription[]> = new EventEmitter();
+  @Output() onOverArea: EventEmitter<any> = new EventEmitter();
 
   userLocation: ILocation = {
     name: '',
@@ -64,8 +64,6 @@ export class MapComponent implements OnInit {
     this.areas.push({
       id: null,
       userId: null,
-      eventId: null,
-      type: null,
       radius: 1,
       latitude: $event.coords.lat,
       longitude: $event.coords.lng,
@@ -75,49 +73,16 @@ export class MapComponent implements OnInit {
 
   }
 
-  // onCircleChangeRadius(arId, $event) {
-  //   // const index = this.emitAreas.findIndex(a => a.arId === arId);
-  //   // if (index >= 0) {
-  //   //   this.emitAreas[index].radius = typeof $event === 'number' ? $event: null;
-  //   // } else {
-  //   //   this.emitAreas.push({
-  //   //     arId: arId,
-  //   //     ltd: null,
-  //   //     lng: null,
-  //   //     radius: typeof $event === 'number' ? $event: null
-  //   //   });
-  //   // }
-  //
-  //   const r = typeof $event === 'number' ? $event : null;
-  //   this.areaChange.emit({
-  //     arId: arId,
-  //     ltd: null,
-  //     lng: null,
-  //     radius: r
-  //   });
-  // }
-  // onCircleChangeCenter(arId, $event) {
-  //   // const index = this.emitAreas.findIndex(a => a.arId === arId);
-  //   // if (index >= 0) {
-  //   //   this.emitAreas[index].ltd = $event.lat ? $event.lat : null;
-  //   //   this.emitAreas[index].lng = $event.lng ? $event.lng : null;
-  //   // } else {
-  //   //   this.emitAreas.push({
-  //   //     arId: arId,
-  //   //     ltd: $event.lat ? $event.lat : null,
-  //   //     lng: $event.lng ? $event.lng : null,
-  //   //     radius: null
-  //   //   });
-  //   // }
-  //
-  //   //console.log("trigger change center", $event);
-  //   this.areaChange.emit({
-  //     arId: arId,
-  //     ltd: $event.lat ? $event.lat : null,
-  //     lng: $event.lng ? $event.lng : null,
-  //     radius: null
-  //   });
-  //
-  //   // console.log(this.emitAreas);
-  // }
+  onAreaChange(arId, $event) {
+    const index = this.areas.findIndex(a => a.id === arId);
+    if (index >= 0) {
+      this.areas[index].latitude = $event.lat ? $event.lat : this.areas[index].latitude;
+      this.areas[index].longitude = $event.lng ? $event.lng : this.areas[index].longitude;
+      this.areas[index].radius = typeof $event === 'number' ? $event : this.areas[index].radius;
+    }
+  }
+
+  overArea(arId, flag) {
+    this.onOverArea.emit({flag: flag, id: arId});
+  }
 }

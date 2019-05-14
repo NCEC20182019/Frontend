@@ -20,14 +20,10 @@ export class SubscriptionsDialogComponent implements OnInit {
 
   eventSubs = [];
   typeSubs = [];
-  areaSubs: Subscription[] = [];
+  areaSubs = [];
 
-  // typesToSubscribe = new FormControl();
   typeList: string[] = [];
-
-  forToggle: any[] = [];
-  // forAreasUpdate = new Set();
-  // forCreateArea: Subscription[] = [];
+  isMarked: any = {};
 
   @ViewChild('tabGroup') tabGroup;
 
@@ -36,16 +32,17 @@ export class SubscriptionsDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<SubscriptionsDialogComponent>,
     private subscriptionService: SubscriptionService,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar) {
-
-    // this.form = this.fb.group({
-    //   subscriptions: new FormArray([]),
-    //   types: new FormArray([]),
-    //   areas: new FormArray([])
-    // });
-  }
+    private snackBar: MatSnackBar) {}
 
   ngOnInit() {
+    this.loadSubscription();
+  }
+
+  loadSubscription() {
+    this.eventSubs =[];
+    this.typeSubs =[];
+    this.areaSubs =[];
+
     this.userId = parseInt(this.route.snapshot.paramMap.get('id')) ? parseInt(this.route.snapshot.paramMap.get('id')) : 1;
     // TODO remove user_id mockup
     this.subscriptionService.getSubscriptions(this.userId).subscribe(
@@ -57,30 +54,13 @@ export class SubscriptionsDialogComponent implements OnInit {
             this.typeSubs.push(sub);
           } else if (sub.radius && sub.longitude && sub.latitude) {
             this.areaSubs.push(sub);
-           }
+          }
         });
         // this.addCheckboxes();
         this.getTypeList();
         // console.log("init areaSubs", this.areaSubs);
       }
     );
-  }
-
-  addCheckboxes() {
-    this.eventSubs.forEach((sub) => {
-      if (sub.eventId) {
-        (this.form.get('subscriptions') as FormArray).push(new FormControl(sub.enabled));
-      }});
-    this.typeSubs.forEach((sub) => {
-      if (sub.type) {
-        (this.form.get('types') as FormArray).push(new FormControl(sub.enabled));
-      }
-    });
-    this.areaSubs.forEach((sub) => {
-      if (sub.radius && sub.longitude && sub.latitude) {
-        (this.form.get('areas') as FormArray).push(new FormControl(sub.enabled));
-      }
-    });
   }
   getTypeList() {
     this.subscriptionService.getTypes().subscribe(
@@ -95,39 +75,38 @@ export class SubscriptionsDialogComponent implements OnInit {
 
   save(currentTab) {
     if (currentTab === 'Types') {
-      this.subscriptionService.updatesAndCreate(this.typeSubs).subscribe();
+      this.subscriptionService.updatesAndCreate(this.typeSubs).subscribe(() => {},
+        () => {this.openSnackBar('Saving error!');},
+        () => {
+          this.openSnackBar('Saved successful!');
+          this.loadSubscription();
+      });
     }
 
     if (currentTab === 'Areas') {
-      this.subscriptionService.updatesAndCreate(this.areaSubs).subscribe();
+      this.subscriptionService.updatesAndCreate(this.areaSubs.map(ar => {
+            if (!ar.userId) {
+              ar.userId = this.userId;
+            }
+            return ar;
+          })
+      ).subscribe(() => {},
+        () => {this.openSnackBar('Saving error!');},
+        () => {
+          this.openSnackBar('Saved successful!');
+          this.loadSubscription();
+      });
     }
 
     if (currentTab === 'Events')
     {
-      this.subscriptionService.updatesAndCreate(this.eventSubs).subscribe();
+      this.subscriptionService.updatesAndCreate(this.eventSubs).subscribe(() => {},
+        () => {this.openSnackBar('Saving error!');},
+        () => {
+          this.openSnackBar('Saved successful!');
+          this.loadSubscription();
+        });
     }
-    // unsubscribe form subs
-    // if (this.forDelete.length > 0) {
-    //   // console.log("forDelete", this.forDelete);
-    //   this.subscriptionService.deleteSubscriptions(this.forDelete);
-    // }
-    // // toggle subs
-    // if (this.forToggle.length > 0) {
-    //   // console.log("forToggle", this.forToggle);
-    //   this.subscriptionService.toggleSubscriptions(this.forToggle);
-    // }
-    // // update areas
-    // if (this.forAreasUpdate.size > 0) {
-    //   this.subscriptionService.updateAreas(this.areaSubs.
-    //     filter((v, i) => this.forAreasUpdate.has(i))
-    //   );
-    //   // console.log("forAreasUpdate", this.areaSubs.
-    //   //   filter((v, i) => this.forAreasUpdate.has(i))
-    //   // );
-    // }
-
-    // save new typeSubs
-    // this.close();
   }
 
   deleteSub(sub) {
@@ -172,14 +151,6 @@ export class SubscriptionsDialogComponent implements OnInit {
       if (sub.eventId) {
         this.eventSubs[this.eventSubs.findIndex( e => e.id === sub.id)].enabled = $event.checked;
       }
-
-      // const obj = {subId: sub.id, isEnable: $event.checked};
-      // const index = this.forToggle.findIndex(o => o.subId === obj.subId);
-      // if ( index < 0) {
-      //   this.forToggle.push(obj);
-      // } else {
-      //   this.forToggle.splice(index);
-      // }
     }
     // console.log("forToggle: ", this.forToggle);
   }
@@ -195,40 +166,28 @@ export class SubscriptionsDialogComponent implements OnInit {
     // console.log(this.typeList);
   }
 
-  changeAreasOnMap($event: Subscription[]) {
-    this.areaSubs = $event.map(ar => {
-      if (!ar.userId) {
-        ar.userId = this.userId;
-      }
-      return ar;
-    });
-    // const index = this.areaSubs.findIndex(a => a.id === $event.arId);
-    // // if exist
-    // if (index >= 0) {
-    //   // console.log("input", $event);
-    //   this.areaSubs[index].latitude = $event.ltd ? $event.ltd : this.areaSubs[index].latitude;
-    //   this.areaSubs[index].longitude = $event.lng ? $event.lng : this.areaSubs[index].longitude;
-    //   this.areaSubs[index].radius = $event.radius ? $event.radius : this.areaSubs[index].radius;
-    //
-    //   this.forAreasUpdate.add(index);
-    //
-    //   // console.log("after", this.areaSubs[index]);
-    //   // console.log("radius", this.radius);
-    // }
-  }
-  /**Determines whether the id is in the forDelete array
-   * @returns true if id is include
-  */
-  // isHidden(id) {
-  //   if (id) {
-  //     return this.forDelete.includes(id);
-  //   }
+  // changeAreasOnMap($event: Subscription[]) {
+  //   this.areaSubs = $event.map(ar => {
+  //     if (!ar.userId) {
+  //       ar.userId = this.userId;
+  //     }
+  //     return ar;
+  //   });
+  //   console.log(this.areaSubs);
+  //   // const index = this.areaSubs.findIndex(a => a.id === $event.arId);
+  //   // // if exist
+  //   // if (index >= 0) {
+  //   //   // console.log("input", $event);
+  //   //   this.areaSubs[index].latitude = $event.ltd ? $event.ltd : this.areaSubs[index].latitude;
+  //   //   this.areaSubs[index].longitude = $event.lng ? $event.lng : this.areaSubs[index].longitude;
+  //   //   this.areaSubs[index].radius = $event.radius ? $event.radius : this.areaSubs[index].radius;
+  //   //
+  //   //   this.forAreasUpdate.add(index);
+  //   //
+  //   //   // console.log("after", this.areaSubs[index]);
+  //   //   // console.log("radius", this.radius);
+  //   // }
   // }
-
-  tabChanged (tabChangeEvent: MatTabChangeEvent) {
-    console.log('tabChangeEvent => ', tabChangeEvent);
-    console.log('index => ', tabChangeEvent.index);
-  }
 
   close() {
     this.dialogRef.close();
@@ -236,5 +195,11 @@ export class SubscriptionsDialogComponent implements OnInit {
 
   onEnter(i, value: string) {
         this.areaSubs[i].name = value;
+  }
+
+  onMarked($event) {
+    this.isMarked = {
+      flag: $event.flag ? $event.flag: false,
+      id: $event.id};
   }
 }

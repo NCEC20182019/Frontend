@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>Your Subscriptions</h1>
 <div mat-dialog-content class="dialog-content"> <!--[formGroup]="form"-->
-  <mat-tab-group #tabGroup animationDuration="0ms" (selectedTabChange)="tabChanged($event)">
+  <mat-tab-group #tabGroup animationDuration="0ms">
     <mat-tab label="Events">
       <ng-template matTabContent>
         <div *ngFor="let sub of eventSubs;">
           <mat-slide-toggle style="margin-right: 8px" [aria-label]="sub.name" [checked]="sub.enabled"
-                            (change)="onToggle(sub.id, $event)"></mat-slide-toggle>
+                            (change)="onToggle(sub, $event)"></mat-slide-toggle>
           <a href="/app/events/{{sub.eventId}}">{{sub.name}}</a>
           <mat-icon style="cursor: pointer" (click)="deleteSub(sub)">delete</mat-icon>
         </div>
@@ -37,15 +37,18 @@
     <mat-tab label="Areas">
       <ng-template matTabContent>
         <div class="areaTab">
-          <span class="mat-hint hint">Для создания новой области - кликните по карте, и введите название!</span>
-          <app-map [areas]="areaSubs" (areaChange)="changeAreasOnMap($event)"></app-map>
+          <span class="mat-hint hint">Для создания новой области - кликните по карте, и введите название!</span><br/>
+          <app-map [areas]="areaSubs" (onOverArea)="onMarked($event)"></app-map>
           <div class="areaSubList">
             <div *ngFor="let sub of areaSubs; let i = index">
               <mat-slide-toggle style="margin-right: 8px" [disabled]="!sub.id" [aria-label]="sub.name"
                                 [checked]="sub.enabled" (change)="onToggle(sub, $event)"></mat-slide-toggle>
-              <span [ngClass]="{'newSub': !sub.id}">{{sub.name}}</span>
+              <span [ngClass]="{'newSub': !sub.id, 'marked': isMarked.flag ? isMarked.id === sub.id : false}">{{sub.name}}</span>
               <div *ngIf="!sub.name">
-                <input matInput placeholder="Enter subs name" #box (keyup.enter)="onEnter(i, box.value)">
+                <mat-form-field>
+                  <input matInput placeholder="Enter subs name" #box (keyup.enter)="onEnter(i, box.value)">
+                </mat-form-field>
+                <button mat-raised-button (click)="onEnter(i, box.value)">Apply</button>
               </div>
               <mat-icon [ngClass]="{'newSub': !sub.id}" (click)="deleteSub(sub)">delete</mat-icon>
             </div>
