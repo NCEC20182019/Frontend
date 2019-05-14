@@ -75,7 +75,7 @@ export class SubscriptionsDialogComponent implements OnInit {
 
   save(currentTab) {
     if (currentTab === 'Types') {
-      this.subscriptionService.updatesAndCreate(this.typeSubs).subscribe(() => {},
+      this.subscriptionService.subscribeOrUpdate(this.typeSubs).subscribe(() => {},
         () => {this.openSnackBar('Saving error!');},
         () => {
           this.openSnackBar('Saved successful!');
@@ -84,7 +84,7 @@ export class SubscriptionsDialogComponent implements OnInit {
     }
 
     if (currentTab === 'Areas') {
-      this.subscriptionService.updatesAndCreate(this.areaSubs.map(ar => {
+      this.subscriptionService.subscribeOrUpdate(this.areaSubs.map(ar => {
             if (!ar.userId) {
               ar.userId = this.userId;
             }
@@ -100,7 +100,7 @@ export class SubscriptionsDialogComponent implements OnInit {
 
     if (currentTab === 'Events')
     {
-      this.subscriptionService.updatesAndCreate(this.eventSubs).subscribe(() => {},
+      this.subscriptionService.subscribeOrUpdate(this.eventSubs).subscribe(() => {},
         () => {this.openSnackBar('Saving error!');},
         () => {
           this.openSnackBar('Saved successful!');
@@ -165,29 +165,6 @@ export class SubscriptionsDialogComponent implements OnInit {
     // console.log(this.typeSubs);
     // console.log(this.typeList);
   }
-
-  // changeAreasOnMap($event: Subscription[]) {
-  //   this.areaSubs = $event.map(ar => {
-  //     if (!ar.userId) {
-  //       ar.userId = this.userId;
-  //     }
-  //     return ar;
-  //   });
-  //   console.log(this.areaSubs);
-  //   // const index = this.areaSubs.findIndex(a => a.id === $event.arId);
-  //   // // if exist
-  //   // if (index >= 0) {
-  //   //   // console.log("input", $event);
-  //   //   this.areaSubs[index].latitude = $event.ltd ? $event.ltd : this.areaSubs[index].latitude;
-  //   //   this.areaSubs[index].longitude = $event.lng ? $event.lng : this.areaSubs[index].longitude;
-  //   //   this.areaSubs[index].radius = $event.radius ? $event.radius : this.areaSubs[index].radius;
-  //   //
-  //   //   this.forAreasUpdate.add(index);
-  //   //
-  //   //   // console.log("after", this.areaSubs[index]);
-  //   //   // console.log("radius", this.radius);
-  //   // }
-  // }
 
   close() {
     this.dialogRef.close();
