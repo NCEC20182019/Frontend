@@ -27,9 +27,9 @@
 
   <div class="type-filter">
     <span>Типы:</span>
-    <ul>
-      <li><mat-checkbox color="primary">Фильмы</mat-checkbox></li>
-      <li><mat-checkbox color="primary">Театры</mat-checkbox></li>
+    <ul #listElement>
+      <li><mat-checkbox #films color="primary">Фильмы</mat-checkbox></li>
+      <li><mat-checkbox #theatres color="primary">Театры</mat-checkbox></li>
       <li><mat-checkbox color="primary">Спросить какие еще могут быть</mat-checkbox></li>
       <li><mat-checkbox color="primary">Просто пустой</mat-checkbox></li>
     </ul>
@@ -39,5 +39,5 @@
       <mat-checkbox #coordFilter (click)="coordFilterChange(coordFilter.checked)" color="primary">Фильтровать по месту на карте</mat-checkbox>
   </div>
 
-  <button mat-raised-button color="primary">Показать</button>
+  <button mat-raised-button (click)="onSubmit()" color="primary">Показать</button>
 </div>

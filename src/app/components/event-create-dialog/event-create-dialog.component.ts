@@ -6,19 +6,18 @@ import { IEvent } from '../../models/ievent';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UrlHandlingStrategy } from '@angular/router';
 import * as moment from 'moment';
-import { Url } from 'url';
 
 @Component({
-  selector: 'app-event-detail-dialog',
-  templateUrl: './event-detail-dialog.component.html',
-  styleUrls: ['./event-detail-dialog.component.scss']
+  selector: 'app-event-create-dialog',
+  templateUrl: './event-create-dialog.component.html',
+  styleUrls: ['./event-create-dialog.component.scss']
 })
-export class EventDetailDialogComponent implements OnInit {
+export class EventCreateDialogComponent implements OnInit {
 
   form: FormGroup;
-  isExist: boolean;
 
   curCoords: ILocation = {
+    id: null,
     name: '',
     lng: 0,
     ltd: 0
@@ -30,16 +29,16 @@ export class EventDetailDialogComponent implements OnInit {
     date_start: moment().format('YYYY-MM-DDTkk:mm'),
     type: '',
     source_uri: '',
-    location: { name: '', lng: 0, ltd: 0 },
+    location: { id: null, name: '', lng: 0, ltd: 0 },
     pic: '',
-    id: 0
+    id: 0,
+    owner_id: 0
   };
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<EventDetailDialogComponent>,
+    private dialogRef: MatDialogRef<EventCreateDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) private data: IEvent) {
-    this.isExist = data.id ? true : false;
 
     this.form = this.fb.group({
       id: [data.id],
@@ -61,6 +60,7 @@ export class EventDetailDialogComponent implements OnInit {
     const dataToPass: IEvent = this.form.value;
 
     dataToPass.location = {
+      id: null,
       name: this.form.value.name_location,
       lng: this.curCoords.lng,
       ltd: this.curCoords.ltd
@@ -89,4 +89,5 @@ export class EventDetailDialogComponent implements OnInit {
     n.push(this.data ? this.data : this.emptyEvent);
     return of(n);
   }
+
 }

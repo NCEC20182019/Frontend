@@ -1,8 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { IEvent } from '../../models/ievent';
 import { DataService } from 'src/app/services/data.service';
-import { Observable } from "rxjs";
 import { Router, ActivatedRoute } from '@angular/router';
+import { MapComponent } from '../map/map.component';
+import { ILocation} from "../../models/ilocation";
+import {FilterComponent} from "../filter/filter.component";
+import {EventlistComponent} from "../eventlist/eventlist.component";
 
 @Component({
   selector: 'app-map-view',
@@ -11,22 +14,41 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MapViewComponent implements OnInit {
 
-  @Output() filter;
-  @Output() Events: IEvent[];
-  // @Output() INITIAL_DELAY: number = 850;
+  @ViewChild('map') mapCmp: MapComponent;
+  @ViewChild('filter') filterCmp: FilterComponent;
+  @ViewChild('eventlist') eventlistCmp: EventlistComponent;
 
+  private filterForm: {
+    dateFrom: Date,
+    dateTo: Date,
+    area: {
+      center: ILocation,
+      radius: number
+    },
+    types: string[]
+  };
+
+  private filter: boolean;
+  @Output() coordFilter;
+  @Output() Events: IEvent[];
+
+  @Output() private filterSubmit = false;
   private spinner: boolean = true;
-  private Filter: boolean = false;
   markerPlaced = new EventEmitter();
 
-  constructor(private data: DataService, private router: Router, private route: ActivatedRoute) {}
+
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.getEvents();
   }
 
   getEvents(){
-     this.Events = this.data.getEvents();
+      this.Events = this.dataService.getEvents(1, this.filterForm);
+    // this.Events = this.dataService.getMockEvents();
   }
 
   /** Method of redirecting to single Event page */
@@ -43,18 +65,38 @@ export class MapViewComponent implements OnInit {
     setTimeout(() => {
       this.spinner = false
     }, 5000);
-    this.spinner = this.Events.length !== 0;
+    this.spinner = this.Events.length != 0;
   }
 
   onFilter(){
-    this.Filter = true;
+    this.filter = true;
   }
   
   onFilterClose(){
-    this.Filter = false;
+    this.filter = false;
   }
 
   changeCoordFilter(event){
-    this.filter = event;
+    this.coordFilter = event;
+  }
+
+  onFilterSubmit(event){
+    this.filterForm = event;
+    this.filterForm.area = this.mapCmp.getBounds();
+    this.getEvents();
+  }
+
+  onPageChanged() {
+    this.getEvents();
+  }
+
+  filterFormIsEmpty(): boolean {
+    return !this.filterForm;
+  }
+
+  onFilterCleared() {
+    this.filterForm = null;
+    this.filterCmp = new FilterComponent();
+    this.getEvents();
   }
 }

@@ -8,63 +8,61 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class DataService {
-  private Events: IEvent[];
+  public Events: IEvent[] = [];
 
-  getEvents(): IEvent[]{
-    this.httpGetEvents();
+  getEvents(sort: number, filter){
+    this.Events = [];
+    this.httpGetEvents(sort, filter);
     return this.Events;
   }
 
-  addLocalEvents(events: IEvent[]){
-    this.Events.concat(events);
+  addLocalEvents(events){
+    this.Events.push(events);
   }
-  // private _eventsUri = 'http://192.168.1.7:8092/event/'; // -- Integration URL
-  private _eventsUri = 'http://lemmeknow.tk:8092/event/'; // -- Integration URL
-  // private _eventsUri = "https://7678acb1-b897-4f74-a317-63ae18c493fe.mock.pstmn.io/events"; // -- Mock server
-  private _userService = 'http://lemmeknow.tk:9999/auth';
+
+  private _eventsUri = 'http://lemmeknow.tk/events'; // -- Integration URL
+  private _usersUri = 'http://lemmeknow.tk/auth';
+  // private _usersUri = 'http://localhost:9999/auth';
 
   constructor(private http: HttpClient) { }
 
-  httpGetEvents() {
-    let count = 0;
-    let patch: IEvent[] = [];
-    this.http.get<IEvent[]>(this._eventsUri,
+  httpGetEvents(sort: number, filter) {
+    this.http.post<IEvent[]>(this._eventsUri, {sort, filter},
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         })
       }).subscribe((data)=>{
-        data.forEach(event => {
-          count++;
-          patch.push(event);
-          if(count === 200){
-            this.addLocalEvents(patch);
-            count = 0;
-            patch = [];
-          }
-        });
+          this.addLocalEvents(data);
+        },
+      (error) => {
+        console.log(error);
+        this.httpGetAllEvents();
       });
   }
 
-  getMockEvents(): Observable<IEvent[]>{
-    return of([
+  getMockEvents(): IEvent[]{
+    return [
       {
+        owner_id: 1,
         id: 1,
-        title: "title1",
-        type: "String",
-        source_uri: 'http://www.site1.com',
-        description: "String",
-        date_start: "0.0.0",
-        date_end: "1.1.1",
-        pic: "",
+        title: "Фестиваль волшебных шаров — Воронеж",
+        description: "Настоящее волшебство окутает стадион «Динамо» 1 июня: в этот вечер здесь пройдет сказочный фестиваль, на котором сотни волшебных шаров в руках гостей в один миг засияют разноцветными огоньками, создав вокруг особую завораживающую атмосферу.\n\nКроме волшебных шаров с заходом солнца жителей города ждет захватывающее световое представление и выступление музыкальных виртуозов с чарующими композициями.\n\nКстати, волшебные шары по окончании фестиваля зрители смогут забрать с собой: они будут озарять светом дом, еще долго напоминая о чудесном событии. \n\nНачало в 21:00.\n\nСтоимость входа: 100₽ (волшебные шары приобретаются на территории фестиваля).",
+        date_start: "2019-06-01T18:00:00.000+0000",
+        date_end: "2019-06-01T19:30:00.000+0000",
+        source_uri: "https://vk.com/event65334589",
+        type: "Другое",
+        pic: '',
         location: {
-          name: 'loc1',
-          ltd: 0,
-          lng: 0
+          id: 15,
+          name: "Фестиваль волшебных шаров — Воронеж",
+          ltd: 51.63344192504883,
+          lng: 39.2305793762207,
         }
       },
       {
+        owner_id: 4,
         id: 2,
         title: "title2",
         type: "String",
@@ -74,12 +72,14 @@ export class DataService {
         date_end: "1.1.1",
         pic: "",
         location: {
+          id: 1,
           name: 'loc2',
-          ltd: 10,
-          lng: 10
+          ltd: 52.6000000,
+          lng: 37.7000000
         }
       },
       {
+        owner_id: null,
         id: 3,
         title: "title3",
         type: "String",
@@ -89,22 +89,33 @@ export class DataService {
         date_end: "1.1.1",
         pic: "",
         location: {
+          id: 2,
           name: 'loc3',
           ltd: 100,
           lng: 100
         }
       },
-    ]);
+    ];
   }
 
-  getEvent(_id): Observable<IEvent> {
-    return this.http.get<IEvent>(this._eventsUri + _id,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        })
+  getEvent(_id): IEvent {
+    if(!this.Events.length){
+      this.Events = this.getMockEvents(); //TODO
+    }
+    let event = this.Events.find((x) => x.id === _id);
+    if(!event) {
+      this.http.get<IEvent>(this._eventsUri + _id,
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          })
+        }).subscribe((data) =>{
+          return data;
       });
+    }else {
+      return event;
+    }
   }
 
   getRandomPic(): Observable<any> {
@@ -119,7 +130,7 @@ export class DataService {
 
   /** PUT: update the event on eventService */
   updateEvent(event, id) {
-    return this.http.put(this._eventsUri + 'update/' + id, event,
+    return this.http.put(this._eventsUri + '/update/' + id, event,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -129,7 +140,7 @@ export class DataService {
   }
   /** POST: add a new event to eventService */
   addEvent(event) {
-    return this.http.post(this._eventsUri + 'create', event,
+    return this.http.post(this._eventsUri + '/create', event,
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -140,15 +151,30 @@ export class DataService {
 
   /** DELETE: delete event from eventService */
   deleteEvent(_id) {
-    return this.http.delete(this._eventsUri + 'delete/' + _id);
+    return this.http.delete(this._eventsUri + '/delete/' + _id);
   }
 
   registerUser(user: User){
-    return this.http.put('http://localhost:9999/auth/user/put', user, 
+    return this.http.put(this._usersUri + '/user/put', user,
     {
       headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     })});
+  }
+
+  private httpGetAllEvents() {
+    this.http.get<IEvent[]>(this._eventsUri,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        })
+      }).subscribe((data)=>{
+        this.addLocalEvents(data);
+      },
+      (error) => {
+        console.log(error);
+      })
   }
 }

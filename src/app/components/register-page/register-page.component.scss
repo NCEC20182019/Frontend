@@ -20,7 +20,23 @@
 
     h2{
         display: block;
-        text-shadow: 1px white;
+        text-shadow: 0 0 1px #FFFFFF;
     }
 }
+
+div.errors{
+  background: rgba(255, 0, 0, 0.1);
+  border-radius: 3px;
+  margin-bottom: 2px;
+  div {
+    color: red;
+    padding: 2px 4px;
+    text-shadow: 0 0 1px #FFFFFF;
+  }
+}
+
+button{
+  margin-right: 5px;
+}
+
 

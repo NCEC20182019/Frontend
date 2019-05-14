@@ -1,5 +1,5 @@
 <div  id="form">
-  <h1 mat-dialog-title>{{isExist ? 'Edit' : 'Add'}} event</h1>
+  <h1 mat-dialog-title>Add event</h1>
   <div mat-dialog-content [formGroup]="form">
     <input hidden formControlName="id">
     <mat-form-field>
@@ -26,7 +26,7 @@
   </div>
 </div>
 <div id="map">
-  <app-map (markerPlaced)="onMarkerPlaced($event)" [Events]="passEventToMap()"></app-map>   
+  <app-map (markerPlaced)="onMarkerPlaced($event)" [Events]="passEventToMap()"></app-map>
 </div>
 <div mat-dialog-actions id="buttons">
   <button mat-raised-button (click)="close()">Cancel</button>

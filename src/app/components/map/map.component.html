@@ -1,11 +1,12 @@
 <div class="map-container" id="map-container">
-    <agm-map *ngIf="eventList" (mapClick)="onChooseLocation($event)"
+    <agm-map (mapClick)="onChooseLocation($event); onCreateArea($event)"
                                id="map" 
-                               [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 51.6720400" 
-                               [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 39.1843000" 
+                               [latitude]="whereToCenter().ltd"
+                               [longitude]="whereToCenter().lng"
                                [zoom]='zoom'
                                >
-            <agm-marker *ngFor="let event of eventList"
+
+            <agm-marker *ngFor="let event of Events"
                         [latitude]="event.location.ltd" 
                         [longitude]="event.location.lng">
 
@@ -20,10 +21,9 @@
 
             </agm-marker>
 
-            <agm-info-window *ngFor="let event of eventList"
-                            [latitude]="event.location.latitude" 
-                            [longitude]="event.location.longitude"
-                            [hidden]="show">
+            <agm-info-window *ngFor="let event of Events"
+                            [latitude]="event.location.ltd"
+                            [longitude]="event.location.lng">
                 <div [routerLink]="event.id">
                     <img [src]="event.pic">
                 </div>
@@ -34,7 +34,7 @@
                         [longitude]="userLocation.lng"
                         [iconUrl]="userMarker.url">
                 <agm-info-window>
-                    <b>Gothca!</b>
+                    <b>Этот маркер - вы</b>
                 </agm-info-window>
             </agm-marker>
 
@@ -42,23 +42,35 @@
                         [latitude]="currentMarker.ltd"
                         [longitude]="currentMarker.lng">
                 <agm-info-window>
-                    You placed this marker
+                    Этот маркер поставили вы
                 </agm-info-window>
             </agm-marker>
 
-            <agm-circle *ngIf="filter"  
-                [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd : eventList[0] ? eventList[0].location.latitude : 51.6720400" 
-                [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : eventList[0] ? eventList[0].location.longitude : 39.1843000" 
+            <agm-circle #coordFilter *ngIf="filter"
+                [latitude]="(userLocation.ltd || userLocation.lng) ? userLocation.ltd  : 51.6720400"
+                [longitude]="(userLocation.ltd || userLocation.lng) ? userLocation.lng : 39.1843000"
                 [radius]="5000"
                 [fillColor]="'red'"
                 [circleDraggable]="true"
                 [editable]="true">
             </agm-circle>
 
+            <div *ngFor="let ar of areas;">
+                <agm-circle
+                *ngIf="ar.enabled"
+                [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius"
+                [fillColor]="'red'"
+                [circleDraggable]="true"
+                [editable]="true"
+                (radiusChange)="onAreaChange(ar.id, $event)"
+                (centerChange)="onAreaChange(ar.id, $event)"
+                (mouseOver)="overArea(ar.id, true)"
+                (mouseOut)="overArea(ar.id, false)">
+                </agm-circle>
+            </div>
             <!-- <agm-snazzy-info-window [isOpen]="true" [latitude]="51.673858" [longitude]="7.815982" [closeWhenOthersOpen]="true">
                   My first Snazzy Info Window!
               </agm-snazzy-info-window> -->
     </agm-map>
 </div>
 
-    

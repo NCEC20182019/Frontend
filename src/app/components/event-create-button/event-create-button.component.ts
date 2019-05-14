@@ -2,22 +2,19 @@ import { Component, OnInit, OnDestroy, Output, Input, Optional } from '@angular/
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
-import { ILocation } from '../../models/ilocation';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { EventDetailDialogComponent } from '../event-detail-dialog/event-detail-dialog.component';
+import { EventCreateDialogComponent } from '../event-create-dialog/event-create-dialog.component';
 import { IEvent } from '../../models/ievent';
 import * as moment from 'moment';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-event-detail',
-  templateUrl: './event-detail.component.html',
-  styleUrls: ['./event-detail.component.scss']
+  selector: 'app-event-create-button',
+  templateUrl: './event-create-button.component.html',
+  styleUrls: ['./event-create-button.component.scss']
 })
+export class EventCreateButtonComponent implements OnInit {
 
-export class EventDetailComponent implements OnInit, OnDestroy {
-
-  @Input() title: string;
   @Input() event: IEvent;
   // sub:Subscription;
   eventObs: Observable<any> = new Observable();
@@ -73,7 +70,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     dialogConf.autoFocus = true;
     dialogConf.data = this.event;
 
-    const dialogRef = this.dialog.open(EventDetailDialogComponent, dialogConf);
+    const dialogRef = this.dialog.open(EventCreateDialogComponent, dialogConf);
 
     dialogRef.afterClosed().subscribe(result => {
       if (typeof result === 'number') {
@@ -90,4 +87,5 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   currentUser(): boolean{
     return !!this.cookieService.get("token");
   }
+
 }

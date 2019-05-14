@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @SpringBootApplication
-@EnableZuulProxy
+//@EnableZuulProxy
 @EnableOAuth2Sso
 @Configuration
 public class FrontApplication extends WebSecurityConfigurerAdapter {
