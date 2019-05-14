@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     date_start: moment().format('YYYY-MM-DDTkk:mm'),
     type: '',
     source_uri: '',
-    location: { id: null, name: '', lng: 0, ltd: 0},
+    location: { id: null, name: '', longitude: 0, latitude: 0},
     pic: '',
     id: 0
   };

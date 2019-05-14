@@ -19,8 +19,8 @@ export class EventCreateDialogComponent implements OnInit {
   curCoords: ILocation = {
     id: null,
     name: '',
-    lng: 0,
-    ltd: 0
+    longitude: 0,
+    latitude: 0
   };
   emptyEvent: IEvent = {
     title: '',
@@ -29,7 +29,7 @@ export class EventCreateDialogComponent implements OnInit {
     date_start: moment().format('YYYY-MM-DDTkk:mm'),
     type: '',
     source_uri: '',
-    location: { id: null, name: '', lng: 0, ltd: 0 },
+    location: { id: null, name: '', longitude: 0, latitude: 0 },
     pic: '',
     id: 0,
     owner_id: 0
@@ -62,8 +62,8 @@ export class EventCreateDialogComponent implements OnInit {
     dataToPass.location = {
       id: null,
       name: this.form.value.name_location,
-      lng: this.curCoords.lng,
-      ltd: this.curCoords.ltd
+      longitude: this.curCoords.longitude,
+      latitude: this.curCoords.latitude
     };
 
     this.dialogRef.close(dataToPass);

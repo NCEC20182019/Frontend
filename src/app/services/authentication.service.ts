@@ -10,7 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   // private _usersUri = 'http://localhost:9999/auth'; // - Local
-  private _usersUri = 'http://lemmeknow.tk/auth'; // - Prod
+  private _usersUri = '/auth'; // - Prod
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;

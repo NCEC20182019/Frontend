@@ -25,8 +25,8 @@ export class MapComponent implements OnInit {
   userLocation: ILocation = {
     id: null,
     name: '',
-    ltd: 0,
-    lng: 0
+    latitude: 0,
+    longitude: 0
   };
 
   private userMarker = {
@@ -47,8 +47,8 @@ export class MapComponent implements OnInit {
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.userLocation.ltd = position.coords.latitude;
-        this.userLocation.lng = position.coords.longitude;
+        this.userLocation.latitude = position.coords.latitude;
+        this.userLocation.longitude = position.coords.longitude;
       });
     }
   }
@@ -56,8 +56,8 @@ export class MapComponent implements OnInit {
   onChooseLocation(event) {
     this.currentMarker =  {
       id: null,
-      ltd: event.coords.lat,
-      lng: event.coords.lng,
+      latitude: event.coords.lat,
+      longitude: event.coords.lng,
       name: ''
     };
 
@@ -95,8 +95,8 @@ export class MapComponent implements OnInit {
   getBounds(){
     if(this.myCircle) {
       let center: ILocation;
-      center.ltd = this.myCircle.nativeElement.attributes.latitude.value;
-      center.lng = this.myCircle.nativeElement.attributes.longitude.value;
+      center.latitude = this.myCircle.nativeElement.attributes.latitude.value;
+      center.longitude = this.myCircle.nativeElement.attributes.longitude.value;
       let radius: number = this.myCircle.nativeElement.attributes.radius.value;
       return {
         center: center,
@@ -110,18 +110,18 @@ export class MapComponent implements OnInit {
   whereToCenter() {
     if(this.center){
       if(this.center === 'event'){
-        return {ltd: this.Events[0].location.ltd,
-                lng: this.Events[0].location.lng}
+        return {ltd: this.Events[0].location.latitude,
+                lng: this.Events[0].location.longitude}
       }else if(this.center === 'user'){
-        return {ltd: this.userLocation.ltd,
-                lng: this.userLocation.lng}
+        return {ltd: this.userLocation.latitude,
+                lng: this.userLocation.longitude}
       }else if(this.center === 'city'){
         return {ltd:  51.6720400,
                 lng:  39.1843000}
       }
     }else{
-      return {ltd: (this.userLocation.ltd || this.userLocation.lng) ? this.userLocation.ltd : this.Events[0] ? this.Events[0].location.ltd : 51.6720400,
-              lng: (this.userLocation.ltd || this.userLocation.lng) ? this.userLocation.lng : this.Events[0] ? this.Events[0].location.lng : 39.1843000}
+      return {ltd: this.userLocation.latitude ? this.userLocation.latitude : this.Events[0] ? this.Events[0].location.latitude : 51.6720400,
+              lng: this.userLocation.longitude ? this.userLocation.longitude : this.Events[0] ? this.Events[0].location.longitude : 39.1843000}
     }
   }
 }

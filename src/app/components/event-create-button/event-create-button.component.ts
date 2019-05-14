@@ -47,8 +47,8 @@ export class EventCreateButtonComponent implements OnInit {
         date_end: this.event.date_end,
         source_uri: this.event.source_uri,
         type: this.event.type,
-        latitude: this.event.location.ltd,
-        longitude: this.event.location.lng,
+        latitude: this.event.location.latitude,
+        longitude: this.event.location.longitude,
         name_location: this.event.location.name
       };
       if (this.event.id) {

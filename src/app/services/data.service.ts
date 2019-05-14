@@ -20,8 +20,8 @@ export class DataService {
     this.Events.push(events);
   }
 
-  private _eventsUri = 'http://lemmeknow.tk/events'; // -- Integration URL
-  private _usersUri = 'http://lemmeknow.tk/auth';
+  private _eventsUri = '/events'; // -- Integration URL
+  private _usersUri = '/auth';
   // private _usersUri = 'http://localhost:9999/auth';
 
   constructor(private http: HttpClient) { }
@@ -57,8 +57,8 @@ export class DataService {
         location: {
           id: 15,
           name: "Фестиваль волшебных шаров — Воронеж",
-          ltd: 51.63344192504883,
-          lng: 39.2305793762207,
+          latitude: 51.63344192504883,
+          longitude: 39.2305793762207,
         }
       },
       {
@@ -74,8 +74,8 @@ export class DataService {
         location: {
           id: 1,
           name: 'loc2',
-          ltd: 52.6000000,
-          lng: 37.7000000
+          latitude: 52.6000000,
+          longitude: 37.7000000
         }
       },
       {
@@ -91,8 +91,8 @@ export class DataService {
         location: {
           id: 2,
           name: 'loc3',
-          ltd: 100,
-          lng: 100
+          latitude: 100,
+          longitude: 100
         }
       },
     ];

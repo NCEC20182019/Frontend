@@ -31,19 +31,22 @@ zuul:
   routes:
     events:
       path: /events/**
-      url: http://lemmeknow.tk:8092/events
+      url: http://localhost:8092/events
     notifications:
       path: /notifications/**
-      url: http://lemmeknow.tk:8093/notifications
+      url: http://localhost:8093/notifications
     parser:
       path: /parser/**
-      url: http://lemmeknow.tk:8094/parser
+      url: http://localhost:8094/parser
     scheduler:
       path: /scheduler/**
-      url: http://lemmeknow.tk:8095/scheduler
+      url: http://localhost:8095/scheduler
     security:
       path: /auth/**
-      url: http://lemmeknow.tk:9999/auth
+      url: http://localhost:9999/auth
+    signin:
+      path: /signin/**
+      url: http://localhost:8090/signin
 
 zuul.include-debug-header: true
 
@@ -58,8 +61,9 @@ zuul.include-debug-header: true
 ##      registered-redirect-uri: http://localhost:8090
 #    resource:
 #      user-info-uri: http://localhost:9999/auth/user/me
-level:
-  org:
-    springframework:
-      security: DEBUG
-      web: DEBUG
+spring:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG
