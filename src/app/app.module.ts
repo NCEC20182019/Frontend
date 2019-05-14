@@ -8,6 +8,8 @@ import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule,
          MatFormFieldModule, MatCardModule, MatProgressSpinnerModule, MatInputModule,
          MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, 
          MatDatepickerModule,MatNativeDateModule, MatDialogModule, MatCheckboxModule, MatIconModule } from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {OverlayModule, OverlayContainer, FullscreenOverlayContainer} from '@angular/cdk/overlay';
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './app.component';
@@ -77,6 +79,8 @@ import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/
     MatNativeDateModule,
     MatDialogModule,
     MatIconModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     OverlayModule,
     FormsModule,
     ReactiveFormsModule

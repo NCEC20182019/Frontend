@@ -11,6 +11,7 @@ export class SubscriptionService {
   constructor(private http: HttpClient) { }
 
   private notificationUri = '/notifications';
+  private eventUri = '/events';
 
   private headers = {
     headers: new HttpHeaders({
@@ -27,16 +28,16 @@ export class SubscriptionService {
     return this.http.post(this.notificationUri + '/subscribe', subs, this.headers);
   }
 
-  /** POST: disable subscriptions */
-  toggleSubscriptions(toggles) {
-    this.http.post(this.notificationUri + '/toggle', toggles, this.headers).subscribe();
-  }
-  /** POST: unsubscribe user from events  */
-  deleteSubscriptions(ids) {
-    this.http.post(this.notificationUri + '/unsubscribe', ids, this.headers).subscribe();
+  /** POST: unsubscribe user from event  */
+  deleteSubscription(subId: any) {
+    return this.http.delete(this.notificationUri + /unsubscribe/ + subId, this.headers);
   }
 
-  updateAreas(areaSubs: Subscription[]) {
-    this.http.post(this.notificationUri + '/update/areas', areaSubs, this.headers).subscribe();
+  getTypes() {
+    return this.http.get<{id: number, type: string}[]>(this.eventUri + '/types', this.headers);
+  }
+
+  subscribeOrUpdate(subs: any[]) {
+    return this.http.post(this.notificationUri + '/subscribe-or-update', subs, this.headers);
   }
 }

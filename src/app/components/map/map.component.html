@@ -1,5 +1,5 @@
 <div class="map-container" id="map-container">
-    <agm-map (mapClick)="onChooseLocation($event)"
+    <agm-map (mapClick)="onChooseLocation($event); onCreateArea($event)"
                                id="map" 
                                [latitude]="whereToCenter().ltd"
                                [longitude]="whereToCenter().lng"
@@ -55,18 +55,17 @@
                 [editable]="true">
             </agm-circle>
 
-            <div *ngFor="let ar of areas; let i = index">
+            <div *ngFor="let ar of areas;">
                 <agm-circle
                 *ngIf="ar.enabled"
-                [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius * 1000"
+                [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius"
                 [fillColor]="'red'"
-                [circleDraggable]="false"
+                [circleDraggable]="true"
                 [editable]="true"
-                (radiusChange)="onCircleChangeRadius(ar.id, $event)"
-                (centerChange)="onCircleChangeCenter(ar.id, $event)">
-                    <agm-info-window [isOpen]="true">
-                        {{ar.name}}
-                    </agm-info-window>
+                (radiusChange)="onAreaChange(ar.id, $event)"
+                (centerChange)="onAreaChange(ar.id, $event)"
+                (mouseOver)="overArea(ar.id, true)"
+                (mouseOut)="overArea(ar.id, false)">
                 </agm-circle>
             </div>
             <!-- <agm-snazzy-info-window [isOpen]="true" [latitude]="51.673858" [longitude]="7.815982" [closeWhenOthersOpen]="true">

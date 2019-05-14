@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { ILocation } from '../../models/ilocation';
 import { IEvent } from '../../models/ievent';
 import { AgmCircle } from '@agm/core';
+import {Subscription} from "../../models/subscription";
 
 @Component({
   selector: 'app-map',
@@ -15,8 +16,8 @@ export class MapComponent implements OnInit {
   @Input() filter: boolean;
   @Input() areas: any[];
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
-  @Output() areaChange: EventEmitter<any> = new EventEmitter();
-  private emitAreas: any[] = [];
+  @Output() onOverArea: EventEmitter<any> = new EventEmitter();
+
   @ViewChild('coordFilter') myCircle;
   @Input() filterSubmit = false;
   @Input() center: String;
@@ -64,54 +65,31 @@ export class MapComponent implements OnInit {
     // console.log(this.currentMarker)
     // console.log(this.circle);
   }
-  onCircleChangeRadius(arId, $event) {
-    // const index = this.emitAreas.findIndex(a => a.arId === arId);
-    // if (index >= 0) {
-    //   this.emitAreas[index].radius = typeof $event === 'number' ? $event: null;
-    // } else {
-    //   this.emitAreas.push({
-    //     arId: arId,
-    //     ltd: null,
-    //     lng: null,
-    //     radius: typeof $event === 'number' ? $event: null
-    //   });
-    // }
 
-
-      console.log("trigger change radius", $event);
-      const radius = typeof $event === 'number' ? $event : null;
-      this.areaChange.emit({
-        arId: arId,
-        ltd: null,
-        lng: null,
-        radius: radius
-      });
-
-    // console.log(this.emitAreas);
-  }
-  onCircleChangeCenter(arId, $event) {
-    // const index = this.emitAreas.findIndex(a => a.arId === arId);
-    // if (index >= 0) {
-    //   this.emitAreas[index].ltd = $event.lat ? $event.lat : null;
-    //   this.emitAreas[index].lng = $event.lng ? $event.lng : null;
-    // } else {
-    //   this.emitAreas.push({
-    //     arId: arId,
-    //     ltd: $event.lat ? $event.lat : null,
-    //     lng: $event.lng ? $event.lng : null,
-    //     radius: null
-    //   });
-    // }
-
-    //console.log("trigger change center", $event);
-    this.areaChange.emit({
-      arId: arId,
-      ltd: $event.lat ? $event.lat : null,
-      lng: $event.lng ? $event.lng : null,
-      radius: null
+  onCreateArea($event) {
+    this.areas.push({
+      id: null,
+      userId: null,
+      radius: 1,
+      latitude: $event.coords.lat,
+      longitude: $event.coords.lng,
+      enabled: true,
+      name: null
     });
 
-    // console.log(this.emitAreas);
+  }
+
+  onAreaChange(arId, $event) {
+    const index = this.areas.findIndex(a => a.id === arId);
+    if (index >= 0) {
+      this.areas[index].latitude = $event.lat ? $event.lat : this.areas[index].latitude;
+      this.areas[index].longitude = $event.lng ? $event.lng : this.areas[index].longitude;
+      this.areas[index].radius = typeof $event === 'number' ? $event : this.areas[index].radius;
+    }
+  }
+
+  overArea(arId, flag) {
+    this.onOverArea.emit({flag: flag, id: arId});
   }
 
   getBounds(){
