@@ -31,6 +31,8 @@ import { FilterButtonComponent } from './components/filter-button/filter-button.
 import { LogoutComponent } from './components/logout/logout.component';
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/subscriptions-dialog.component';
+import { EventCreateButtonComponent } from './components/event-create-button/event-create-button.component';
+import { EventCreateDialogComponent } from './components/event-create-dialog/event-create-dialog.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/
     FilterButtonComponent,
     LogoutComponent,
     SubscriptionsComponent,
-    SubscriptionsDialogComponent
+    SubscriptionsDialogComponent,
+    EventCreateButtonComponent,
+    EventCreateDialogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -93,7 +97,8 @@ import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/
   bootstrap: [AppComponent],
   entryComponents: [
     MapComponent,
-    SubscriptionsDialogComponent
+    SubscriptionsDialogComponent,
+    EventCreateDialogComponent
   ]
 })
 export class AppModule { }

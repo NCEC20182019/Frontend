@@ -1,4 +1,3 @@
-import { Url } from "url";
 import { ILocation } from "./ilocation";
 
 export interface IEvent{
