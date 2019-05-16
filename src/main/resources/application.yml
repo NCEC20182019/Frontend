@@ -31,8 +31,8 @@ zuul:
   add-host-header: true
   include-debug-header: true
   host:
-    connect-timeout-millis: 60000
-    socket-timeout-millis: 60000
+    connect-timeout-millis: 30000
+    socket-timeout-millis: 30000
   routes:
     events:
       path: /events/**
