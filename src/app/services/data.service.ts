@@ -3,12 +3,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, from } from 'rxjs';
 import { IEvent } from '../models/ievent';
 import { User } from '../models/user';
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   public Events: IEvent[];
+  private authService: AuthenticationService;
+
+  private headers = new HttpHeaders({
+                                               'Content-Type': 'application/json',
+                                               'Access-Control-Allow-Origin': '*',
+                                               'Authorization': 'Bearer ' + this.authService.cookieService.get('token')
+                                             });
 
   getEvents(sort: number, filter){
     this.Events = [];
@@ -29,12 +37,8 @@ export class DataService {
 
   httpGetEvents(sort: number, filter) {
     this.http.post<IEvent[]>(this._eventsUri, {sort, filter},
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        })
-      }).subscribe((data)=>{
+      {headers: this.headers}
+      ).subscribe((data)=>{
           this.addLocalEvents(data);
         },
       (error) => {
@@ -133,26 +137,23 @@ export class DataService {
   updateEvent(event, id) {
     return this.http.put(this._eventsUri + '/update/' + id, event,
       {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        })
+        headers: this.headers
       });
   }
   /** POST: add a new event to eventService */
   addEvent(event) {
     return this.http.post(this._eventsUri + '/create', event,
       {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        })
+        headers: this.headers
       });
   }
 
   /** DELETE: delete event from eventService */
   deleteEvent(_id) {
-    return this.http.delete(this._eventsUri + '/delete/' + _id);
+    return this.http.delete(this._eventsUri + '/delete/' + _id,
+      {
+        headers: this.headers
+      });
   }
 
   registerUser(user: User){

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Subscription } from '../models/subscription';
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,13 @@ export class SubscriptionService {
 
   private notificationUri = '/notifications';
   private eventUri = '/events';
+  private authService: AuthenticationService;
 
   private headers = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Origin': '*',
+      'Authorization': 'Bearer ' + this.authService.cookieService.get('token')
     })
   };
 
