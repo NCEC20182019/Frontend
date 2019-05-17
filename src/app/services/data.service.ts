@@ -1,22 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, from } from 'rxjs';
+import {Observable, of, from, BehaviorSubject} from 'rxjs';
 import { IEvent } from '../models/ievent';
 import { User } from '../models/user';
 import {AuthenticationService} from "./authentication.service";
+import {CookieService} from "ngx-cookie-service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   public Events: IEvent[];
-  private authService: AuthenticationService;
 
   private headers = new HttpHeaders({
                                                'Content-Type': 'application/json',
                                                'Access-Control-Allow-Origin': '*',
-                                               'Authorization': 'Bearer ' + this.authService.cookieService ? this.authService.cookieService.get('token') : ''
+                                               'Authorization': 'Bearer ' + this.authService.cookieService ? this.authService.cookieService.get('token') : ' '
                                              });
+  constructor(
+    private authService: AuthenticationService,
+    private http: HttpClient) {
+  }
 
   getEvents(sort: number, filter){
     this.Events = [];
@@ -33,11 +38,12 @@ export class DataService {
   private _usersUri = '/auth';
   // private _usersUri = 'http://localhost:9999/auth';
 
-  constructor(private http: HttpClient) { }
-
   httpGetEvents(sort: number, filter) {
     this.http.post<IEvent[]>(this._eventsUri, {sort, filter},
-      {headers: this.headers}
+      {headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        })}
       ).subscribe((data)=>{
           this.addLocalEvents(data);
         },

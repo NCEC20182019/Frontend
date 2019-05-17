@@ -9,17 +9,19 @@ import {AuthenticationService} from "./authentication.service";
 })
 export class SubscriptionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService) { }
 
   private notificationUri = '/notifications';
   private eventUri = '/events';
-  private authService: AuthenticationService;
+  ;
 
   private headers = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Authorization': 'Bearer ' + this.authService.cookieService ? this.authService.cookieService.get('token') : ''
+    'Authorization': 'Bearer ' + this.authService.cookieService ? this.authService.cookieService.get('token') : ' '
     })
   };
 
