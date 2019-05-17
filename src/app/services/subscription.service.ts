@@ -19,7 +19,7 @@ export class SubscriptionService {
     headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-      'Authorization': 'Bearer ' + this.authService.cookieService.get('token')
+    'Authorization': 'Bearer ' + this.authService.cookieService ? this.authService.cookieService.get('token') : ''
     })
   };
 
