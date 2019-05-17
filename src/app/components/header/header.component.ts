@@ -13,22 +13,10 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class HeaderComponent implements OnInit {
 
-  private Title = 'Lemmeknow';
+  private Title = 'LemmeKnow';
   private navLinks = [{relativePath: 'map', label: 'Map View'},
                       {relativePath: 'calendar', label: 'Calendar View'}];
 
-  emptyEvent: IEvent = {
-    owner_id: null,
-    title: '',
-    description: '',
-    date_end: moment().format('YYYY-MM-DDTkk:mm'),
-    date_start: moment().format('YYYY-MM-DDTkk:mm'),
-    type: '',
-    source_uri: '',
-    location: { id: null, name: '', longitude: 0, latitude: 0},
-    pic: '',
-    id: 0
-  };
 
   constructor(
     private router: Router,

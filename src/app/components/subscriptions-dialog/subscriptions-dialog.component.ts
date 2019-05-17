@@ -4,6 +4,7 @@ import {MatDialogRef, MatSelectChange, MatSnackBar} from '@angular/material';
 import {SubscriptionService} from 'src/app/services/subscription.service';
 import {ActivatedRoute} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-subscriptions-dialog',
@@ -31,9 +32,11 @@ export class SubscriptionsDialogComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<SubscriptionsDialogComponent>,
     private subscriptionService: SubscriptionService,
+    private dataService: DataService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private authService: AuthenticationService) {}
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit() {
     this.loadSubscription();
@@ -64,7 +67,7 @@ export class SubscriptionsDialogComponent implements OnInit {
     );
   }
   getTypeList() {
-    this.subscriptionService.getTypes().subscribe(
+    this.dataService.getTypes().subscribe(
       data => data.forEach(
         d => {
           if (this.typeSubs.findIndex(t => t.type === d.type) < 0) {

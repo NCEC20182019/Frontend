@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {User} from '../models/user';
@@ -30,6 +30,15 @@ export class AuthenticationService {
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
+
+  addAuthHeader(headers: HttpHeaders){
+    const token = this.cookieService.get('token');
+    if (token) {
+      console.log('token', token);
+      return headers.set('Authorization', 'Bearer ' + token);
+    }
+  }
+
 
   login(username: string, password: string): any {
     return this.http.post<any>('/signin', { username, password })

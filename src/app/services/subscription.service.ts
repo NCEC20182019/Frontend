@@ -8,41 +8,33 @@ import {AuthenticationService} from "./authentication.service";
   providedIn: 'root'
 })
 export class SubscriptionService {
+  private notificationUri = '/notifications';
+
+  private headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+  });
 
   constructor(
     private http: HttpClient,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService
+  ) { }
 
-  private notificationUri = '/notifications';
-  private eventUri = '/events';
-  ;
-
-  private headers = {
-    headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Authorization': 'Bearer ' + this.authService.cookieService ? this.authService.cookieService.get('token') : ' '
-    })
-  };
 
   getSubscriptions(userId): Observable<Subscription[]> {
-    return this.http.get<Subscription[]>(this.notificationUri + '/subscriptions/' + userId, this.headers);
+    return this.http.get<Subscription[]>(this.notificationUri + '/subscriptions/' + userId, {headers: this.authService.addAuthHeader(this.headers)});
   }
   /** POST: subscribe to event */
   addSubscription(subs) {
-    return this.http.post(this.notificationUri + '/subscribe', subs, this.headers);
+    return this.http.post(this.notificationUri + '/subscribe', subs, {headers: this.authService.addAuthHeader(this.headers)});
   }
 
   /** POST: unsubscribe user from event  */
   deleteSubscription(subId: any) {
-    return this.http.delete(this.notificationUri + /unsubscribe/ + subId, this.headers);
-  }
-
-  getTypes() {
-    return this.http.get<{id: number, type: string}[]>(this.eventUri + '/types', this.headers);
+    return this.http.delete(this.notificationUri + /unsubscribe/ + subId, {headers: this.authService.addAuthHeader(this.headers)});
   }
 
   subscribeOrUpdate(subs: any[]) {
-    return this.http.post(this.notificationUri + '/subscribe-or-update', subs, this.headers);
+    return this.http.post(this.notificationUri + '/subscribe-or-update', subs, {headers: this.authService.addAuthHeader(this.headers)});
   }
 }

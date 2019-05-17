@@ -1,59 +1,51 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable, of, from, BehaviorSubject} from 'rxjs';
-import { IEvent } from '../models/ievent';
-import { User } from '../models/user';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {IEvent} from '../models/ievent';
+import {User} from '../models/user';
 import {AuthenticationService} from "./authentication.service";
-import {CookieService} from "ngx-cookie-service";
-import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  private _eventsUri = '/events';
+  private _usersUri = '/auth';
   public Events: IEvent[];
-
   private headers = new HttpHeaders({
-                                               'Content-Type': 'application/json',
-                                               'Access-Control-Allow-Origin': '*',
-                                               'Authorization': 'Bearer ' + this.authService.cookieService ? this.authService.cookieService.get('token') : ' '
-                                             });
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+  });
+
   constructor(
     private authService: AuthenticationService,
-    private http: HttpClient) {
+    private http: HttpClient
+  ) {
+    this.Events = [];
   }
 
-  getEvents(sort: number, filter){
-    this.Events = [];
+  getEvents(sort: number, filter) {
     this.httpGetEvents(sort, filter);
     return this.Events;
   }
 
-  addLocalEvents(events){
+  addLocalEvents(events) {
     this.Events.concat(events);
     console.log('Все ивенты', this.Events);
   }
 
-  private _eventsUri = '/events'; // -- Integration URL
-  private _usersUri = '/auth';
-  // private _usersUri = 'http://localhost:9999/auth';
-
   httpGetEvents(sort: number, filter) {
-    this.http.post<IEvent[]>(this._eventsUri, {sort, filter},
-      {headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        })}
-      ).subscribe((data)=>{
+    this.http.post<IEvent[]>(this._eventsUri, {sort, filter}, {headers: this.authService.addAuthHeader(this.headers)})
+      .subscribe((data) => {
           this.addLocalEvents(data);
         },
-      (error) => {
-        console.log(error);
-        this.httpGetAllEvents();
-      });
+        (error) => {
+          console.log(error);
+          this.httpGetAllEvents();
+        });
   }
 
-  getMockEvents(): IEvent[]{
+  getMockEvents(): IEvent[] {
     return [
       {
         owner_id: 1,
@@ -110,21 +102,21 @@ export class DataService {
   }
 
   getEvent(_id): IEvent {
-    if(!this.Events.length){
+    if (!this.Events.length) {
       this.Events = this.getMockEvents(); //TODO
     }
     let event = this.Events.find((x) => x.id === _id);
-    if(!event) {
+    if (!event) {
       this.http.get<IEvent>(this._eventsUri + '/' + _id,
         {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
           })
-        }).subscribe((data) =>{
-          return data;
+        }).subscribe((data) => {
+        return data;
       });
-    }else {
+    } else {
       return event;
     }
   }
@@ -146,43 +138,33 @@ export class DataService {
         headers: this.headers
       });
   }
+
   /** POST: add a new event to eventService */
   addEvent(event) {
-    return this.http.post(this._eventsUri + '/create', event,
-      {
-        headers: this.headers
-      });
+    return this.http.post(this._eventsUri + '/create', event, {headers: this.authService.addAuthHeader(this.headers)});
   }
 
   /** DELETE: delete event from eventService */
   deleteEvent(_id) {
-    return this.http.delete(this._eventsUri + '/delete/' + _id,
-      {
-        headers: this.headers
-      });
+    return this.http.delete(this._eventsUri + '/delete/' + _id, {headers: this.authService.addAuthHeader(this.headers)});
   }
 
-  registerUser(user: User){
-    return this.http.put(this._usersUri + '/user/put', user,
-    {
-      headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    })});
+  registerUser(user: User) {
+    return this.http.put(this._usersUri + '/user/put', user, {headers: this.headers});
   }
 
   private httpGetAllEvents() {
-    this.http.get<IEvent[]>(this._eventsUri,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+    this.http.get<IEvent[]>(this._eventsUri, {headers: this.headers})
+      .subscribe((data) => {
+          this.addLocalEvents(data);
+        },
+        (error) => {
+          console.log(error);
         })
-      }).subscribe((data)=>{
-        this.addLocalEvents(data);
-      },
-      (error) => {
-        console.log(error);
-      })
+  }
+
+  /** Retrive all available event types from eventDB*/
+  getTypes() {
+    return this.http.get<{id: number, type: string}[]>(this._eventsUri + '/types', {headers: this.authService.addAuthHeader(this.headers)});
   }
 }
