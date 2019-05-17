@@ -1,5 +1,5 @@
-import {Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
-import {ILocation} from "../../models/ilocation";
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-filter',
@@ -12,6 +12,7 @@ export class FilterComponent implements OnInit {
 
   minDate: Date;
   maxDate: Date;
+  typeList: any[];
 
   @Output() close = new EventEmitter();
   @Output() coordFilterEvent = new EventEmitter();
@@ -20,12 +21,22 @@ export class FilterComponent implements OnInit {
   coordFilter: boolean = false;
 
 
-  constructor() { 
+  constructor(
+    private dataService: DataService
+  ) {
     this.minDate = new Date();
     this.maxDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDay());
+    this.typeList = [];
   }
 
   ngOnInit() {
+    this.loadTypeList();
+  }
+
+  loadTypeList() {
+    this.dataService.getTypes().subscribe(
+      data => this.typeList = data
+    );
   }
 
   changeMinDate(event){

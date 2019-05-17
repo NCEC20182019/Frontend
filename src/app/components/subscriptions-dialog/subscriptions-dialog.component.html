@@ -16,12 +16,6 @@
       <ng-template matTabContent>
         <mat-form-field *ngIf="typeList.length !== 0">
           <mat-select placeholder="Create new subscriptions" multiple (selectionChange)="onNewTypeSelect($event)">
-            <!--<mat-select-trigger>-->
-            <!--{{typesToSubscribe.value ? typesToSubscribe.value[0] : ''}}-->
-            <!--<span *ngIf="typesToSubscribe.value?.length > 1" class="example-additional-selection">-->
-            <!--(+{{typesToSubscribe.value.length - 1}} {{typesToSubscribe.value?.length === 2 ? 'other' : 'others'}})-->
-            <!--</span>-->
-            <!--</mat-select-trigger>-->
             <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
           </mat-select>
         </mat-form-field>

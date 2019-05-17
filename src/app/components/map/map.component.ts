@@ -65,16 +65,17 @@ export class MapComponent implements OnInit {
   }
 
   onCreateArea($event) {
-    this.areas.push({
-      id: null,
-      userId: null,
-      radius: 1000,
-      latitude: $event.coords.lat,
-      longitude: $event.coords.lng,
-      enabled: true,
-      name: null
-    });
-
+    if (this.areas) {
+      this.areas.push({
+        id: null,
+        userId: null,
+        radius: 1000,
+        latitude: $event.coords.lat,
+        longitude: $event.coords.lng,
+        enabled: true,
+        name: null
+      });
+    }
   }
 
   onAreaChange(arId, $event) {

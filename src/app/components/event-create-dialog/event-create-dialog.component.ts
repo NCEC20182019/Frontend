@@ -14,6 +14,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 export class EventCreateDialogComponent implements OnInit {
 
   form: FormGroup;
+  typeList: any[];
 
   newEvent: IEvent = {
     title: '',
@@ -33,18 +34,27 @@ export class EventCreateDialogComponent implements OnInit {
     private dataService: DataService,
     private dialogRef: MatDialogRef<EventCreateDialogComponent>,
     private snackBar: MatSnackBar,
-    private authService: AuthenticationService) {  }
+    private authService: AuthenticationService
+  ) {
+    this.typeList = [];
+  }
 
   ngOnInit() {
+    this.loadTypeList();
     this.form = this.fb.group({
       title: this.newEvent.title,
       description: [this.newEvent.description, Validators.required],
       date_start: [this.newEvent.date_start, Validators.required],
       date_end: [this.newEvent.date_end, Validators.required],
       source_uri: [this.newEvent.source_uri, Validators.required],
-      type: [this.newEvent.type, Validators.required],
+      type: [Validators.required],
       name_location: [this.newEvent.location.name, Validators.required]
     });
+  }
+  loadTypeList() {
+    this.dataService.getTypes().subscribe(
+      data => this.typeList = data
+    );
   }
 
   openSnackBar(message: any, action?: string) {
@@ -54,6 +64,7 @@ export class EventCreateDialogComponent implements OnInit {
   }
 
   save() {
+    console.log(this.form.value);
     this.newEvent.title = this.form.value.title;
     this.newEvent.description = this.form.value.description;
     this.newEvent.date_start = this.form.value.date_start;

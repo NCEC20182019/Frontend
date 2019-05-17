@@ -96,7 +96,8 @@ export class MapViewComponent implements OnInit {
 
   onFilterCleared() {
     this.filterForm = null;
-    this.filterCmp = new FilterComponent();
+    //TODO rewrite this
+    this.filterCmp = null; //new FilterComponent();
     this.getEvents();
   }
 }

@@ -17,7 +17,10 @@
       <input matInput placeholder="Event source url" formControlName="source_uri">
     </mat-form-field><br />
     <mat-form-field>
-      <input matInput placeholder="Event Type" formControlName="type">
+      <mat-select placeholder="Choose event type" formControlName="type">
+        <!--(selectionChange)="onNewTypeSelect($event)">-->
+        <mat-option *ngFor="let type of typeList" [value]="type.type">{{type.type}}</mat-option>
+      </mat-select>
     </mat-form-field><br />
     <mat-form-field>
       <input matInput placeholder="Name Location" formControlName="name_location">

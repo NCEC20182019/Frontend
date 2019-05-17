@@ -28,10 +28,7 @@
   <div class="type-filter">
     <span>Типы:</span>
     <ul #listElement>
-      <li><mat-checkbox #films color="primary">Фильмы</mat-checkbox></li>
-      <li><mat-checkbox #theatres color="primary">Театры</mat-checkbox></li>
-      <li><mat-checkbox color="primary">Спросить какие еще могут быть</mat-checkbox></li>
-      <li><mat-checkbox color="primary">Просто пустой</mat-checkbox></li>
+      <li *ngFor="let type of typeList"><mat-checkbox color="primary">{{type.type}}</mat-checkbox></li>
     </ul>
   </div>
 
