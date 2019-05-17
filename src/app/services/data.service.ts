@@ -30,7 +30,7 @@ export class DataService {
   }
 
   addLocalEvents(events){
-    this.Events.push(events);
+    this.Events.concat(events);
     console.log('Все ивенты', this.Events);
   }
 
