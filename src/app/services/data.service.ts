@@ -36,28 +36,17 @@ export class DataService {
         },
         (error) => {
           console.log(error);
-        })
-  }
-
-  getEvents(sort: number, filter) {
-    this.httpGetEvents(sort, filter);
-    return this.Events;
-  }
-
-  addLocalEvents(events) {
-    this.Events.concat(events);
-    console.log('Все ивенты', this.Events);
-  }
-
-  httpGetEvents(sort: number, filter) {
-    this.http.post<IEvent[]>(this._eventsUri, {sort, filter}, {headers: this.authService.addAuthHeader(this.headers)})
-      .subscribe((data) => {
-          this.addLocalEvents(data);
-        },
-        (error) => {
-          console.log(error);
-          this.httpGetAllEvents();
         });
+  }
+  getSortedEvents(sort: number, filter) {
+    this.http.post<IEvent[]>(this._eventsUri, {sort, filter},{headers: this.authService.addAuthHeader(this.headers)})
+      .subscribe(
+        (data) => this._eventSource.next(data),
+        (error) => {
+          this.getAllEvents();
+          console.log(error);
+        }
+      );
   }
 
   getMockEvents(): IEvent[] {
@@ -117,40 +106,27 @@ export class DataService {
   }
 
   getEvent(_id): IEvent {
-    if (!this.Events.length) {
-      this.Events = this.getMockEvents(); //TODO
-    }
+    // if (!this.Events.length) {
+    //   this.Events = this.getMockEvents();
+    // }
     let event = this.Events.find((x) => x.id === _id);
     if (!event) {
-      this.http.get<IEvent>(this._eventsUri + '/' + _id,
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          })
-        }).subscribe((data) => {
-        return data;
-      });
+      this.http.get<IEvent>(this._eventsUri + '/' + _id,{ headers: this.headers })
+        .subscribe((data) => {
+          return data;
+        });
     } else {
       return event;
     }
   }
 
-  getRandomPic(): Observable<any> {
-    return this.http.get<any>('https://picsum.photos/200/300/?random',   // Put the url in
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        })
-      });
-  }
-
   /** PUT: update the event on eventService */
   updateEvent(event, id) {
-    return this.http.put(this._eventsUri + '/update/' + id, this.convertEventToDTO(event),
-      {
-        headers: this.headers
+    const ar = [];
+    return this.http.put(this._eventsUri + '/update/' + id, this.convertEventToDTO(event),{ headers: this.headers })
+      .subscribe( (event) => {
+        ar.push(event);
+        this._eventSource.next(ar);
       });
   }
 
@@ -167,21 +143,11 @@ export class DataService {
 
   /** DELETE: delete event from eventService */
   deleteEvent(_id) {
-    return this.http.delete(this._eventsUri + '/delete/' + _id, {headers: this.authService.addAuthHeader(this.headers)});
+    return this.http.delete(this._eventsUri + '/delete/' + _id, {headers: this.authService.addAuthHeader(this.headers)}).subscribe();
   }
 
   registerUser(user: User) {
     return this.http.put(this._usersUri + '/user/put', user, {headers: this.headers});
-  }
-
-  private httpGetAllEvents() {
-    this.http.get<IEvent[]>(this._eventsUri, {headers: this.headers})
-      .subscribe((data) => {
-          this.addLocalEvents(data);
-        },
-        (error) => {
-          console.log(error);
-        })
   }
 
   /** Retrive all available event types from eventDB*/

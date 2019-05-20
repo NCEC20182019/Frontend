@@ -1,13 +1,15 @@
 <div #main id="main" *ngIf="currentEvent">
   <div class="event-info" *ngIf="!edit">
-    <h2 class="event-title left-text">{{ currentEvent.title }}</h2> <button class="edit-button" mat-button [disabled]="!canEdit()">Edit</button>
+    <h2 class="event-title left-text">{{ currentEvent.title }}</h2><button class="edit-button" mat-button [disabled]="!canEdit()">Edit</button>
+    <button *ngIf="subscribed" (click)="subscribeToEvent()" class="edit-button" mat-button><mat-icon>notifications</mat-icon></button>
+    <button *ngIf="!subscribed" (click)="unsubscribe()" class="edit-button" mat-button><mat-icon>notifications_off</mat-icon></button>
     <span class="event-type left-text">Тип мероприятия: {{ currentEvent.type }}</span>
 
 
 
     <h3 class="location-date left-text">Проводится {{currentEvent.location.name === currentEvent.title ? '' : 'в ' + currentEvent.location.name}}
       {{dateFormat(currentEvent.date_start, currentEvent.date_end)}}</h3>
-    <span class="left-text">Координаты: {{currentEvent.location.ltd}}, {{currentEvent.location.lng}}</span>
+    <span class="left-text">Координаты: {{currentEvent.location.latitude}}, {{currentEvent.location.longitude}}</span>
 
     <app-map [center]="'event'" [Events]="getCurrentList()"></app-map>
     <span class="description"><h4>Описание события:</h4><br>{{ currentEvent.description }}</span>

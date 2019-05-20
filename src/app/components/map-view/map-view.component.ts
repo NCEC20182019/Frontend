@@ -1,9 +1,9 @@
-import {Component, OnInit, Output, EventEmitter, Input, ViewChild, OnDestroy} from '@angular/core';
-import { IEvent } from '../../models/ievent';
-import { DataService } from 'src/app/services/data.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MapComponent } from '../map/map.component';
-import { ILocation} from "../../models/ilocation";
+import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {IEvent} from '../../models/ievent';
+import {DataService} from 'src/app/services/data.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MapComponent} from '../map/map.component';
+import {ILocation} from "../../models/ilocation";
 import {FilterComponent} from "../filter/filter.component";
 import {EventlistComponent} from "../eventlist/eventlist.component";
 import {Subscription} from "rxjs";
@@ -60,15 +60,25 @@ export class MapViewComponent implements OnInit, OnDestroy {
       this.Events = events;
       return;
     }
-    events.forEach((event, i) => {
-      let index = this.Events.findIndex(e => e.id === event[i].id);
+
+    for (let event of events) {
+      let index = this.Events.findIndex(e => e.id === event.id);
       if (index !== -1) {
-        this.Events[index] = events[i];
+        this.Events[index] = event;
       } else {
         this.Events.push(event);
         console.log(this.Events);
       }
-    });
+    }
+    // events.forEach((event, i) => {
+    //   let index = this.Events.findIndex(e => e.id === event[i].id);
+    //   if (index !== -1) {
+    //     this.Events[index] = events[i];
+    //   } else {
+    //     this.Events.push(event);
+    //     console.log(this.Events);
+    //   }
+    // }, this);
   }
 
   getEvents() {

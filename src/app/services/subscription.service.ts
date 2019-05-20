@@ -26,15 +26,25 @@ export class SubscriptionService {
   }
   /** POST: subscribe to event */
   addSubscription(subs) {
-    return this.http.post(this.notificationUri + '/subscribe', subs, {headers: this.authService.addAuthHeader(this.headers)});
+    return this.http.post(this.notificationUri + '/subscribe', subs, {headers: this.authService.addAuthHeader(this.headers)})
+      .subscribe();
   }
 
-  /** POST: unsubscribe user from event  */
+  /** POST: unsubscribe user from event, type or area by subId  */
   deleteSubscription(subId: any) {
-    return this.http.delete(this.notificationUri + /unsubscribe/ + subId, {headers: this.authService.addAuthHeader(this.headers)});
+    return this.http.delete(this.notificationUri + '/unsubscribe/' + subId, {headers: this.authService.addAuthHeader(this.headers)});
+  }
+  /** POST: unsubscribe user from event by eventId and userId  */
+  deleteEventSubscription(eventId, userId) {
+    return this.http.delete(this.notificationUri + '/unsubscribe/' + userId + '/' + eventId, {headers: this.authService.addAuthHeader(this.headers)})
+      .subscribe();
   }
 
   subscribeOrUpdate(subs: any[]) {
     return this.http.post(this.notificationUri + '/subscribe-or-update', subs, {headers: this.authService.addAuthHeader(this.headers)});
+  }
+
+  isSubscribed(eventId, userId) {
+    return this.http.get<boolean>(this.notificationUri + '/check/' + userId + '/' + eventId, {headers: this.authService.addAuthHeader(this.headers)});
   }
 }

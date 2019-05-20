@@ -7,6 +7,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { MapComponent } from '../map/map.component';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../services/authentication.service";
+import {SubscriptionService} from "../../services/subscription.service";
 
 @Component({
   selector: 'app-event-view',
@@ -20,6 +21,7 @@ export class EventViewComponent implements OnInit {
   private currentEvent: IEvent;
   private edit: boolean = false;
   private form: FormGroup;
+  subscribed = false;
 
 
 
@@ -28,24 +30,30 @@ export class EventViewComponent implements OnInit {
     private route: ActivatedRoute,
     private overlay: Overlay,
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private subService: SubscriptionService
   ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
         this.getCurrentEvent(parseInt(params.get('id')));
-      });
-
-  this.form = this.fb.group({
-      id: [this.currentEvent.id],
-      title: [this.currentEvent.title, Validators.required],
-      description: [this.currentEvent.description, Validators.required],
-      date_start: [this.currentEvent.date_start, Validators.required],
-      date_end: [this.currentEvent.date_end, Validators.required],
-      source_uri: [typeof this.currentEvent.source_uri === 'string' ? this.currentEvent.source_uri : '', Validators.required],
-      type: [this.currentEvent.type, Validators.required],
-      name_location: [this.currentEvent.location.name, Validators.required]
     });
+
+    this.subService.isSubscribed(this.currentEvent.id, this.authService.currentUserValue.id)
+      .subscribe(
+        (data) => this.subscribed = data
+      );
+
+    this.form = this.fb.group({
+        id: [this.currentEvent.id],
+        title: [this.currentEvent.title, Validators.required],
+        description: [this.currentEvent.description, Validators.required],
+        date_start: [this.currentEvent.date_start, Validators.required],
+        date_end: [this.currentEvent.date_end, Validators.required],
+        source_uri: [typeof this.currentEvent.source_uri === 'string' ? this.currentEvent.source_uri : '', Validators.required],
+        type: [this.currentEvent.type, Validators.required],
+        name_location: [this.currentEvent.location.name, Validators.required]
+      });
   }
 
   getCurrentEvent(_id){
@@ -95,5 +103,19 @@ export class EventViewComponent implements OnInit {
     });
     return this.authService.currentUserValue.id === this.currentEvent.owner_id || head;
 
+  }
+
+  subscribeToEvent() {
+    this.subscribed = true;
+    this.subService.addSubscription({
+      eventId: this.currentEvent.id,
+      name: this.currentEvent.title,
+      enabled: true,
+      userId: this.authService.currentUserValue.id
+    });
+  }
+  unsubscribe(){
+    this.subscribed = false;
+    this.subService.deleteEventSubscription(this.currentEvent.id, this.authService.currentUserValue.id);
   }
 }

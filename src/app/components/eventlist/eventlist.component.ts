@@ -8,7 +8,7 @@ import { MatTableDataSource, MatTable, MatSort, MatPaginator } from '@angular/ma
   styleUrls: ['./eventlist.component.scss']
 })
 export class EventlistComponent implements OnInit {
-  @Input() Events: IEvent[];
+  @Input() Events: IEvent[] = [];
   @Input() isFiltering;
   @Output() pageChanged = new EventEmitter();
   @Output() filterCleared = new EventEmitter();
