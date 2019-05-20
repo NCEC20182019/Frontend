@@ -10,5 +10,5 @@ export interface IEvent{
     location: ILocation;
     date_start: String;
     date_end: String;
-    pic: String;
+    image_url: String;
 }

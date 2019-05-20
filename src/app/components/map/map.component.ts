@@ -43,7 +43,7 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     if (this.Events.length > 0) {
       this.Events.forEach(event => {
-        event.pic = 'https://picsum.photos/50/50/?random';
+        event.image_url = 'https://picsum.photos/50/50/?random';
       });
     }
 

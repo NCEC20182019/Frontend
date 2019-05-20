@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {IEvent} from '../models/ievent';
 import {User} from '../models/user';
 import {AuthenticationService} from "./authentication.service";
@@ -17,11 +17,26 @@ export class DataService {
     'Access-Control-Allow-Origin': '*'
   });
 
+  // Observable navItem source
+  private _eventSource = new Subject<IEvent[]>();
+  // Observable navItem stream
+  eventList$ = this._eventSource.asObservable();
+
   constructor(
     private authService: AuthenticationService,
     private http: HttpClient
   ) {
     this.Events = [];
+  }
+
+  getAllEvents() {
+    this.http.get<IEvent[]>(this._eventsUri, {headers: this.headers})
+      .subscribe((data) => {
+          this._eventSource.next(data);
+        },
+        (error) => {
+          console.log(error);
+        })
   }
 
   getEvents(sort: number, filter) {
@@ -56,7 +71,7 @@ export class DataService {
         date_end: "2019-06-01T19:30:00.000+0000",
         source_uri: "https://vk.com/event65334589",
         type: "Другое",
-        pic: '',
+        image_url: '',
         location: {
           id: 15,
           name: "Фестиваль волшебных шаров — Воронеж",
@@ -73,7 +88,7 @@ export class DataService {
         description: "String",
         date_start: "0.0.0",
         date_end: "1.1.1",
-        pic: "",
+        image_url: "",
         location: {
           id: 1,
           name: 'loc2',
@@ -90,7 +105,7 @@ export class DataService {
         description: "String",
         date_start: "0.0.0",
         date_end: "1.1.1",
-        pic: "",
+        image_url: "",
         location: {
           id: 2,
           name: 'loc3',
@@ -133,7 +148,7 @@ export class DataService {
 
   /** PUT: update the event on eventService */
   updateEvent(event, id) {
-    return this.http.put(this._eventsUri + '/update/' + id, event,
+    return this.http.put(this._eventsUri + '/update/' + id, this.convertEventToDTO(event),
       {
         headers: this.headers
       });
@@ -141,7 +156,13 @@ export class DataService {
 
   /** POST: add a new event to eventService */
   addEvent(event) {
-    return this.http.post(this._eventsUri + '/create', event, {headers: this.authService.addAuthHeader(this.headers)});
+    const ar = [];
+    this.http.post<IEvent>(this._eventsUri + '/create', this.convertEventToDTO(event),
+      {headers: this.authService.addAuthHeader(this.headers)})
+      .subscribe( (event) => {
+        ar.push(event);
+        this._eventSource.next(ar);
+      });
   }
 
   /** DELETE: delete event from eventService */
@@ -166,5 +187,21 @@ export class DataService {
   /** Retrive all available event types from eventDB*/
   getTypes() {
     return this.http.get<{id: number, type: string}[]>(this._eventsUri + '/types', {headers: this.authService.addAuthHeader(this.headers)});
+  }
+
+  convertEventToDTO(event: IEvent) {
+    return {
+      owner_id: event.owner_id,
+      title: event.title,
+      description: event.description,
+      date_start: event.date_start,
+      date_end: event.date_end,
+      source_uri: event.source_uri,
+      image_url: event.image_url,
+      type: event.type,
+      name_location: event.location.name,
+      latitude: event.location.latitude,
+      longitude: event.location.longitude
+    }
   }
 }

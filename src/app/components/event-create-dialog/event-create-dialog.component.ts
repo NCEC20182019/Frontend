@@ -24,7 +24,7 @@ export class EventCreateDialogComponent implements OnInit {
     type: '',
     source_uri: '',
     location: { id: null, name: '', longitude: 0, latitude: 0 },
-    pic: '',
+    image_url: '',
     id: 0,
     owner_id: 0
   };
@@ -64,7 +64,7 @@ export class EventCreateDialogComponent implements OnInit {
   }
 
   save() {
-    console.log(this.form.value);
+    // console.log(this.form.value);
     this.newEvent.title = this.form.value.title;
     this.newEvent.description = this.form.value.description;
     this.newEvent.date_start = this.form.value.date_start;
@@ -75,7 +75,7 @@ export class EventCreateDialogComponent implements OnInit {
     this.newEvent.owner_id = this.authService.currentUserValue.id;
 
     if (this.newEvent.location.longitude && this.newEvent.location.latitude) {
-      this.dataService.addEvent(this.newEvent).subscribe();
+      this.dataService.addEvent(this.newEvent);
       this.close();
     } else {
       this.openSnackBar('Set the location of the event on the map!');
