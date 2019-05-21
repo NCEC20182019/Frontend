@@ -33,20 +33,21 @@ export class RegisterPageComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.registerForm = this.formBuilder.group({
-          firstName: ['',[ Validators.required]],
-          lastName: ['', [ Validators.required]],
-          email: ['', [ Validators.required, Validators.email]],
-          password: ['', [ Validators.required, Validators.minLength(6)]],
-          repeatPassword: ['', [ Validators.required, Validators.minLength(6)]]
+    this.registerForm = this.formBuilder.group({
+        firstName: ['',[ Validators.required]],
+        lastName: ['', [ Validators.required]],
+        email: ['', [ Validators.required, Validators.email]],
+        password: ['', [ Validators.required, Validators.minLength(6)]],
+        repeatPassword: ['', [ Validators.required, Validators.minLength(6)]]
       },
-        {
-          validator: PasswordValidation.MatchPassword
-        });
+      {
+        validator: PasswordValidation.MatchPassword
+      });
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
+  get f() {
+    return this.registerForm.controls; }
 
   onSubmit() {
       this.submitted = true;
