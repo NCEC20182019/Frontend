@@ -33,9 +33,9 @@ export class MapComponent implements OnInit {
     url: '../../../assets/blue-marker.png',
   };
 
-  private currentMarker: any;
+  public currentMarker: any;
 
-  private zoom = 12;
+  public zoom = 12;
 
 
   constructor() { }

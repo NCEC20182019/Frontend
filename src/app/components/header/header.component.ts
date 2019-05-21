@@ -14,10 +14,7 @@ import {User} from "../../models/user";
 })
 export class HeaderComponent implements OnInit {
 
-  private Title = 'LemmeKnow';
-  private navLinks = [{relativePath: 'map', label: 'Map View'},
-                      {relativePath: 'calendar', label: 'Calendar View'}];
-
+  public Title = 'LemmeKnow';
 
   constructor(
     private router: Router,

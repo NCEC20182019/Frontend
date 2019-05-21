@@ -18,7 +18,7 @@ export class EventViewComponent implements OnInit {
 
   @ViewChild('main') mainDiv : HTMLDivElement;
 
-  private currentEvent: IEvent;
+  public currentEvent: IEvent;
   private edit: boolean = false;
   private form: FormGroup;
   subscribed = false;

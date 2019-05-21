@@ -47,7 +47,11 @@ export class MapViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getEvents();
     this.eventSubscription = this.dataService.eventList$
-      .subscribe(events => this.toEvents(events))
+      .subscribe(events => {
+        this.toEvents(events);
+        this.eventlistCmp.ngOnInit();
+      });
+
   }
 
   ngOnDestroy(): void {
