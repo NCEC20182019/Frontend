@@ -41,7 +41,7 @@ export class DataService {
         });
   }
   getSortedEvents(sort: number, filter) {
-    this.http.post<IEvent[]>(this._eventsUri, {sort, filter},{headers: this.authService.addAuthHeader(this.headers)})
+    this.http.post<IEvent[]>(this._eventsUri + '/sort', {sort, filter},{headers: this.authService.addAuthHeader(this.headers)})
       .subscribe(
         (data) => this._eventSource.next(data),
         (error) => {
