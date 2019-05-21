@@ -1,14 +1,14 @@
 mat-toolbar{
     background: rgba(106, 131, 241, 0.116);
 
-    span{
+    .title{
         margin-top: 10px;
         margin-right: 50px;
         margin-bottom: 10px;
         margin-left: 50px;
         font-size: 24px;
     }
-    span:hover{
+    .title:hover{
         cursor: pointer;
     }
 
@@ -24,11 +24,20 @@ mat-toolbar{
     .logBT{
         position: relative;
         right: 0;
-        margin-left: auto;
+        margin-left: 10px;
     }
 
     app-login{
         margin-left: auto;
     }
+
+  .username-holder{
+    margin-left: auto;
+  }
+
+  .username{
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 

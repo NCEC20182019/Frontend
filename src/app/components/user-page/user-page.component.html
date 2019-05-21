@@ -1,0 +1,47 @@
+<div id="form">
+  <h2>User info</h2>
+  <form [formGroup]="infoForm" (ngSubmit)="submit()">
+    <div>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+      </mat-form-field>
+      <div *ngIf="submitted && f.password.errors" class="errors">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+      </div>
+    </div>
+    <div>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Repeat password" formControlName="repeatPassword" [ngClass]="{ 'is-invalid': submitted && f.repeatPassword.errors }"/>
+      </mat-form-field>
+      <div *ngIf="submitted && f.repeatPassword.errors" class="errors">
+        <div *ngIf="f.repeatPassword.errors.required">Password is required</div>
+        <div *ngIf="f.repeatPassword.errors.minlength">Password must be at least 6 characters</div>
+        <div *ngIf="f.repeatPassword.errors.MatchPassword"> Passwords mismatch </div>
+      </div>
+    </div>
+    <div>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Current Password" formControlName="oldPassword" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+      </mat-form-field>
+      <div *ngIf="submitted && f.oldPassword.errors" class="errors">
+        <div *ngIf="f.repeatPassword.errors.required">Current password is required</div>
+      </div>
+    </div>
+    <div>
+      <button mat-raised-button [disabled]="loading">Submit</button>
+      <app-subscriptions></app-subscriptions>
+      <a [routerLink]="['/app/login']">Cancel</a>
+    </div>
+  </form>
+</div>

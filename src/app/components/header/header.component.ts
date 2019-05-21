@@ -5,6 +5,7 @@ import { IEvent } from '../../models/ievent';
 import * as moment from 'moment';
 import {CookieService} from "ngx-cookie-service";
 import {AuthenticationService} from "../../services/authentication.service";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-header',
@@ -37,5 +38,13 @@ export class HeaderComponent implements OnInit {
 
   loggedIn(){
     return this.authService.currentUserValue;
+  }
+
+  user(): User {
+    return JSON.parse(localStorage.getItem('currentUser'));
+  }
+
+  redirectUser() {
+    this.router.navigate(['/app/me']);
   }
 }

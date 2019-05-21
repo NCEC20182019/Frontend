@@ -1,6 +1,6 @@
 <div #main id="main" *ngIf="currentEvent">
   <div class="event-info" *ngIf="!edit">
-    <h2 class="event-title left-text">{{ currentEvent.title }}</h2><button class="edit-button" mat-button [disabled]="!canEdit()">Edit</button>
+    <h2 class="event-title left-text">{{ currentEvent.title }}</h2><app-event-create-button class="edit-button" mat-button *ngIf="!canEdit()">Edit</app-event-create-button>
     <button *ngIf="subscribed" (click)="subscribeToEvent()" class="edit-button" mat-button><mat-icon>notifications</mat-icon></button>
     <button *ngIf="!subscribed" (click)="unsubscribe()" class="edit-button" mat-button><mat-icon>notifications_off</mat-icon></button>
     <span class="event-type left-text">Тип мероприятия: {{ currentEvent.type }}</span>

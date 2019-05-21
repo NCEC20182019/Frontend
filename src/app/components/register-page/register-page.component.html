@@ -19,10 +19,10 @@
       </div>
       <div>
           <mat-form-field>
-            <input type="text" matInput placeholder="Email" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <input type="text" matInput placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
           </mat-form-field>
             <div *ngIf="submitted && f.username.errors" class="errors">
-              <div *ngIf="f.username.errors.required">Username is required</div>
+              <div *ngIf="f.username.errors.required">Email is required</div>
           </div>
       </div>
       <div>

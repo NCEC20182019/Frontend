@@ -5,6 +5,7 @@ import { EventViewComponent } from '../components/event-view/event-view.componen
 import { MapViewComponent } from '../components/map-view/map-view.component';
 import { LoginPageComponent } from "../components/login-page/login-page.component";
 import { RegisterPageComponent } from "../components/register-page/register-page.component";
+import {UserPageComponent} from "../components/user-page/user-page.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'app/events/:id',
     component: EventViewComponent
+  },
+  {
+    path: 'app/me',
+    component: UserPageComponent
   },
   {
     path: '**',

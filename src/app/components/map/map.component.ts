@@ -41,12 +41,6 @@ export class MapComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.Events.length > 0) {
-      this.Events.forEach(event => {
-        event.image_url = 'https://picsum.photos/50/50/?random';
-      });
-    }
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.userLocation.latitude = position.coords.latitude;

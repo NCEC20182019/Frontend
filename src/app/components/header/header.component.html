@@ -1,8 +1,9 @@
 <mat-toolbar color="primary">
-  <span (click)="redirectHome()"> {{Title}} </span>
+  <span class="title" (click)="redirectHome()"> {{Title}} </span>
 
   <app-event-create-button *ngIf="loggedIn()"></app-event-create-button>
-  <app-subscriptions *ngIf="loggedIn()"></app-subscriptions>
+
+  <span class="username-holder" *ngIf="loggedIn()"> Logged as: <span class="username" (click)="redirectUser()">{{user().username}}</span> </span>
 
   <app-login *ngIf="!loggedIn()" class="logBT"></app-login>
   <app-logout *ngIf="loggedIn()" class="logBT"></app-logout>

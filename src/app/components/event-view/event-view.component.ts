@@ -36,6 +36,7 @@ export class EventViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log(params);
         this.getCurrentEvent(parseInt(params.get('id')));
     });
 

@@ -4,6 +4,8 @@ import {Observable, Subject} from 'rxjs';
 import {IEvent} from '../models/ievent';
 import {User} from '../models/user';
 import {AuthenticationService} from "./authentication.service";
+import {CookieService} from "ngx-cookie-service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +51,7 @@ export class DataService {
       );
   }
 
-  getMockEvents(): IEvent[] {
+  getMockEvents(): IEvent[]{
     return [
       {
         owner_id: 1,
@@ -148,6 +150,10 @@ export class DataService {
 
   registerUser(user: User) {
     return this.http.put(this._usersUri + '/user/put', user, {headers: this.headers});
+  }
+
+  updateUser(user) {
+    return this.http.post(this._usersUri + '/user/update', user, {headers: this.headers});
   }
 
   /** Retrive all available event types from eventDB*/
