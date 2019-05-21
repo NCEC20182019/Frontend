@@ -152,10 +152,6 @@ export class DataService {
     return this.http.put(this._usersUri + '/user/put', user, {headers: this.headers});
   }
 
-  updateUser(user) {
-    return this.http.post(this._usersUri + '/user/update', user, {headers: this.headers});
-  }
-
   /** Retrive all available event types from eventDB*/
   getTypes() {
     return this.http.get<{id: number, type: string}[]>(this._eventsUri + '/types', {headers: this.authService.addAuthHeader(this.headers)});
