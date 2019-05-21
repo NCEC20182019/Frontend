@@ -26,8 +26,7 @@ export class SubscriptionService {
   }
   /** POST: subscribe to event */
   addSubscription(subs) {
-    return this.http.post(this.notificationUri + '/subscribe', subs, {headers: this.authService.addAuthHeader(this.headers)})
-      .subscribe();
+    return this.http.post(this.notificationUri + '/subscribe', subs, {headers: this.authService.addAuthHeader(this.headers)});
   }
 
   /** POST: unsubscribe user from event, type or area by subId  */
@@ -36,8 +35,7 @@ export class SubscriptionService {
   }
   /** POST: unsubscribe user from event by eventId and userId  */
   deleteEventSubscription(eventId, userId) {
-    return this.http.delete(this.notificationUri + '/unsubscribe/' + userId + '/' + eventId, {headers: this.authService.addAuthHeader(this.headers)})
-      .subscribe();
+    return this.http.delete(this.notificationUri + '/unsubscribe/' + userId + '/' + eventId, {headers: this.authService.addAuthHeader(this.headers)});
   }
 
   subscribeOrUpdate(subs: any[]) {

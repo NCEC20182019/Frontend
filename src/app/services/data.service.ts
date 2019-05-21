@@ -37,7 +37,7 @@ export class DataService {
           this._eventSource.next(data);
         },
         (error) => {
-          console.log(error);
+          //console.log(error);
         });
   }
   getSortedEvents(sort: number, filter) {
@@ -46,7 +46,7 @@ export class DataService {
         (data) => this._eventSource.next(data),
         (error) => {
           this.getAllEvents();
-          console.log(error);
+          //console.log(error);
         }
       );
   }
@@ -107,19 +107,8 @@ export class DataService {
     ];
   }
 
-  getEvent(_id): IEvent {
-    // if (!this.Events.length) {
-    //   this.Events = this.getMockEvents();
-    // }
-    let event = this.Events.find((x) => x.id === _id);
-    if (!event) {
-      this.http.get<IEvent>(this._eventsUri + '/' + _id,{ headers: this.headers })
-        .subscribe((data) => {
-          return data;
-        });
-    } else {
-      return event;
-    }
+  getEvent(_id) {
+    return this.http.get<IEvent>(this._eventsUri + '/' + _id,{ headers: this.headers });
   }
 
   /** PUT: update the event on eventService */

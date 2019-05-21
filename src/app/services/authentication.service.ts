@@ -34,7 +34,7 @@ export class AuthenticationService {
   addAuthHeader(headers: HttpHeaders){
     const token = this.cookieService.get('token');
     if (token) {
-      console.log('token', token);
+      //console.log('token', token);
       return headers.set('Authorization', 'Bearer ' + token);
     }
   }

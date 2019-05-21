@@ -39,26 +39,30 @@ export class EventViewComponent implements OnInit {
       console.log(params);
         this.getCurrentEvent(parseInt(params.get('id')));
     });
-
-    this.subService.isSubscribed(this.currentEvent.id, this.authService.currentUserValue.id)
-      .subscribe(
-        (data) => this.subscribed = data
-      );
-
-    this.form = this.fb.group({
-        id: [this.currentEvent.id],
-        title: [this.currentEvent.title, Validators.required],
-        description: [this.currentEvent.description, Validators.required],
-        date_start: [this.currentEvent.date_start, Validators.required],
-        date_end: [this.currentEvent.date_end, Validators.required],
-        source_uri: [typeof this.currentEvent.source_uri === 'string' ? this.currentEvent.source_uri : '', Validators.required],
-        type: [this.currentEvent.type, Validators.required],
-        name_location: [this.currentEvent.location.name, Validators.required]
-      });
   }
 
+  initForm(){
+    this.form = this.fb.group({
+      id: [this.currentEvent.id],
+      title: [this.currentEvent.title, Validators.required],
+      description: [this.currentEvent.description, Validators.required],
+      date_start: [this.currentEvent.date_start, Validators.required],
+      date_end: [this.currentEvent.date_end, Validators.required],
+      source_uri: [typeof this.currentEvent.source_uri === 'string' ? this.currentEvent.source_uri : '', Validators.required],
+      type: [this.currentEvent.type, Validators.required],
+      name_location: [this.currentEvent.location.name, Validators.required]
+    });
+  }
   getCurrentEvent(_id){
-    this.currentEvent = this.dataService.getEvent(_id);
+    this.dataService.getEvent(_id)
+      .subscribe((event) => {
+        this.currentEvent = event;
+        this.initForm();
+        this.subService.isSubscribed(this.currentEvent.id, this.authService.currentUserValue.id)
+          .subscribe(
+            (data) => this.subscribed = data
+          );
+      });
   }
 
   onMarkerPlaced($event) {
@@ -88,9 +92,13 @@ export class EventViewComponent implements OnInit {
   }
 
   dateFormat(str_date1: String, str_date2: String){
-    let [date1, time1] = this.dateFormatInner(str_date1).split(' ');
-    let [date2, time2] = this.dateFormatInner(str_date2).split(' ');
-    return date1 === date2 ? `${date1} c ${time1} по ${time2}` : `c ${date1}, ${time1} по ${date2}, ${time2}`;
+    if (str_date1 && str_date2) {
+      let [date1, time1] = this.dateFormatInner(str_date1).split(' ');
+      let [date2, time2] = this.dateFormatInner(str_date2).split(' ');
+      return date1 === date2 ? `${date1} c ${time1} по ${time2}` : `c ${date1}, ${time1} по ${date2}, ${time2}`;
+    } else {
+      return '<i>время отсутсвует</i>';
+    }
   }
 
   getCurrentList() {
@@ -107,16 +115,15 @@ export class EventViewComponent implements OnInit {
   }
 
   subscribeToEvent() {
-    this.subscribed = true;
     this.subService.addSubscription({
       eventId: this.currentEvent.id,
       name: this.currentEvent.title,
       enabled: true,
       userId: this.authService.currentUserValue.id
-    });
+    }).subscribe( ()=>{},()=>{},() => this.subscribed = true);
   }
   unsubscribe(){
-    this.subscribed = false;
-    this.subService.deleteEventSubscription(this.currentEvent.id, this.authService.currentUserValue.id);
+    this.subService.deleteEventSubscription(this.currentEvent.id, this.authService.currentUserValue.id)
+      .subscribe(()=>{}, ()=>{}, ()=> this.subscribed = false);
   }
 }
