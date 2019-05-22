@@ -22,14 +22,15 @@ security:
     client:
       client-id: client_service
       client-secret: clientsecret
-      access-token-uri: /auth/oauth/token
-      user-authorization-uri: /auth/oauth/authorize
+      access-token-uri: http://localhost/auth/oauth/token
+      user-authorization-uri: http://localhost/auth/oauth/authorize
     resource:
-      user-info-uri: /auth/user/me
+      user-info-uri: http://localhost/auth/user/me
 
 zuul:
   add-host-header: true
   include-debug-header: true
+  sensitiveHeaders: Cookie,Set-Cookie,Authorization
   host:
     connect-timeout-millis: 30000
     socket-timeout-millis: 30000

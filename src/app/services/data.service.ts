@@ -114,7 +114,7 @@ export class DataService {
   /** PUT: update the event on eventService */
   updateEvent(event, id) {
     const ar = [];
-    return this.http.put(this._eventsUri + '/update/' + id, this.convertEventToDTO(event),{ headers: this.headers })
+    return this.http.put(this._eventsUri + '/update/' + id, this.convertEventToDTO(event), { headers: this.authService.addAuthHeader(this.headers) })
       .subscribe( (event) => {
         ar.push(event);
         this._eventSource.next(ar);
