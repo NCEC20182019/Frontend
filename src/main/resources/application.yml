@@ -30,7 +30,7 @@ security:
 zuul:
   add-host-header: true
   include-debug-header: true
-  sensitiveHeaders: Cookie,Set-Cookie,Authorization
+  sensitiveHeaders: Cookie,Set-Cookie
   host:
     connect-timeout-millis: 30000
     socket-timeout-millis: 30000
