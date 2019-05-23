@@ -44,13 +44,13 @@ export class EventViewComponent implements OnInit {
   initForm(){
     this.form = this.fb.group({
       id: [this.currentEvent.id],
-      title: [this.currentEvent.title, Validators.required],
-      description: [this.currentEvent.description, Validators.required],
-      date_start: [this.currentEvent.date_start, Validators.required],
-      date_end: [this.currentEvent.date_end, Validators.required],
-      source_uri: [typeof this.currentEvent.source_uri === 'string' ? this.currentEvent.source_uri : '', Validators.required],
-      type: [this.currentEvent.type, Validators.required],
-      name_location: [this.currentEvent.location.name, Validators.required]
+      title: [this.currentEvent.title, [ Validators.required]],
+      description: [this.currentEvent.description, [ Validators.required]],
+      date_start: [this.currentEvent.date_start, [ Validators.required]],
+      date_end: [this.currentEvent.date_end, [ Validators.required]],
+      source_uri: [typeof this.currentEvent.source_uri === 'string' ? this.currentEvent.source_uri : '', [ Validators.required]],
+      type: [this.currentEvent.type, [ Validators.required]],
+      name_location: [this.currentEvent.location.name, [ Validators.required]]
     });
   }
   getCurrentEvent(_id){
@@ -97,7 +97,7 @@ export class EventViewComponent implements OnInit {
       let [date2, time2] = this.dateFormatInner(str_date2).split(' ');
       return date1 === date2 ? `${date1} c ${time1} по ${time2}` : `c ${date1}, ${time1} по ${date2}, ${time2}`;
     } else {
-      return '<i>время отсутсвует</i>';
+      return 'время отсутсвует';
     }
   }
 
@@ -111,7 +111,6 @@ export class EventViewComponent implements OnInit {
       head = head || (x.name === "ROLE_moderator" || x.name === "ROLE_admin");
     });
     return this.authService.currentUserValue.id === this.currentEvent.owner_id || head;
-
   }
 
   subscribeToEvent() {

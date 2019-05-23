@@ -27,5 +27,5 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[100, 200, 300]" showFirstLastButtons (page)="onPageChanged($event)"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[15, 30, 50]" showFirstLastButtons (page)="onPageChanged($event)"></mat-paginator>
 </div>
