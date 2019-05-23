@@ -38,7 +38,10 @@ app-event-detail-dialog{
     width: 100%;
 }
 
-div.si-float-wrapper{
+.si-float-wrapper{
     position: absolute;
+}
 
+.si-float-wrapper, .si-float-wrapper *{
+  box-sizing: content-box;
 }

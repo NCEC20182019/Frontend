@@ -12,10 +12,10 @@
 
                   <agm-snazzy-info-window [latitude]="event.location.latitude"
                                           [longitude]="event.location.longitude">
-                      <ng-template>
+                      <ng-template class="template">
                           <div [routerLink]="event.id">
-                            <img [src]="event.image_url">
-                            <span>{{event.title}}</span>
+                            <img *ngIf="event.image_url" [src]="event.image_url">
+                            <span *ngIf="!event.image_url">{{event.title}}</span>
                           </div>
                       </ng-template>
                   </agm-snazzy-info-window>
