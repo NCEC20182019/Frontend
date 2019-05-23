@@ -28,14 +28,13 @@ export class EventlistComponent implements OnInit {
 
   // Init method
   ngOnInit() {
-    this.createTable(this.Events);
     // setTimeout(() => this.createTable(), this.INITIAL_DELAY)
   }
 
-  createTable(data) {
-    this.dataSource = new MatTableDataSource<IEvent>(data);
+  createTable() {
+    this.dataSource = new MatTableDataSource<IEvent>(this.Events);
     this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
     // this.dataSource.data update
   }
 
@@ -45,5 +44,10 @@ export class EventlistComponent implements OnInit {
 
   clearFilter() {
     this.filterCleared.emit();
+  }
+
+  createDataSource() {
+    this.createTable();
+    return this.dataSource;
   }
 }
