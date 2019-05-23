@@ -24,17 +24,20 @@ export class EventlistComponent implements OnInit {
    * data: Service, which does an http request for list of Events
    * route: Thing for components communication (literally for proper routing)
    * router: Thing that completes routing within this very component  */
-  constructor() { }
+  constructor() {
+  }
 
   // Init method
   ngOnInit() {
+    this.createDataSource();
     // setTimeout(() => this.createTable(), this.INITIAL_DELAY)
   }
 
   createTable() {
     this.dataSource = new MatTableDataSource<IEvent>(this.Events);
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // console.log(this.dataSource);
+    // this.dataSource.sort = this.sort;
     // this.dataSource.data update
   }
 
@@ -47,7 +50,14 @@ export class EventlistComponent implements OnInit {
   }
 
   createDataSource() {
+    // console.log(this.Events.length);
+    // console.log(this.Events);
     this.createTable();
-    return this.dataSource;
+    // console.log(this.dataSource);
+    return true;
+  }
+
+  events() {
+    return !!this.Events.length ? (this.dataSource.data.length ? true : this.createDataSource()) : false;
   }
 }

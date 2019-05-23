@@ -59,7 +59,6 @@ export class MapViewComponent implements OnInit, OnDestroy {
   }
 
   toEvents(events: IEvent[]) {
-    console.log(events);
     if (!this.Events.length) {
       this.Events = events;
       return;

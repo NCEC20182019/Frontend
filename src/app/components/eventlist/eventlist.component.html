@@ -1,5 +1,5 @@
-<div *ngIf="Events" class="eventlist">
-  <table mat-table [dataSource]="createDataSource()">
+<div *ngIf="events()" class="eventlist">
+  <table mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="redirect">
       <th mat-header-cell *matHeaderCellDef> Name </th>
