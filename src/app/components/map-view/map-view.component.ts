@@ -87,7 +87,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
 
   getEvents() {
     this.dataService.getAllEvents();
-    this.Events = this.dataService.getMockEvents();
+    // this.Events = this.dataService.getMockEvents();
     // this.Events = this.dataService.getEvents(1, this.filterForm);
     // this.Events = this.dataService.getMockEvents();
   }
