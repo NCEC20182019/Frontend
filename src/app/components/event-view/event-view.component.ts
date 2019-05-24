@@ -36,7 +36,6 @@ export class EventViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      console.log(params);
         this.getCurrentEvent(parseInt(params.get('id')));
     });
   }
@@ -108,6 +107,7 @@ export class EventViewComponent implements OnInit {
   canEdit(){
     let head = false;
     this.authService.currentUserValue.roles.forEach((x) => {
+      console.log(x.name);
       head = head || (x.name === "ROLE_moderator" || x.name === "ROLE_admin");
     });
     return this.authService.currentUserValue.id === this.currentEvent.owner_id || head;
