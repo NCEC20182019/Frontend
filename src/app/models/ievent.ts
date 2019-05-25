@@ -8,7 +8,7 @@ export interface IEvent{
     source_uri: String;
     description: String;
     location: ILocation;
-    date_start: String;
-    date_end: String;
+    date_start: string;
+    date_end: string;
     image_url: String;
 }

@@ -1,8 +1,12 @@
 <div #main id="main" *ngIf="currentEvent">
-  <div class="event-info" *ngIf="!edit">
-    <h2 class="event-title left-text">{{ currentEvent.title }}</h2><app-event-create-button class="edit-button" mat-button *ngIf="canEdit()">Edit</app-event-create-button>
-    <button *ngIf="!subscribed" (click)="subscribeToEvent()" class="edit-button" mat-button><mat-icon>notifications</mat-icon></button>
-    <button *ngIf="subscribed" (click)="unsubscribe()" class="edit-button" mat-button><mat-icon>notifications_off</mat-icon></button>
+  <div class="event-info">
+    <h2 class="event-title left-text">{{ currentEvent.title }}
+      <div class="notifyBT">
+        <button *ngIf="!subscribed" (click)="subscribeToEvent()" class="edit-button" mat-button><mat-icon>notifications</mat-icon></button>
+        <button *ngIf="subscribed" (click)="unsubscribe()" class="edit-button" mat-button><mat-icon>notifications_off</mat-icon></button>
+      </div>
+    </h2><button mat-stroked-button class="edit-button" (click)="editRedirect()">Edit</button>
+
     <span class="event-type left-text">Тип мероприятия: {{ currentEvent.type }}</span>
 
 
@@ -15,44 +19,8 @@
     <span class="description"><h4>Описание события:</h4><br>{{ currentEvent.description }}</span>
   </div>
 
-  <div *ngIf="!edit" class="live-actions">
+  <div class="live-actions">
     <span class="live-actions-span">Здесь должны быть live-actions события</span>
     <!--TODO-->
-  </div>
-
-  <div *ngIf="edit" id="form">
-    <h1 mat-dialog-title> Edit event</h1>
-    <div mat-dialog-content [formGroup]="form">
-      <input hidden formControlName="id">
-      <mat-form-field>
-        <input matInput placeholder="Event Title" formControlName="title">
-      </mat-form-field><br />
-      <mat-form-field>
-        <input matInput placeholder="Event Description" formControlName="description">
-      </mat-form-field><br />
-      <mat-form-field>
-        <input matInput type="datetime-local" placeholder="Event Start Date" formControlName="date_start">
-      </mat-form-field><br />
-      <mat-form-field>
-        <input matInput type="datetime-local" placeholder="Event End Date" formControlName="date_end">
-      </mat-form-field><br />
-      <mat-form-field>
-        <input matInput placeholder="Event source url" formControlName="source_uri">
-      </mat-form-field><br />
-      <mat-form-field>
-        <input matInput placeholder="Event Type" formControlName="type">
-      </mat-form-field><br />
-      <mat-form-field>
-        <input matInput placeholder="Name Location" formControlName="name_location">
-      </mat-form-field>
-    </div>
-  </div>
-  <div *ngIf="edit" id="map">
-    <app-map (markerPlaced)="onMarkerPlaced($event)" [Events]="passEventToMap()"></app-map>
-  </div>
-  <div *ngIf="edit" id="buttons">
-    <button mat-raised-button (click)="close()">Cancel</button>
-    <button mat-raised-button mat-primary [disabled]="!form.valid" (click)="save()">Save</button>
-    <button mat-raised-button *ngIf="currentEvent.id" [disabled]="!form.valid" (click)="delete()">Delete</button>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import {Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 import { IEvent } from '../../models/ievent';
 import { DataService } from 'src/app/services/data.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 // import { MapOverlayService } from 'src/app/services/map.overlay';
 import { Overlay } from '@angular/cdk/overlay';
 import { MapComponent } from '../map/map.component';
@@ -19,15 +19,13 @@ export class EventViewComponent implements OnInit {
   @ViewChild('main') mainDiv : HTMLDivElement;
 
   public currentEvent: IEvent;
-  private edit: boolean = false;
-  private form: FormGroup;
   subscribed = false;
-
-
+  editUrl = '/edit';
 
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
+    private router: Router,
     private overlay: Overlay,
     private fb: FormBuilder,
     private authService: AuthenticationService,
@@ -37,26 +35,14 @@ export class EventViewComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
         this.getCurrentEvent(parseInt(params.get('id')));
+      // this.currentEvent = this.dataService.getMockEvents()[0];
     });
   }
 
-  initForm(){
-    this.form = this.fb.group({
-      id: [this.currentEvent.id],
-      title: [this.currentEvent.title, [ Validators.required]],
-      description: [this.currentEvent.description, [ Validators.required]],
-      date_start: [this.currentEvent.date_start, [ Validators.required]],
-      date_end: [this.currentEvent.date_end, [ Validators.required]],
-      source_uri: [typeof this.currentEvent.source_uri === 'string' ? this.currentEvent.source_uri : '', [ Validators.required]],
-      type: [this.currentEvent.type, [ Validators.required]],
-      name_location: [this.currentEvent.location.name, [ Validators.required]]
-    });
-  }
   getCurrentEvent(_id){
     this.dataService.getEvent(_id)
       .subscribe((event) => {
         this.currentEvent = event;
-        this.initForm();
         this.subService.isSubscribed(this.currentEvent.id, this.authService.currentUserValue.id)
           .subscribe(
             (data) => this.subscribed = data
@@ -64,27 +50,7 @@ export class EventViewComponent implements OnInit {
       });
   }
 
-  onMarkerPlaced($event) {
-
-  }
-
-  passEventToMap() {
-
-  }
-
-  close() {
-
-  }
-
-  save() {
-
-  }
-
-  delete() {
-
-  }
-
-  dateFormatInner(str_date: String) {
+  static dateFormatInner(str_date: String) {
     let [date, time] = str_date.split('T');
     let [hrs, mins] = time.split(':');
     return date.split('-').reverse().join('/') + " " + hrs + ':' + mins;
@@ -92,8 +58,8 @@ export class EventViewComponent implements OnInit {
 
   dateFormat(str_date1: String, str_date2: String){
     if (str_date1 && str_date2) {
-      let [date1, time1] = this.dateFormatInner(str_date1).split(' ');
-      let [date2, time2] = this.dateFormatInner(str_date2).split(' ');
+      let [date1, time1] = EventViewComponent.dateFormatInner(str_date1).split(' ');
+      let [date2, time2] = EventViewComponent.dateFormatInner(str_date2).split(' ');
       return date1 === date2 ? `${date1} c ${time1} по ${time2}` : `c ${date1}, ${time1} по ${date2}, ${time2}`;
     } else {
       return 'время отсутсвует';
@@ -104,14 +70,7 @@ export class EventViewComponent implements OnInit {
     return [this.currentEvent];
   }
 
-  canEdit(){
-    let head = false;
-    this.authService.currentUserValue.roles.forEach((x) => {
-      console.log(x.name);
-      head = head || (x.name === "ROLE_moderator" || x.name === "ROLE_admin");
-    });
-    return this.authService.currentUserValue.id === this.currentEvent.owner_id || head;
-  }
+
 
   subscribeToEvent() {
     this.subService.addSubscription({
@@ -124,5 +83,9 @@ export class EventViewComponent implements OnInit {
   unsubscribe(){
     this.subService.deleteEventSubscription(this.currentEvent.id, this.authService.currentUserValue.id)
       .subscribe(()=>{}, ()=>{}, ()=> this.subscribed = false);
+  }
+
+  editRedirect() {
+    this.router.navigate(['app/events/'+ this.currentEvent.id.toString() + '/edit']);
   }
 }

@@ -6,6 +6,7 @@ import { MapViewComponent } from '../components/map-view/map-view.component';
 import { LoginPageComponent } from "../components/login-page/login-page.component";
 import { RegisterPageComponent } from "../components/register-page/register-page.component";
 import {UserPageComponent} from "../components/user-page/user-page.component";
+import {EventEditComponent} from "../components/event-edit/event-edit.component";
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'app/events/:id',
     component: EventViewComponent
+  },
+  {
+    path: 'app/events/:id/edit',
+    component: EventEditComponent
   },
   {
     path: 'app/me',

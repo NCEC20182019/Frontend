@@ -33,6 +33,7 @@ import { SubscriptionsComponent } from './components/subscriptions/subscriptions
 import { SubscriptionsDialogComponent } from './components/subscriptions-dialog/subscriptions-dialog.component';
 import { EventCreateButtonComponent } from './components/event-create-button/event-create-button.component';
 import { EventCreateDialogComponent } from './components/event-create-dialog/event-create-dialog.component';
+import { EventEditComponent } from './components/event-edit/event-edit.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { EventCreateDialogComponent } from './components/event-create-dialog/eve
     SubscriptionsComponent,
     SubscriptionsDialogComponent,
     EventCreateButtonComponent,
-    EventCreateDialogComponent
+    EventCreateDialogComponent,
+    EventEditComponent
   ],
   imports: [
     AgmCoreModule.forRoot({

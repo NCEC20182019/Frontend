@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
 
   @ViewChild('coordFilter') myCircle;
   @Input() filterSubmit = false;
-  @Input() center: String = 'city';
+  @Input() center: any = 'city';
 
   userLocation: ILocation = {
     id: null,
@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
     url: '../../../assets/blue-marker.png',
   };
 
-  public currentMarker: any;
+  @Input() public currentMarker: any;
 
   public zoom = 12;
 
@@ -111,6 +111,9 @@ export class MapComponent implements OnInit {
       }else if(this.center === 'city'){
         return {ltd:  51.6720400,
                 lng:  39.1843000}
+      } else if(this.center.latitude||this.center.longitude){
+        return {ltd: this.center.latitude,
+                lng: this.center.longitude}
       }
     }else{
       return {ltd: this.userLocation.latitude ? this.userLocation.latitude : 51.6720400,

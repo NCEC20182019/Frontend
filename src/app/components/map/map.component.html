@@ -22,12 +22,12 @@
 
               </agm-marker>
 
-              <agm-info-window *ngIf="event.location" [latitude]="event.location.latitude" [longitude]="event.location.longitude">
-                  <div [routerLink]="event.id">
-                    <img [src]="event.image_url">
-                    <span>{{event.title}}</span>
-                  </div>
-              </agm-info-window>
+<!--              <agm-info-window *ngIf="event.location" [latitude]="event.location.latitude" [longitude]="event.location.longitude">-->
+<!--                  <div [routerLink]="event.id">-->
+<!--                    <img [src]="event.image_url">-->
+<!--                    <span>{{event.title}}</span>-->
+<!--                  </div>-->
+<!--              </agm-info-window>-->
             </ng-container>
 
             <agm-marker *ngIf="userLocation.latitude != 0 || userLocation.longitude != 0"
