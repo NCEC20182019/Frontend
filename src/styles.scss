@@ -34,15 +34,16 @@ div.si-wrapper-top{
     margin: 0;
 }
 
-app-event-detail-dialog{
-    height: 100%;
-    width: 100%;
-}
-
 .si-float-wrapper{
     position: absolute;
 }
 
 .si-float-wrapper, .si-float-wrapper *{
   box-sizing: content-box;
+}
+
+tr.mat-header-row{
+  height: 0 !important;
+  padding: 0;
+  margin: 0;
 }
