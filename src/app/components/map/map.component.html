@@ -56,17 +56,17 @@
                 [editable]="true">
             </agm-circle>
 
-            <div *ngFor="let ar of areas;">
+      <div *ngFor="let ar of areas; let i = index">
                 <agm-circle
-                *ngIf="ar.enabled"
-                [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius"
-                [fillColor]="'red'"
-                [circleDraggable]="true"
-                [editable]="true"
-                (radiusChange)="onAreaChange(ar.id, $event)"
-                (centerChange)="onAreaChange(ar.id, $event)"
-                (mouseOver)="overArea(ar.id, true)"
-                (mouseOut)="overArea(ar.id, false)">
+                  *ngIf="ar.enabled"
+                  [latitude]="ar.latitude" [longitude]="ar.longitude" [radius]="ar.radius"
+                  [fillColor]="'red'"
+                  [circleDraggable]="true"
+                  [editable]="true"
+                  (radiusChange)="onAreaChange(i, $event)"
+                  (centerChange)="onAreaChange(i, $event)"
+                  (mouseOver)="overArea(ar, true)"
+                  (mouseOut)="overArea(ar, false)">
                 </agm-circle>
             </div>
             <!-- <agm-snazzy-info-window [isOpen]="true" [latitude]="51.673858" [longitude]="7.815982" [closeWhenOthersOpen]="true">

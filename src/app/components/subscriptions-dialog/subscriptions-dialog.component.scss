@@ -1,18 +1,71 @@
 app-map{
-    height: 500px;
-    width: 700px;
+  height: 300px;
+  width: 500px;
     display: inline-block;
     margin-top: 10px;
+}
+
+.no-subs {
+  color: rgba(160, 162, 162, 0.77);
+  text-align: center;
+  vertical-align: middle;
+  font-size: 25px;
+  margin: 10px;
+}
+
+.areaSubList .no-subs {
+  vertical-align: middle;
+}
+
+.tab-content {
+  height: 330px;
+  width: 500px;
+  margin-bottom: 4px;
+}
+
+.records {
+  height: 290px;
+  width: 500px;
+  overflow-y: auto;
+  margin-bottom: 4px;
+}
+
+.buttons {
+  margin-top: 4px;
+  height: 36px;
+  width: 500px;
+}
+
+.subs-record {
+  display: block;
+}
+
+.subs-button-save {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.subs-button-cancel {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
 }
 
 .areaSubList{
   display: inline-block;
   margin-left: 10px;
-  width: 150px;
+  width: 200px;
+  height: 300px;
+  overflow-y: auto;
 }
 
-.areaSubList mat-icon {
-  right: 0px;
+.new-sub-name {
+  display: inline-block;
+}
+
+.areaSubList input {
+  //width: 75px;
 }
 
 .areaTab {
@@ -22,7 +75,7 @@ app-map{
 }
 
 .hint {
-  margin: 10px 0px;
+  margin: 10px 0;
   font-size: 18px;
 }
 
@@ -31,10 +84,18 @@ app-map{
   overflow: hidden;
 }
 .newSub {
-  background-color: #3f51b5;
+  background-color: rgba(77, 28, 155, 0.8);
   color: white;
 }
 .marked {
-  background-color: #48b552;
+  background-color: rgba(9, 155, 19, 0.8);
   color: white;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+mat-slide-toggle {
+  margin-right: 8px;
 }
