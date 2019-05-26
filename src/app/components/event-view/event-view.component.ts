@@ -22,7 +22,6 @@ export class EventViewComponent implements OnInit {
   public currentEvent: IEvent;
   liveActions: any[];
   subscribed = false;
-  editUrl = '/edit';
 
   constructor(
     private dataService: DataService,
@@ -78,8 +77,6 @@ export class EventViewComponent implements OnInit {
     return [this.currentEvent];
   }
 
-
-
   subscribeToEvent() {
     this.subService.addSubscription({
       eventId: this.currentEvent.id,
@@ -95,5 +92,13 @@ export class EventViewComponent implements OnInit {
 
   editRedirect() {
     this.router.navigate(['app/events/'+ this.currentEvent.id.toString() + '/edit']);
+  }
+
+  get canEdit(){
+    let head = false;
+    this.authService.currentUserValue.roles.forEach((x) => {
+      head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
+    });
+    return head || this.authService.currentUserValue.id === this.currentEvent.owner_id;
   }
 }
