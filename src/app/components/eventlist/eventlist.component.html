@@ -1,31 +1,31 @@
 <div *ngIf="events()" class="eventlist">
 
   <h3 class="header"> Events <button [disabled]="!isFiltering" mat-button (click)="clearFilter()" class="clear-filter"> Clear filter </button></h3>
-  <mat-paginator [pageSizeOptions]="[14, 30, 50]" showFirstLastButtons (page)="onPageChanged($event)"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[14, 30, 50]" showFirstLastButtons pageSize="14" (page)="onPageChanged($event)"></mat-paginator>
   <table mat-table [dataSource]="dataSource">
 
-    <ng-container matColumnDef="redirect">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let event"> {{event.title}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let event"> {{event.type}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="resource_uri">
-      <th mat-header-cell *matHeaderCellDef> Link </th>
-      <td mat-cell *matCellDef="let event"> 
-        <a href="{{event.source_uri}}"> {{event.source_uri}} </a> </td>
-    </ng-container>
+<!--    <ng-container matColumnDef="redirect">-->
+<!--      <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--      <td mat-cell *matCellDef="let event"> {{event.title}} </td>-->
+<!--    </ng-container>-->
+<!--  -->
+<!--    <ng-container matColumnDef="type">-->
+<!--      <th mat-header-cell *matHeaderCellDef> Type </th>-->
+<!--      <td mat-cell *matCellDef="let event"> {{event.type}} </td>-->
+<!--    </ng-container>-->
+<!--  -->
+<!--    <ng-container matColumnDef="resource_uri">-->
+<!--      <th mat-header-cell *matHeaderCellDef> Link </th>-->
+<!--      <td mat-cell *matCellDef="let event"> -->
+<!--        <a href="{{event.source_uri}}"> {{event.source_uri}} </a> </td>-->
+<!--    </ng-container>-->
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let event">
           <span [routerLink]="event.id"  class="link"> {{ event.title }} </span>
-        </td>
-      </ng-container>
+      </td>
+    </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>

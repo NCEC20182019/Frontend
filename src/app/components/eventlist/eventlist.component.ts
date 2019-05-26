@@ -16,7 +16,6 @@ export class EventlistComponent implements OnInit {
   // Properties for MatTable be working
   public dataSource = new MatTableDataSource<IEvent>();
   @ViewChild(MatTable) table: MatTable<any>;
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public columnsToDisplay: String[] = ['title'];
 
@@ -35,7 +34,7 @@ export class EventlistComponent implements OnInit {
 
   createTable() {
     this.dataSource = new MatTableDataSource<IEvent>(this.Events);
-    this.dataSource.paginator = this.paginator;
+    setTimeout(() => this.dataSource.paginator = this.paginator);
     // console.log(this.dataSource);
     // this.dataSource.sort = this.sort;
     // this.dataSource.data update
