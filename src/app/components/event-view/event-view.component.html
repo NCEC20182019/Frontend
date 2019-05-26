@@ -20,11 +20,11 @@
   </div>
 
   <div class="live-actions">
-    <ul *ngIf="!!liveActions.length">
+    <ul *ngIf="!!liveActions">
       <li class="action" *ngFor="let action of liveActions">
         {{action}}
       </li>
     </ul>
-    <span *ngIf="!liveActions.length" class="live-actions-span">Нет информации о данном событии</span>
+    <span *ngIf="!liveActions" class="live-actions-span">Нет информации о данном событии</span>
   </div>
 </div>
