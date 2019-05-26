@@ -8,6 +8,7 @@ import { MapComponent } from '../map/map.component';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../services/authentication.service";
 import {SubscriptionService} from "../../services/subscription.service";
+import {UpdateService} from "../../services/update.service";
 
 @Component({
   selector: 'app-event-view',
@@ -19,6 +20,7 @@ export class EventViewComponent implements OnInit {
   @ViewChild('main') mainDiv : HTMLDivElement;
 
   public currentEvent: IEvent;
+  liveActions: any[];
   subscribed = false;
   editUrl = '/edit';
 
@@ -29,7 +31,8 @@ export class EventViewComponent implements OnInit {
     private overlay: Overlay,
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private subService: SubscriptionService
+    private subService: SubscriptionService,
+    private updateService: UpdateService
   ) { }
 
   ngOnInit() {
@@ -47,6 +50,11 @@ export class EventViewComponent implements OnInit {
           .subscribe(
             (data) => this.subscribed = data
           );
+        this.updateService.getUpdates(this.currentEvent.id)
+          .subscribe((actions: any[]) => {
+            this.liveActions = actions;
+            console.log(this.liveActions);
+          })
       });
   }
 

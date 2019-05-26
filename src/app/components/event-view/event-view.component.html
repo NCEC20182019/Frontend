@@ -20,7 +20,10 @@
   </div>
 
   <div class="live-actions">
-    <span class="live-actions-span">Здесь должны быть live-actions события</span>
-    <!--TODO-->
+    <ul>
+      <li class="action" *ngFor="let action of liveActions">
+        {{action}}
+      </li>
+    </ul>
   </div>
 </div>
