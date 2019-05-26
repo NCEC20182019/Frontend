@@ -43,10 +43,10 @@ export class EventCreateDialogComponent implements OnInit {
     this.loadTypeList();
     this.form = this.fb.group({
       title: this.newEvent.title,
-      description: [this.newEvent.description, Validators.required],
+      description: [this.newEvent.description],
       date_start: [this.newEvent.date_start, Validators.required],
       date_end: [this.newEvent.date_end, Validators.required],
-      source_uri: [this.newEvent.source_uri, Validators.required],
+      source_uri: [this.newEvent.source_uri],
       type: [Validators.required],
       name_location: [this.newEvent.location.name, Validators.required]
     });
