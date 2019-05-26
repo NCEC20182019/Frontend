@@ -40,7 +40,8 @@ export class UserPageComponent implements OnInit {
         email: [this.user().email, [ Validators.email]],
         password: ['', [ Validators.minLength(6)]],
         repeatPassword: ['', [ Validators.minLength(6)]],
-        oldPassword: ['', [ Validators.required]]
+        oldPassword: ['', [ Validators.required]],
+        notification_channel: [this.user().notification_channel, [ Validators.required]]
       },
       {
         validator: PasswordValidation.MatchPassword

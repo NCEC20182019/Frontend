@@ -4,5 +4,6 @@ export class User {
   id: number;
   username: string;
   email: string;
-  roles: IRole[]
+  roles: IRole[];
+  notification_channel: string;
 }

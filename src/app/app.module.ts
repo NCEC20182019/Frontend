@@ -4,11 +4,10 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule, 
+import { MatToolbarModule, MatTabsModule, MatButtonModule, MatBottomSheetModule,
          MatFormFieldModule, MatCardModule, MatProgressSpinnerModule, MatInputModule,
          MatSnackBarModule, MatTableModule, MatPaginatorModule, MatSortModule, 
-         MatDatepickerModule,MatNativeDateModule, MatDialogModule, MatCheckboxModule, MatIconModule } from '@angular/material';
-import {MatSelectModule} from '@angular/material/select';
+         MatDatepickerModule,MatNativeDateModule, MatDialogModule, MatCheckboxModule, MatIconModule, MatSelectModule } from '@angular/material';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {OverlayModule, OverlayContainer, FullscreenOverlayContainer} from '@angular/cdk/overlay';
 import { AppRoutingModule } from './core/app-routing.module';

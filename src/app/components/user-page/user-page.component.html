@@ -13,7 +13,7 @@
     </div>
     <div>
       <mat-form-field>
-        <input class="input" type="password" matInput placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+        <input class="input" type="password" matInput placeholder="New password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
       </mat-form-field>
       <div *ngIf="submitted && f.password.errors" class="errors">
         <div *ngIf="f.password.errors.required">Password is required</div>
@@ -29,6 +29,16 @@
         <div *ngIf="f.repeatPassword.errors.minlength">Password must be at least 6 characters</div>
         <div *ngIf="f.repeatPassword.errors.MatchPassword"> Passwords mismatch </div>
       </div>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Notification type</mat-label>
+        <mat-select formControlName="notification_channel" [ngClass]="{ 'is-invalid': submitted && f.notification_channel.errors }" disableRipple>
+          <mat-option value="email">Email</mat-option>
+          <mat-option value="push">Push</mat-option>
+          <mat-option value="none">Disable notifications</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div>
       <mat-form-field>

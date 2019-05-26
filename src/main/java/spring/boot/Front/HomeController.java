@@ -74,9 +74,10 @@ public class HomeController {
         +   "\"email\" : \"%s\","
         +   "\"roles\" : ["
         +     "%s"
-        + "]"
+        + "],"
+        + "\"notification_channel\" : \"%s\""
         + "}"
       + "}", tokenInfo.get("access_token"), tokenInfo.get("expires_in"), tokenInfo.get("refresh_token"),
-      principal.get("id"), principal.get("username"), principal.get("email"), roles);
+      principal.get("id"), principal.get("username"), principal.get("email"), roles, principal.get("notification_channel"));
   }
 }
