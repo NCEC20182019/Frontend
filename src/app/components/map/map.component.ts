@@ -69,9 +69,7 @@ export class MapComponent implements OnInit {
     }
   }
 
-  onAreaChange(arId, $event) {
-    // TODO bug when id is null, changes radius first circle
-    const index = this.areas.findIndex(a => a.id === arId);
+  onAreaChange(index, $event) {
     if (index >= 0) {
       this.areas[index].latitude = $event.lat ? $event.lat : this.areas[index].latitude;
       this.areas[index].longitude = $event.lng ? $event.lng : this.areas[index].longitude;
