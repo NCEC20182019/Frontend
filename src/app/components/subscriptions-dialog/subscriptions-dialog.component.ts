@@ -2,9 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialogRef, MatSelectChange, MatSnackBar} from '@angular/material';
 import {SubscriptionService} from 'src/app/services/subscription.service';
-import {ActivatedRoute} from "@angular/router";
-import {AuthenticationService} from "../../services/authentication.service";
-import {DataService} from "../../services/data.service";
+import {ActivatedRoute} from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-subscriptions-dialog',
@@ -24,7 +24,7 @@ export class SubscriptionsDialogComponent implements OnInit {
   areaSubs = [];
 
   typeList: string[] = [];
-  isMarked: any = {};
+  marked: any = {};
 
   @ViewChild('tabGroup') tabGroup;
 
@@ -43,12 +43,11 @@ export class SubscriptionsDialogComponent implements OnInit {
   }
 
   loadSubscription() {
-    this.eventSubs =[];
-    this.typeSubs =[];
-    this.areaSubs =[];
+    this.eventSubs = [];
+    this.typeSubs = [];
+    this.areaSubs = [];
 
     this.userId = this.authService.currentUserValue.id;
-    //parseInt(this.route.snapshot.paramMap.get('id')) ? parseInt(this.route.snapshot.paramMap.get('id')) : 1;
     this.subscriptionService.getSubscriptions(this.userId).subscribe(
       (subs) => {
         subs.forEach((sub) => {
@@ -80,7 +79,9 @@ export class SubscriptionsDialogComponent implements OnInit {
   save(currentTab) {
     if (currentTab === 'Types') {
       this.subscriptionService.subscribeOrUpdate(this.typeSubs).subscribe(() => {},
-        () => {this.openSnackBar('Saving error!');},
+        () => {
+          this.openSnackBar('Saving error!');
+        },
         () => {
           this.openSnackBar('Saved successful!');
           this.loadSubscription();
@@ -95,17 +96,20 @@ export class SubscriptionsDialogComponent implements OnInit {
             return ar;
           })
       ).subscribe(() => {},
-        () => {this.openSnackBar('Saving error!');},
+        () => {
+          this.openSnackBar('Saving error!');
+        },
         () => {
           this.openSnackBar('Saved successful!');
           this.loadSubscription();
       });
     }
 
-    if (currentTab === 'Events')
-    {
+    if (currentTab === 'Events') {
       this.subscriptionService.subscribeOrUpdate(this.eventSubs).subscribe(() => {},
-        () => {this.openSnackBar('Saving error!');},
+        () => {
+          this.openSnackBar('Saving error!');
+        },
         () => {
           this.openSnackBar('Saved successful!');
           this.loadSubscription();
@@ -117,24 +121,25 @@ export class SubscriptionsDialogComponent implements OnInit {
     if (sub.id) {
       this.subscriptionService.deleteSubscription(sub.id).subscribe(
         () => {},
-        () => this.openSnackBar(sub.name + " deleting error"),
+        () => this.openSnackBar(sub.name + ' deleting error'),
         () => {
-          this.openSnackBar(sub.name + " deleted successfully");
+          this.openSnackBar(sub.name + ' deleted successfully');
           this._deleteFromViewArray(sub);
         }
       );
-    } else
+    } else {
       this._deleteFromViewArray(sub);
+    }
   }
   private _deleteFromViewArray(sub: any) {
     if (sub.type) {
       this.typeSubs.splice(this.typeSubs.indexOf(sub), 1);
-      //TODO: тут баг, потому что тип возвращается в вып.список уже выбранный
+      // TODO: тут баг, потому что тип возвращается в вып.список уже выбранный
       this.typeList.push(sub.type);
     } else if (sub.eventId) {
       this.eventSubs.splice(this.eventSubs.indexOf(sub), 1);
     } else if (sub.radius) {
-      this.areaSubs.splice(this.areaSubs.indexOf(sub),1);
+      this.areaSubs.splice(this.areaSubs.indexOf(sub), 1);
     }
 
   }
@@ -159,7 +164,7 @@ export class SubscriptionsDialogComponent implements OnInit {
     // console.log("forToggle: ", this.forToggle);
   }
 
-  onNewTypeSelect($event: MatSelectChange){
+  onNewTypeSelect($event: MatSelectChange) {
     // console.log($event);
     $event.value.forEach(t => {
       // TODO удаление не правильное удаляет до конца все
@@ -179,8 +184,14 @@ export class SubscriptionsDialogComponent implements OnInit {
   }
 
   onMarked($event) {
-    this.isMarked = {
-      flag: $event.flag ? $event.flag: false,
-      id: $event.id};
+    this.marked = {
+      flag: $event.flag ? $event.flag : false,
+      id: $event.id,
+      name: $event.name
+    };
+  }
+
+  isMarked(sub) {
+    return this.marked.flag ? this.marked.id && sub.id ? this.marked.id === sub.id : this.marked.name === sub.name : false;
   }
 }
