@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
-  private static String serviceUrl = "http://lemmeknow:9999/auth";
+  private static String serviceUrl = "http://localhost:9999/auth";
 
   @GetMapping({"/", "/app/**", "/login"})
   public static String index(){
