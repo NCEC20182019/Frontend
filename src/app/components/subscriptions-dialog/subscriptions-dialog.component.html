@@ -47,7 +47,7 @@
     <mat-tab label="Areas">
       <ng-template matTabContent>
         <div class="areaTab">
-          <span class="mat-hint hint">Для создания новой области - кликните по карте, и введите название!</span><br/>
+          <span class="mat-hint hint">Для создания новой области - кликните по карте и введите название!</span><br/>
           <app-map [areas]="areaSubs" (onOverArea)="onMarked($event)"></app-map>
           <div class="areaSubList">
             <div *ngIf="areaSubs.length <= 0" class="no-subs">No subscriptions</div>
@@ -57,7 +57,7 @@
               <span [ngClass]="{'newSub': !sub.id, 'marked': isMarked(sub)}">{{sub.name}}</span>
               <div class="new-sub-name" *ngIf="!sub.name">
                 <!--<mat-form-field>-->
-                <input matInput placeholder="Subs name.." #box (keyup.enter)="onEnter(i, box.value)">
+                <input matInput placeholder="Enter name.." #box (keyup.enter)="onEnter(i, box.value)">
                 <!--</mat-form-field>-->
                 <!--<button mat-raised-button (click)="onEnter(i, box.value)">Apply</button>-->
               </div>
@@ -67,6 +67,7 @@
         </div>
         <div class="buttons">
           <button class="subs-button-save" mat-raised-button mat-primary *ngIf="areaSubs.length"
+                  [disabled]="!allAreaNamed()"
                   (click)="save('Areas')">Save
           </button>
           <button class="subs-button-cancel" mat-raised-button (click)="close()">Cancel</button>
