@@ -194,4 +194,8 @@ export class SubscriptionsDialogComponent implements OnInit {
   isMarked(sub) {
     return this.marked.flag ? this.marked.id && sub.id ? this.marked.id === sub.id : this.marked.name === sub.name : false;
   }
+
+  allAreaNamed() {
+    return this.areaSubs.every((ar) => !!ar.name);
+  }
 }
