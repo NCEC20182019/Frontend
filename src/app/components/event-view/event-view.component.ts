@@ -99,6 +99,8 @@ export class EventViewComponent implements OnInit {
     this.authService.currentUserValue.roles.forEach((x) => {
       head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
     });
-    return head || this.authService.currentUserValue.id === this.currentEvent.owner_id;
+    if(this.currentEvent.owner_id)
+      head = head || this.authService.currentUserValue.id === this.currentEvent.owner_id;
+    return head;
   }
 }
