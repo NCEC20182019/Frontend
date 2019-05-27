@@ -86,7 +86,15 @@ export class EventEditComponent implements OnInit {
     this.authService.currentUserValue.roles.forEach((x) => {
       head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
     });
-    return head || this.authService.currentUserValue.id == this.currentEvent.owner_id;
+    if(this.currentEvent.owner_id) {
+      console.log(this.authService.currentUserValue.id);
+      console.log(this.currentEvent.owner_id);
+      console.log(this.authService.currentUserValue.id == this.currentEvent.owner_id);
+
+      head = head || this.authService.currentUserValue.id == this.currentEvent.owner_id;
+    }
+    console.log(head);
+    return head;
   }
 
   goBack() {

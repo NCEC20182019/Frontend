@@ -5,5 +5,5 @@ export class User {
   username: string;
   email: string;
   roles: IRole[];
-  notification_channel: string;
+  notificationChannel: string;
 }

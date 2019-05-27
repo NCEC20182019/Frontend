@@ -1,11 +1,11 @@
-<div #main id="main" *ngIf="currentEvent">
+<div #main id="main" *ngIf="!!currentEvent.id">
   <div class="event-info">
     <h2 class="event-title left-text">{{ currentEvent.title }}
       <div class="notifyBT">
         <button *ngIf="!subscribed" (click)="subscribeToEvent()" class="edit-button" mat-button><mat-icon>notifications</mat-icon></button>
         <button *ngIf="subscribed" (click)="unsubscribe()" class="edit-button" mat-button><mat-icon>notifications_off</mat-icon></button>
       </div>
-    </h2><button mat-stroked-button class="edit-button" [disabled]="!!canEdit.valueOf()" (click)="editRedirect()">Edit</button>
+    </h2><button mat-stroked-button class="edit-button" [disabled]="canEdit(currentEvent.owner_id)" (click)="editRedirect()">Edit</button>
 
     <span class="event-type left-text">Тип мероприятия: {{ currentEvent.type }}</span>
 

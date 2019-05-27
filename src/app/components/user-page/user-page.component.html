@@ -34,9 +34,9 @@
       <mat-form-field>
         <mat-label>Notification type</mat-label>
         <mat-select formControlName="notification_channel" [ngClass]="{ 'is-invalid': submitted && f.notification_channel.errors }" disableRipple>
-          <mat-option value="email">Email</mat-option>
-          <mat-option value="push">Push</mat-option>
-          <mat-option value="none">Disable notifications</mat-option>
+          <mat-option value="EMAIL">Email</mat-option>
+          <mat-option value="PUSH">Push</mat-option>
+          <mat-option value="NONE">Disable notifications</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
