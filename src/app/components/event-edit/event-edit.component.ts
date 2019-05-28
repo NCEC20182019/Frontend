@@ -82,7 +82,7 @@ export class EventEditComponent implements OnInit {
   }
 
   canEdit(owner_id: number): boolean{
-    if(this.authService.currentUserValue) {
+    if(!!this.authService.currentUserValue) {
       let head = false;
       this.authService.currentUserValue.roles.forEach((x) => {
         head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";

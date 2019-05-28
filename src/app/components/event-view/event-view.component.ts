@@ -95,7 +95,7 @@ export class EventViewComponent implements OnInit {
   }
 
   canEdit(owner_id: number){
-    if(this.authService.currentUserValue) {
+    if(!!this.authService.currentUserValue) {
       let head = false;
       this.authService.currentUserValue.roles.forEach((x) => {
         head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
