@@ -1,4 +1,4 @@
-<div *ngIf="canEdit() && !!currentEvent" class="main-edit">
+<div *ngIf="canEdit(currentEvent.owner_id) && !!currentEvent" class="main-edit">
   <div id="formHTML">
     <h3> Edit event</h3>
     <div [formGroup]="form">
