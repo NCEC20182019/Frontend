@@ -94,7 +94,7 @@ export class EventViewComponent implements OnInit {
     this.router.navigate(['app/events/'+ this.currentEvent.id.toString() + '/edit']);
   }
 
-  canEdit(owner_id: number){
+  canEdit(owner_id){
     if(!!this.authService.currentUserValue) {
       let head = false;
       this.authService.currentUserValue.roles.forEach((x) => {

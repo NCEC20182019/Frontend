@@ -81,7 +81,7 @@ export class EventEditComponent implements OnInit {
     return this.form.controls;
   }
 
-  canEdit(owner_id: number): boolean{
+  canEdit(owner_id): boolean{
     if(!!this.authService.currentUserValue) {
       let head = false;
       this.authService.currentUserValue.roles.forEach((x) => {
