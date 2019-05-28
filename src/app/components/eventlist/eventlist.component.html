@@ -1,33 +1,16 @@
-<div *ngIf="events()" class="eventlist">
+<div class="eventlist">
+  <span class="header"> Events <button [disabled]="!isFiltering" mat-button (click)="clearFilter()"
+                                       class="clear-filter"> Clear filter </button></span>
+  <mat-paginator [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
 
-  <h3 class="header"> Events <button [disabled]="!isFiltering" mat-button (click)="clearFilter()" class="clear-filter"> Clear filter </button></h3>
-  <mat-paginator [pageSizeOptions]="[14, 30, 50]" showFirstLastButtons pageSize="14" (page)="onPageChanged($event)"></mat-paginator>
-  <table mat-table [dataSource]="dataSource">
-
-<!--    <ng-container matColumnDef="redirect">-->
-<!--      <th mat-header-cell *matHeaderCellDef> Name </th>-->
-<!--      <td mat-cell *matCellDef="let event"> {{event.title}} </td>-->
-<!--    </ng-container>-->
-<!--  -->
-<!--    <ng-container matColumnDef="type">-->
-<!--      <th mat-header-cell *matHeaderCellDef> Type </th>-->
-<!--      <td mat-cell *matCellDef="let event"> {{event.type}} </td>-->
-<!--    </ng-container>-->
-<!--  -->
-<!--    <ng-container matColumnDef="resource_uri">-->
-<!--      <th mat-header-cell *matHeaderCellDef> Link </th>-->
-<!--      <td mat-cell *matCellDef="let event"> -->
-<!--        <a href="{{event.source_uri}}"> {{event.source_uri}} </a> </td>-->
-<!--    </ng-container>-->
-
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let event">
-          <span [routerLink]="event.id"  class="link"> {{ event.title }} </span>
-      </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-  </table>
+  <div class="cards">
+    <mat-card matTooltip="click to view event details" *ngFor="let event of obs | async" class="my-style card"
+              (click)="onCardClick(event.id)">
+      <mat-card-header>
+        <img mat-card-avatar class="my-style" src="{{getImageUrl(event.id)}}">
+        <mat-card-title class="my-style">{{event.title}}</mat-card-title>
+        <mat-card-subtitle class="my-style">Date: {{dateFormat(event.date_start, event.date_end)}}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
 </div>
