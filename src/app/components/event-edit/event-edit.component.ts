@@ -81,20 +81,20 @@ export class EventEditComponent implements OnInit {
     return this.form.controls;
   }
 
-  canEdit(): boolean{
-    let head = false;
-    this.authService.currentUserValue.roles.forEach((x) => {
-      head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
-    });
-    if(this.currentEvent.owner_id) {
-      console.log(this.authService.currentUserValue.id);
-      console.log(this.currentEvent.owner_id);
-      console.log(this.authService.currentUserValue.id == this.currentEvent.owner_id);
-
-      head = head || this.authService.currentUserValue.id == this.currentEvent.owner_id;
+  canEdit(owner_id: number): boolean{
+    if(this.authService.currentUserValue) {
+      let head = false;
+      this.authService.currentUserValue.roles.forEach((x) => {
+        head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
+      });
+      // console.log(owner_id);
+      // console.log(this.authService.currentUserValue.id);
+      // console.log(this.authService.currentUserValue.id == owner_id);
+      head = head || this.authService.currentUserValue.id == owner_id;
+      return head;
+    }else{
+      return false;
     }
-    console.log(head);
-    return head;
   }
 
   goBack() {
