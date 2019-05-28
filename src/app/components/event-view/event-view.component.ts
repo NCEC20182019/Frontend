@@ -95,6 +95,7 @@ export class EventViewComponent implements OnInit {
   }
 
   canEdit(owner_id: number){
+    if(this.authService.currentUserValue) {
       let head = false;
       this.authService.currentUserValue.roles.forEach((x) => {
         head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
@@ -102,9 +103,12 @@ export class EventViewComponent implements OnInit {
       console.log(owner_id);
       console.log(this.authService.currentUserValue.id);
       console.log(this.authService.currentUserValue.id == owner_id);
-      if(!!this.currentEvent.owner_id) {
+      if (!!this.currentEvent.owner_id) {
         head = head || this.authService.currentUserValue.id == owner_id;
       }
       return head;
+    }else{
+      return false;
+    }
   }
 }
