@@ -19,21 +19,16 @@ export class MapViewComponent implements OnInit, OnDestroy {
   @ViewChild('filter') filterCmp: FilterComponent;
   @ViewChild('eventlist') eventlistCmp: EventlistComponent;
 
-  private filterForm: {
-    dateFrom: Date,
-    dateTo: Date,
-    area: {
+  private area: {
       center: ILocation,
       radius: number
-    },
-    types: string[]
   };
 
   private filter: boolean;
   @Output() coordFilter;
   @Output() Events: IEvent[] = [];
 
-  @Output() private filterSubmit = false;
+  // @Output() private filterSubmit = false;
   private spinner: boolean = true;
   markerPlaced = new EventEmitter();
   eventSubscription: Subscription;
@@ -59,18 +54,18 @@ export class MapViewComponent implements OnInit, OnDestroy {
   }
 
   toEvents(events: IEvent[]) {
-    if (!this.Events.length) {
+    if (!this.Events.length || this.filter) {
       this.Events = events;
       return;
     }
 
     for (let event of events) {
       let index = this.Events.findIndex(e => e.id === event.id);
-      if (index !== -1) {
+      if (index >= 0) {
         this.Events[index] = event;
       } else {
         this.Events.push(event);
-        console.log(this.Events);
+        // console.log(this.Events);
       }
     }
     // events.forEach((event, i) => {
@@ -114,14 +109,14 @@ export class MapViewComponent implements OnInit, OnDestroy {
     this.filter = false;
   }
 
-  changeCoordFilter(event){
+  changeCoordFilter(event) {
     this.coordFilter = event;
   }
 
-  onFilterSubmit(event){
-    this.filterForm = event;
-    this.filterForm.area = this.mapCmp.getBounds();
-    this.getEvents();
+  onFilterSubmit() {
+    // this.filterForm = event;
+    this.area = this.mapCmp.getBounds();
+    // this.getEvents();
   }
 
   onPageChanged() {
@@ -129,13 +124,14 @@ export class MapViewComponent implements OnInit, OnDestroy {
   }
 
   filterFormIsEmpty(): boolean {
-    return !this.filterForm;
+    // return !this.filterForm;
+    return false;
   }
 
   onFilterCleared() {
-    this.filterForm = null;
-    //TODO rewrite this
-    this.filterCmp = null; //new FilterComponent();
+    // this.filterForm = null;
+    // TODO rewrite this
+    this.filterCmp = null; // new FilterComponent();
     this.getEvents();
   }
 }

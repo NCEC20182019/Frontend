@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {DataService} from "../../services/data.service";
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-filter',
@@ -7,6 +7,15 @@ import {DataService} from "../../services/data.service";
   styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
+
+
+  constructor(
+    private dataService: DataService
+  ) {
+    this.minDate = new Date();
+    this.maxDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDay());
+    this.typeList = [];
+  }
 
   @ViewChild('listElement') ul;
 
@@ -18,16 +27,22 @@ export class FilterComponent implements OnInit {
   @Output() coordFilterEvent = new EventEmitter();
   @Output() submit = new EventEmitter();
 
-  coordFilter: boolean = false;
+  @Input() areaFilter;
 
+  coordFilter = false;
 
-  constructor(
-    private dataService: DataService
-  ) {
-    this.minDate = new Date();
-    this.maxDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDay());
-    this.typeList = [];
-  }
+  private filterForm = {
+    dateFrom: this.minDate,
+    dateTo: this.maxDate,
+    area: {
+      center: {
+        latitude: 0,
+        longitude: 0
+      },
+      radius: 0
+    },
+    types: []
+  };
 
   ngOnInit() {
     this.loadTypeList();
@@ -39,44 +54,40 @@ export class FilterComponent implements OnInit {
     );
   }
 
-  changeMinDate(event){
+  changeMinDate(event) {
     this.minDate = event.value;
   }
 
-  changeMaxDate(event){
+  changeMaxDate(event) {
     this.maxDate = event.value;
   }
 
-  closeEm(){
+  closeEm() {
     this.close.emit();
   }
 
-  coordFilterChange(checked: boolean){
+  coordFilterChange(checked: boolean) {
     this.coordFilter = !checked;
     this.coordFilterEvent.emit(this.coordFilter);
   }
 
-  private filterForm = {
-    dateFrom: this.minDate,
-    dateTo: this.maxDate,
-    area: {
-      center: {
-        ltd: 0,
-        lng: 0
-      },
-      radius: 0
-    },
-    types: []
-  };
+  onSubmit() {
+    // TODO получение area стоит переписать
+    this.submit.emit();
 
-  onSubmit(){
-    this.ul.nativeElement.childNodes.forEach((li) =>{
-      if(li.childNodes[0].firstChild.firstChild.firstChild.attributes[4].value !== "false") {
+    // get selected types
+    this.ul.nativeElement.childNodes.forEach((li) => {
+      if (li.childNodes[0].firstChild.firstChild.firstChild.attributes[4].value !== 'false') {
         this.filterForm.types.push(li.childNodes[0].textContent.trim());
       }
     });
-    this.filterForm.dateFrom=this.minDate;
-    this.filterForm.dateTo=this.maxDate;
-    this.submit.emit(this.filterForm);
+
+    // get dates
+    this.filterForm.dateFrom = this.minDate;
+    this.filterForm.dateTo = this.maxDate;
+
+    this.filterForm.area = this.areaFilter;
+
+    this.dataService.getFilteredEvents(this.filterForm);
   }
 }

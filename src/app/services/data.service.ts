@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {IEvent} from '../models/ievent';
 import {User} from '../models/user';
-import {AuthenticationService} from "./authentication.service";
-import {CookieService} from "ngx-cookie-service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {AuthenticationService} from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class DataService {
   private _eventsUri = '/events';
   private _usersUri = '/auth';
-  public Events: IEvent[];
+  // public Events: IEvent[];
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
@@ -28,7 +26,7 @@ export class DataService {
     private authService: AuthenticationService,
     private http: HttpClient
   ) {
-    this.Events = [];
+    // this.Events = [];
   }
 
   getAllEvents() {
@@ -37,35 +35,36 @@ export class DataService {
           this._eventSource.next(data);
         },
         (error) => {
-          //console.log(error);
+          // console.log(error);
         });
   }
-  getSortedEvents(sort: number, filter) {
-    this.http.post<IEvent[]>(this._eventsUri + '/sort', {sort, filter},{headers: this.authService.addAuthHeader(this.headers)})
+
+  getFilteredEvents(filter) {
+    this.http.post<IEvent[]>(this._eventsUri + '/filter', filter, {headers: this.headers})
       .subscribe(
         (data) => this._eventSource.next(data),
-        (error) => {
+        () => {
           this.getAllEvents();
-          //console.log(error);
+          // console.log(error);
         }
       );
   }
 
-  getMockEvents(): IEvent[]{
+  getMockEvents(): IEvent[] {
     return [
       {
         owner_id: 1,
         id: 1,
-        title: "Фестиваль волшебных шаров — Воронеж",
-        description: "Настоящее волшебство окутает стадион «Динамо» 1 июня: в этот вечер здесь пройдет сказочный фестиваль, на котором сотни волшебных шаров в руках гостей в один миг засияют разноцветными огоньками, создав вокруг особую завораживающую атмосферу.\n\nКроме волшебных шаров с заходом солнца жителей города ждет захватывающее световое представление и выступление музыкальных виртуозов с чарующими композициями.\n\nКстати, волшебные шары по окончании фестиваля зрители смогут забрать с собой: они будут озарять светом дом, еще долго напоминая о чудесном событии. \n\nНачало в 21:00.\n\nСтоимость входа: 100₽ (волшебные шары приобретаются на территории фестиваля).",
-        date_start: "2019-06-01T18:00:00.000+0000",
-        date_end: "2019-06-01T19:30:00.000+0000",
-        source_uri: "https://vk.com/event65334589",
-        type: "Другое",
+        title: 'Фестиваль волшебных шаров — Воронеж',
+        description: 'Настоящее волшебство окутает стадион «Динамо» 1 июня: в этот вечер здесь пройдет сказочный фестиваль, на котором сотни волшебных шаров в руках гостей в один миг засияют разноцветными огоньками, создав вокруг особую завораживающую атмосферу.\n\nКроме волшебных шаров с заходом солнца жителей города ждет захватывающее световое представление и выступление музыкальных виртуозов с чарующими композициями.\n\nКстати, волшебные шары по окончании фестиваля зрители смогут забрать с собой: они будут озарять светом дом, еще долго напоминая о чудесном событии. \n\nНачало в 21:00.\n\nСтоимость входа: 100₽ (волшебные шары приобретаются на территории фестиваля).',
+        date_start: '2019-06-01T18:00:00.000+0000',
+        date_end: '2019-06-01T19:30:00.000+0000',
+        source_uri: 'https://vk.com/event65334589',
+        type: 'Другое',
         image_url: '',
         location: {
           id: 15,
-          name: "Фестиваль волшебных шаров — Воронеж",
+          name: 'Фестиваль волшебных шаров — Воронеж',
           latitude: 51.63344192504883,
           longitude: 39.2305793762207,
         }
@@ -73,13 +72,13 @@ export class DataService {
       {
         owner_id: 4,
         id: 2,
-        title: "title2",
-        type: "String",
+        title: 'title2',
+        type: 'String',
         source_uri: 'http://www.site2.com',
-        description: "String",
-        date_start: "0.0.0",
-        date_end: "1.1.1",
-        image_url: "",
+        description: 'String',
+        date_start: '0.0.0',
+        date_end: '1.1.1',
+        image_url: '',
         location: {
           id: 1,
           name: 'loc2',
@@ -90,13 +89,13 @@ export class DataService {
       {
         owner_id: null,
         id: 3,
-        title: "title3",
-        type: "String",
+        title: 'title3',
+        type: 'String',
         source_uri: 'http://www.site3.com',
-        description: "String",
-        date_start: "0.0.0",
-        date_end: "1.1.1",
-        image_url: "",
+        description: 'String',
+        date_start: '0.0.0',
+        date_end: '1.1.1',
+        image_url: '',
         location: {
           id: 2,
           name: 'loc3',
@@ -108,7 +107,7 @@ export class DataService {
   }
 
   getEvent(_id) {
-    return this.http.get<IEvent>(this._eventsUri + '/' + _id,{ headers: this.headers });
+    return this.http.get<IEvent>(this._eventsUri + '/' + _id, {headers: this.headers});
   }
 
   /** PUT: update the event on eventService */
@@ -159,6 +158,6 @@ export class DataService {
       name_location: event.location.name,
       latitude: event.location.latitude,
       longitude: event.location.longitude
-    }
+    };
   }
 }

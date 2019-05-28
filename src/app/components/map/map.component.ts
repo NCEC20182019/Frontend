@@ -14,9 +14,9 @@ export class MapComponent implements OnInit {
   @Input() areas: any[];
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
   @Output() onOverArea: EventEmitter<any> = new EventEmitter();
+  @Output() onAreaFilterChange: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('coordFilter') myCircle;
-  @Input() filterSubmit = false;
   @Input() center: any = 'city';
 
   userLocation: ILocation = {
@@ -75,6 +75,16 @@ export class MapComponent implements OnInit {
       this.areas[index].longitude = $event.lng ? $event.lng : this.areas[index].longitude;
       this.areas[index].radius = typeof $event === 'number' ? $event : this.areas[index].radius;
     }
+  }
+
+  areaFilterChange($event) {
+    return {
+      center: {
+        latitude: $event.lat ? $event.lat : 0,
+        longitude: $event.lng ? $event.lng : 0
+      },
+      radius: typeof $event === 'number' ? $event : 0
+    };
   }
 
   overArea(area, flag) {
