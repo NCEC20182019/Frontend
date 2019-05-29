@@ -1,4 +1,4 @@
-<div *ngIf="canEdit() && !!currentEvent" class="main-edit">
+<div *ngIf="canEdit(currentEvent.owner_id) && !!currentEvent" class="main-edit">
   <div id="formHTML">
     <h3> Edit event</h3>
     <div [formGroup]="form">
@@ -39,6 +39,6 @@
     <button mat-raised-button *ngIf="currentEvent.id" (click)="delete()">Delete</button>
   </div>
 </div>
-<div *ngIf="!this.canEdit()">
+<div *ngIf="!this.canEdit(currentEvent.owner_id)">
   <span>You are not allowed to edit this event</span>
 </div>

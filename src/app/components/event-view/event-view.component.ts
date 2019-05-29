@@ -94,17 +94,19 @@ export class EventViewComponent implements OnInit {
     this.router.navigate(['app/events/'+ this.currentEvent.id.toString() + '/edit']);
   }
 
-  canEdit(owner_id: number){
+  canEdit(owner_id){
+    if(!!this.authService.currentUserValue) {
       let head = false;
       this.authService.currentUserValue.roles.forEach((x) => {
         head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
       });
-      console.log(owner_id);
-      console.log(this.authService.currentUserValue.id);
-      console.log(this.authService.currentUserValue.id == owner_id);
-      if(!!this.currentEvent.owner_id) {
-        head = head || this.authService.currentUserValue.id == owner_id;
-      }
+      // console.log(owner_id);
+      // console.log(this.authService.currentUserValue.id);
+      // console.log(this.authService.currentUserValue.id == owner_id);
+      head = head || this.authService.currentUserValue.id == owner_id;
       return head;
+    }else{
+      return false;
+    }
   }
 }

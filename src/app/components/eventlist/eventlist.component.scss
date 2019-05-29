@@ -1,34 +1,18 @@
-// div.eventlist{
-//     display: inline-block;
-//     height: 400px;
-//     width: 200px;
-//     border: 1px solid black;
-//     float: left;
-// }
-
-// button{
-//     display: block;
-//     width: 150px;
-//     margin: 15px;
-// }
-
 div.eventlist{
-    display: block;
+  display: flex;
+  flex-direction: column;
     height: 100%;
-    max-height: 100%;
+  //max-height: 100%;
     width: 100%;
-    overflow: auto;
+  //overflow: hidden;
 
     box-shadow: 0 0 10px rgba(0,0,0, 0.5);
 
     background: white;
 
-    table{
-        width: 100%;
-    }
-
     .header{
-        font-size: 12pt;
+      font-size: 12pt;
+      font-weight: bold;
       margin-left: 15px;
     }
 
@@ -36,24 +20,38 @@ div.eventlist{
         width: 100%;
         bottom: 0;
     }
-
-
-}
-
-.link{
-    font-variant: all-petite-caps;
-    text-decoration: underline;
-    font-size: 14pt;
-
-    &:hover{
-        cursor: pointer;
-    }
 }
 
 .clear-filter{
   margin-left: auto;
 }
 
-th{
-  height: 0;
+.cards {
+  flex-grow: 1;
+  //height: 100%;
+  overflow-y: auto;
 }
+
+.card {
+  cursor: pointer;
+}
+
+mat-card.my-style {
+  border-radius: 0 !important;
+  padding: 7px !important;
+}
+
+.my-style .mat-card-subtitle {
+  margin-bottom: 10px;
+}
+
+.my-style .mat-card-title {
+  font-size: 18px;
+}
+
+.my-style .mat-card-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 20%;
+}
+
