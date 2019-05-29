@@ -70,7 +70,7 @@ export class EventlistComponent implements OnInit, OnDestroy, OnChanges {
 
   getImageUrl(eventId) {
     const url = this.Events.find(e => e.id === eventId).image_url;
-    return url ? url : '../../../assets/no_logo_50x50.png';
+    return url ? url : '../../../assets/no_image.png';
   }
 
   onCardClick(eventId) {
