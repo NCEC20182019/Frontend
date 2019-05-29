@@ -32,7 +32,9 @@ export class EventViewComponent implements OnInit {
     private authService: AuthenticationService,
     private subService: SubscriptionService,
     private updateService: UpdateService
-  ) { }
+  ) {
+    this.liveActions = [];
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
