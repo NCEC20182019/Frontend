@@ -1,38 +1,275 @@
 [
-    {
-        "id": 1,
-        "name": "Event1",
-        "type": "Film",
-        "description": "Повседневная практика показывает, что реализация намеченных плановых заданий в значительной степени обуславливает создание модели развития. Идейные соображения высшего порядка",
-        "link": "https://service.webboss.pro/text-generator",
-        "ltd": 51.668174,
-        "lng": 39.221370,
-        "start_date": "19/03/1998",
-        "end_date": "19/03/1999",
-        "pic": "https://via.placeholder.com/420x250.jpeg?text=1st+event+image"
+  {
+    "id": 5608,
+    "owner_id": null,
+    "title": "ЭСТЕТИКА 6",
+    "description": "Вход 500р. \n«Эстетика» — ежегодный автомобильный фестиваль, объединяющий представителей  stance, resto и custom культуры. Куча эмоций, подарков и хорошее настроение мы вам гарантируем! \n- Распитие спиртных напитков запрещено.\n- несогласованное передвижение автомобилей запрещено.\n- купание запрещено.\n#ЭстетикаФест #Эстетика6",
+    "date_start": "2019-07-13T09:00:00.000+0000",
+    "date_end": "2019-07-13T16:00:00.000+0000",
+    "source_uri": "https://vk.com/event86541565",
+    "type": null,
+    "image_url": "https://sun6-6.userapi.com/c845521/v845521029/1ceab8/GEtz1PICirI.jpg?ava=1",
+    "location": {
+      "id": 422,
+      "name": "ЭСТЕТИКА 6",
+      "latitude": 51.85419464111328,
+      "longitude": 39.71348190307617,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
     },
-    {
-        "id": 2,
-        "name": "Event2",
-        "type": "Music-concert",
-        "description": "Не следует, однако забывать, что дальнейшее развитие различных форм деятельности способствует подготовки и реализации форм развития. Значимость этих проблем настолько очевидна, что консультация с широким активом играет важную роль в формировании новых предложений.",
-        "link": "https://music.yandex.ru/artist/111004/tracks",
-        "ltd": -18.93636,
-        "lng": -53.73129,
-        "start_date": "13/01/2019",
-        "end_date": "13/01/2020",
-        "pic": "https://via.placeholder.com/420x250.jpeg?text=2nd+event+image"
+    "localizations": []
+  },
+  {
+    "id": 5649,
+    "owner_id": null,
+    "title": "Би-2 • Воронеж • 31 мая и 1 июня 2019",
+    "description": "► Би-2 с симфоническим оркестром в Воронеже\n⚡ 31 мая, 1 июня, 19:00, EVENT HALL\n\n► БИЛЕТЫ:\n⚡ 31 мая:\nvk.cc/8LXTFS\n⚡ 1 июня: \nvk.cc/8LXU0Z\n\n► ПОЛУЧАТЬ НОВОСТИ:\nvk.com/app5898182_-162667459#s=120857",
+    "date_start": "2019-05-31T16:00:00.000+0000",
+    "date_end": null,
+    "source_uri": "https://vk.com/event162667459",
+    "type": null,
+    "image_url": "https://sun6-5.userapi.com/c844521/v844521729/7d7bf/H7yhUw3fkPQ.jpg?ava=1",
+    "location": {
+      "id": 444,
+      "name": "Би-2 • Воронеж • 31 мая и 1 июня 2019",
+      "latitude": 51.788333892822266,
+      "longitude": 39.205265045166016,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
     },
-    {
-        "id": 3,
-        "name": "Event3",
-        "type": "Some-type",
-        "description": "С другой стороны укрепление и развитие структуры обеспечивает участие в формировании систем массового участия",
-        "link": "https://www.afisha.ru/",
-        "ltd": 62.75548,
-        "lng": 63.19102,
-        "start_date": "30/03/2018",
-        "end_date": "06/04/2018",
-        "pic": "https://via.placeholder.com/420x250.jpeg?text=3rd+event+image"
-    }
+    "localizations": []
+  },
+  {
+    "id": 5647,
+    "owner_id": null,
+    "title": "МДПС Воронеж приглашает вас",
+    "description": "Дорогие друзья!!!!\nПриглашаем вас в группу помощи на дороге https://vk.com/voronezhdps",
+    "date_start": "2020-03-13T17:00:00.000+0000",
+    "date_end": "2020-12-17T21:00:00.000+0000",
+    "source_uri": "https://vk.com/event83435655",
+    "type": null,
+    "image_url": "https://pp.userapi.com/c621923/v621923713/630f/wsLW3FaVdaE.jpg?ava=1",
+    "location": {
+      "id": 419,
+      "name": "",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 6155,
+    "owner_id": null,
+    "title": "vbasjkmd",
+    "description": "asdvbnm",
+    "date_start": "2019-05-27T18:33:00.000+0000",
+    "date_end": "2019-05-27T18:33:00.000+0000",
+    "source_uri": "ssss",
+    "type": "UNKNOWN",
+    "image_url": "",
+    "location": {
+      "id": 609,
+      "name": "Test",
+      "latitude": 51.65031138461247,
+      "longitude": 39.30158906474708,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5648,
+    "owner_id": null,
+    "title": "parkrun Воронеж",
+    "description": "Еженедельные бесплатные забеги на 5 км в Воронеже в Центральном парке по адресу ул. Ленина, 10\n\nЕсли Вы ранее не бегали parkrun, для участия Вам нужно один раз зарегистрироваться https://www.parkrun.ru/register/\n\nУчастники, не забываем приносить на забег свой parkrun-id. Помним, у нас действует правило \"нет шрихкода, нет результата\"",
+    "date_start": null,
+    "date_end": null,
+    "source_uri": "https://vk.com/event149322382",
+    "type": null,
+    "image_url": "https://sun6-3.userapi.com/c846521/v846521255/64eea/E2iSjW9sr2w.jpg?ava=1",
+    "location": {
+      "id": 443,
+      "name": "parkrun Воронеж",
+      "latitude": 51.6983757019043,
+      "longitude": 39.21853256225586,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5606,
+    "owner_id": null,
+    "title": "Фестиваль мыльных пузырей — Воронеж",
+    "description": "Шоу мыльных  пузырей, карнавал костюмов и возможность вновь почувствовать себя беззаботным ребенком – малый перечень того, что приготовил для гостей Фестиваль мыльных пузырей.\n\nСовсем скоро в городе развернется настоящий семейный праздник: зрителей ждет насыщенная развлекательная программа, в ходе которой один за другим вырастут настоящие мыльно-воздушные  гиганты и пузыри, наполненные дымом.\n\nОдним мыльным шоу фестиваль не ограничится: горожан организаторы праздника приглашают присоединиться к костюмированному карнавалу и параду плакатов. Требований и к костюмам, и к плакатам всего два: они должны быть веселыми и очень яркими.\n\nФестиваль начнется в 15:00 и продлится один час.\nСтоимость входных  билетов: 200 рублей (набор для создания мыльных пузырей уже включен в стоимость).",
+    "date_start": "2019-06-01T12:00:00.000+0000",
+    "date_end": "2019-06-01T13:00:00.000+0000",
+    "source_uri": "https://vk.com/event82753130",
+    "type": null,
+    "image_url": "https://sun6-2.userapi.com/c846120/v846120076/1ed8d9/_prqG4UgNEM.jpg?ava=1",
+    "location": {
+      "id": 420,
+      "name": "Фестиваль мыльных пузырей — Воронеж",
+      "latitude": 51.6935920715332,
+      "longitude": 39.22418975830078,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5754,
+    "owner_id": null,
+    "title": "ВелоДивы",
+    "description": "• Доброго времени суток, уважаемые туристы и велосипедисты! \n21-23 июНя приглашаем Вас в Дивногорье для дружеских посиделок у костра, песен под гитару, поездок, прогулок и любования природой Дивногорья. \nДобраться можно на вело/авто/электро/пешком. Вам остается решить, что делать дальше. ... проминать задницей диван или ехать с нами. \nВремя:21-23 июНя. \nМесто: 50.955586, 39.268558(координаты Гугл) \nЦена:бесплатно \nУчастники:старо-новые знакомые \nЗаезд в любой день, мы всем рады.",
+    "date_start": "2019-07-20T00:00:00.000+0000",
+    "date_end": "2019-07-23T19:00:00.000+0000",
+    "source_uri": "https://vk.com/event122498336",
+    "type": null,
+    "image_url": "https://pp.userapi.com/c845520/v845520585/205bf5/zU6RqGT0s6g.jpg?ava=1",
+    "location": {
+      "id": 491,
+      "name": "ВелоДивы",
+      "latitude": 51.67966079711914,
+      "longitude": 39.20623016357422,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 6156,
+    "owner_id": null,
+    "title": "qwertyuiop",
+    "description": "wertyuiop",
+    "date_start": "2019-05-27T19:07:00.000+0000",
+    "date_end": "2019-05-27T19:07:00.000+0000",
+    "source_uri": "",
+    "type": "UNKNOWN",
+    "image_url": "",
+    "location": {
+      "id": 610,
+      "name": "sadfghk",
+      "latitude": 51.648725882280644,
+      "longitude": 39.30166307056925,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5610,
+    "owner_id": null,
+    "title": "МДПС Воронеж приглашает вас",
+    "description": "МДПС ВОРОНЕЖ - \n Оповещание о расположении ДПС, информация о пробках, авариях. Новости города, помощь на дорогах, сходки и различные мероприятия и многое другое....",
+    "date_start": "2019-07-19T18:00:00.000+0000",
+    "date_end": "2020-04-18T19:00:00.000+0000",
+    "source_uri": "https://vk.com/event84583177",
+    "type": null,
+    "image_url": "https://pp.userapi.com/55CIa6ATB4U9NOI-DmWieWOg5p83moP8dkWd0g/pFZzwx2OMOE.jpg?ava=1",
+    "location": {
+      "id": 419,
+      "name": "",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5614,
+    "owner_id": null,
+    "title": "БЕЗОПАСНЫЙ ГОРОД | ВОРОНЕЖ",
+    "description": "Данные опросов не претендует на звание серьёзного маркетингового исследования, основанного на многофакторном анализе и глубокой переработке статистических данных и отражает субъективное мнение участников опроса.",
+    "date_start": "2019-12-30T21:00:00.000+0000",
+    "date_end": null,
+    "source_uri": "https://vk.com/event181077556",
+    "type": null,
+    "image_url": "https://pp.userapi.com/c855620/v855620745/252a7/JHT5LhR1YC0.jpg?ava=1",
+    "location": {
+      "id": 419,
+      "name": "",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5615,
+    "owner_id": null,
+    "title": "WoW!Bazar праздник творчества и подарков",
+    "description": "WoW!Bazar на GoGreen - Фестиваль ЗОЖ и ВегМаркет Воронежа 15 июня, Центральный парк. Принимаются заявки на участие\n\nТелефоны для связи:\n8(951)865-43-49 Анастасия\n8(930)409-69-97 Наталья",
+    "date_start": "2019-12-23T07:00:00.000+0000",
+    "date_end": null,
+    "source_uri": "https://vk.com/event153290354",
+    "type": null,
+    "image_url": "https://sun6-3.userapi.com/c824500/v824500620/fefde/iRET3D7QW1U.jpg?ava=1",
+    "location": {
+      "id": 426,
+      "name": "WoW!Bazar праздник творчества и подарков",
+      "latitude": 51.67351531982422,
+      "longitude": 39.212486267089844,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5613,
+    "owner_id": null,
+    "title": "DRIFT FEST & DBS 2019_«МОТОРШОУ ЧЕРНОЗЕМЬЕ»",
+    "description": "наши мероприятия:\n«МОТОРШОУ ЧЕРНОЗЕМЬЕ» \n(Воронеж-Липецк-Тамбов)\n\"АВТОСПОРТ в наших сердцах!\" \n\"Краски лета\"\nDRIFT FEST&DBS\nDriftBattleSeries\nКубок Черноземья по дрифту\nи мн. др.",
+    "date_start": null,
+    "date_end": null,
+    "source_uri": "https://vk.com/event39044021",
+    "type": null,
+    "image_url": "https://sun6-2.userapi.com/c627231/v627231475/4522/pXeWLN2frOM.jpg?ava=1",
+    "location": {
+      "id": 425,
+      "name": "DRIFT FEST & DBS 2019_«МОТОРШОУ ЧЕРНОЗЕМЬЕ»",
+      "latitude": 51.78959274291992,
+      "longitude": 39.20188522338867,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 5616,
+    "owner_id": null,
+    "title": "НИГАТИВ ★  ВОРОНЕЖ ★ 21 АПРЕЛЯ",
+    "description": "",
+    "date_start": "2019-06-07T17:00:00.000+0000",
+    "date_end": null,
+    "source_uri": "https://vk.com/event55892851",
+    "type": null,
+    "image_url": "https://pp.userapi.com/c849536/v849536852/19a635/Cm_B2VAbjwA.jpg?ava=1",
+    "location": {
+      "id": 419,
+      "name": "",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "street_address": null,
+      "postal_code": null,
+      "city": null
+    },
+    "localizations": []
+  }
 ]
