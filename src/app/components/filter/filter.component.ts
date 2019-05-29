@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {DataService} from '../../services/data.service';
+import {MatCheckboxChange} from "@angular/material";
 
 @Component({
   selector: 'app-filter',
@@ -27,20 +28,12 @@ export class FilterComponent implements OnInit {
   @Output() coordFilterEvent = new EventEmitter();
   @Output() submit = new EventEmitter();
 
-  @Input() areaFilter;
-
-  coordFilter = false;
+  // coordFilter = false;
 
   private filterForm = {
-    dateFrom: this.minDate,
-    dateTo: this.maxDate,
-    area: {
-      center: {
-        latitude: 0,
-        longitude: 0
-      },
-      radius: 0
-    },
+    dateFrom: Date,
+    dateTo: Date,
+    area: {},
     types: []
   };
 
@@ -55,39 +48,38 @@ export class FilterComponent implements OnInit {
   }
 
   changeMinDate(event) {
-    this.minDate = event.value;
+    this.filterForm.dateFrom = event.value;
+    // this.minDate = event.value;
   }
 
   changeMaxDate(event) {
-    this.maxDate = event.value;
+    this.filterForm.dateTo = event.value;
+    // this.maxDate = event.value;
   }
 
   closeEm() {
     this.close.emit();
   }
 
-  coordFilterChange(checked: boolean) {
-    this.coordFilter = !checked;
-    this.coordFilterEvent.emit(this.coordFilter);
+  coordFilterChange($event: MatCheckboxChange) {
+    this.coordFilterEvent.emit($event.checked);
   }
 
   onSubmit() {
-    // TODO получение area стоит переписать
-    this.submit.emit();
-
     // get selected types
     this.ul.nativeElement.childNodes.forEach((li) => {
-      if (li.childNodes[0].firstChild.firstChild.firstChild.attributes[4].value !== 'false') {
-        this.filterForm.types.push(li.childNodes[0].textContent.trim());
+      if (li.childNodes[0]) {
+        if (li.childNodes[0].firstChild.firstChild.firstChild.attributes[4].value !== 'false') {
+          this.filterForm.types.push(li.childNodes[0].textContent.trim());
+        }
       }
     });
 
     // get dates
-    this.filterForm.dateFrom = this.minDate;
-    this.filterForm.dateTo = this.maxDate;
+    // this.filterForm.dateFrom = this.minDate;
+    // this.filterForm.dateTo = this.maxDate;
 
-    this.filterForm.area = this.areaFilter;
-
-    this.dataService.getFilteredEvents(this.filterForm);
+    this.submit.emit(this.filterForm);
+    // this.closeEm();
   }
 }

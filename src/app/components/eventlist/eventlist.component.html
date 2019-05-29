@@ -1,7 +1,7 @@
 <div class="eventlist">
   <span class="header"> Events <button [disabled]="!isFiltering" mat-button (click)="clearFilter()"
                                        class="clear-filter"> Clear filter </button></span>
-  <mat-paginator [pageSizeOptions]="[10, 30, 50]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[15, 35, 50]" showFirstLastButtons></mat-paginator>
 
   <div class="cards">
     <mat-card matTooltip="click to view event details" *ngFor="let event of obs | async" class="my-style card"

@@ -11,12 +11,10 @@
                 (close)="onFilterClose()"
                 (coordFilterEvent)="changeCoordFilter($event)"
                 (submit)="onFilterSubmit($event)"
-                [areaFilter]="area"
     ></app-filter>
     <app-eventlist #eventlist *ngIf="!filter"
                    [Events]="Events"
-                   (pageChanged)="onPageChanged()"
-                   [isFiltering]="!filterFormIsEmpty()"
+                   [isFiltering]="isFiltering"
                    (filterCleared)="onFilterCleared()"
                    (eventCardClick)="redirectTo($event)"
     ></app-eventlist>

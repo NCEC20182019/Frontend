@@ -17,9 +17,9 @@ export class DataService {
     'Access-Control-Allow-Origin': '*'
   });
 
-  // Observable navItem source
+  // Observable events source
   private _eventSource = new Subject<IEvent[]>();
-  // Observable navItem stream
+  // Observable events stream
   eventList$ = this._eventSource.asObservable();
 
   constructor(
@@ -142,7 +142,7 @@ export class DataService {
 
   /** Retrive all available event types from eventDB*/
   getTypes() {
-    return this.http.get<{id: number, type: string}[]>(this._eventsUri + '/types', {headers: this.authService.addAuthHeader(this.headers)});
+    return this.http.get<{ id: number, type: string }[]>(this._eventsUri + '/types', {headers: this.headers});
   }
 
   convertEventToDTO(event: IEvent) {

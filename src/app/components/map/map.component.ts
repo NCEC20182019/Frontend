@@ -14,7 +14,6 @@ export class MapComponent implements OnInit {
   @Input() areas: any[];
   @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
   @Output() onOverArea: EventEmitter<any> = new EventEmitter();
-  @Output() onAreaFilterChange: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('coordFilter') myCircle;
   @Input() center: any = 'city';
@@ -25,6 +24,7 @@ export class MapComponent implements OnInit {
     latitude: 0,
     longitude: 0
   };
+  filterArea;
 
   private userMarker = {
     url: '../../../assets/blue-marker.png',
@@ -34,7 +34,6 @@ export class MapComponent implements OnInit {
 
   public zoom = 12;
 
-
   constructor() { }
 
   ngOnInit() {
@@ -42,6 +41,11 @@ export class MapComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.userLocation.latitude = position.coords.latitude;
         this.userLocation.longitude = position.coords.longitude;
+        this.filterArea = {
+          latitude: this.userLocation.latitude ? this.userLocation.latitude : 51.6720400,
+          longitude: this.userLocation.longitude ? this.userLocation.longitude : 39.1843000,
+          radius: 5000
+        };
       });
     }
   }
@@ -77,14 +81,10 @@ export class MapComponent implements OnInit {
     }
   }
 
-  areaFilterChange($event) {
-    return {
-      center: {
-        latitude: $event.lat ? $event.lat : 0,
-        longitude: $event.lng ? $event.lng : 0
-      },
-      radius: typeof $event === 'number' ? $event : 0
-    };
+  onFilterAreaChange($event) {
+    this.filterArea.latitude = $event.lat ? $event.lat : this.filterArea.latitude;
+    this.filterArea.longitude = $event.lng ? $event.lng : this.filterArea.longitude;
+    this.filterArea.radius = typeof $event === 'number' ? $event : this.filterArea.radius;
   }
 
   overArea(area, flag) {
@@ -92,18 +92,20 @@ export class MapComponent implements OnInit {
   }
 
   getBounds() {
-    if (this.myCircle) {
-      const center: any = {};
-      center.latitude = this.myCircle.nativeElement.attributes.latitude.value;
-      center.longitude = this.myCircle.nativeElement.attributes.longitude.value;
-      const radius: number = this.myCircle.nativeElement.attributes.radius.value;
-      return {
-        center: center,
-        radius: radius
-      };
-    } else {
-      return null;
-    }
+    return this.filterArea;
+    // if (this.myCircle) {
+    //   console.log(this.myCircle);
+    //   const center: any = {};
+    //   center.latitude = this.myCircle.nativeElement.attributes.latitude.value;
+    //   center.longitude = this.myCircle.nativeElement.attributes.longitude.value;
+    //   const radius: number = this.myCircle.nativeElement.attributes.radius.value;
+    //   return {
+    //     center: center,
+    //     radius: radius
+    //   };
+    // } else {
+    //   return null;
+    // }
   }
 
   whereToCenter() {
@@ -118,10 +120,12 @@ export class MapComponent implements OnInit {
         };
       } else if (this.center === 'city') {
         return {ltd:  51.6720400,
-                lng:  39.1843000}
-      } else if(this.center.latitude||this.center.longitude){
+          lng: 39.1843000
+        };
+      } else if (this.center.latitude || this.center.longitude) {
         return {ltd: this.center.latitude,
-                lng: this.center.longitude}
+          lng: this.center.longitude
+        };
       }
     } else {
       return {ltd: this.userLocation.latitude ? this.userLocation.latitude : 51.6720400,

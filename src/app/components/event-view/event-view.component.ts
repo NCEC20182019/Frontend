@@ -1,14 +1,12 @@
-import {Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
-import { IEvent } from '../../models/ievent';
-import { DataService } from 'src/app/services/data.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {IEvent} from '../../models/ievent';
+import {DataService} from 'src/app/services/data.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-// import { MapOverlayService } from 'src/app/services/map.overlay';
-import { Overlay } from '@angular/cdk/overlay';
-import { MapComponent } from '../map/map.component';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService} from "../../services/authentication.service";
-import {SubscriptionService} from "../../services/subscription.service";
-import {UpdateService} from "../../services/update.service";
+import {Overlay} from '@angular/cdk/overlay';
+import {FormBuilder} from '@angular/forms';
+import {AuthenticationService} from '../../services/authentication.service';
+import {SubscriptionService} from '../../services/subscription.service';
+import {UpdateService} from '../../services/update.service';
 
 @Component({
   selector: 'app-event-view',
@@ -16,12 +14,6 @@ import {UpdateService} from "../../services/update.service";
   styleUrls: ['./event-view.component.scss']
 })
 export class EventViewComponent implements OnInit {
-
-  @ViewChild('main') mainDiv : HTMLDivElement;
-
-  public currentEvent: IEvent;
-  liveActions: any[];
-  subscribed = false;
 
   constructor(
     private dataService: DataService,
@@ -34,6 +26,18 @@ export class EventViewComponent implements OnInit {
     private updateService: UpdateService
   ) { }
 
+  @ViewChild('main') mainDiv: HTMLDivElement;
+
+  public currentEvent: IEvent;
+  liveActions: any[];
+  subscribed = false;
+
+  static dateFormatInner(str_date: String) {
+    const [date, time] = str_date.split('T');
+    const [hrs, mins] = time.split(':');
+    return date.split('-').reverse().join('/') + ' ' + hrs + ':' + mins;
+  }
+
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
         this.getCurrentEvent(parseInt(params.get('id')));
@@ -41,7 +45,7 @@ export class EventViewComponent implements OnInit {
     });
   }
 
-  getCurrentEvent(_id){
+  getCurrentEvent(_id) {
     this.dataService.getEvent(_id)
       .subscribe((event) => {
         this.currentEvent = event;
@@ -53,20 +57,14 @@ export class EventViewComponent implements OnInit {
           .subscribe((actions: any[]) => {
             this.liveActions = actions;
             console.log(this.liveActions);
-          })
+          });
       });
   }
 
-  static dateFormatInner(str_date: String) {
-    let [date, time] = str_date.split('T');
-    let [hrs, mins] = time.split(':');
-    return date.split('-').reverse().join('/') + " " + hrs + ':' + mins;
-  }
-
-  dateFormat(str_date1: String, str_date2: String){
+  dateFormat(str_date1: String, str_date2: String) {
     if (str_date1 && str_date2) {
-      let [date1, time1] = EventViewComponent.dateFormatInner(str_date1).split(' ');
-      let [date2, time2] = EventViewComponent.dateFormatInner(str_date2).split(' ');
+      const [date1, time1] = EventViewComponent.dateFormatInner(str_date1).split(' ');
+      const [date2, time2] = EventViewComponent.dateFormatInner(str_date2).split(' ');
       return date1 === date2 ? `${date1} c ${time1} по ${time2}` : `c ${date1}, ${time1} по ${date2}, ${time2}`;
     } else {
       return 'время отсутсвует';
@@ -83,29 +81,34 @@ export class EventViewComponent implements OnInit {
       name: this.currentEvent.title,
       enabled: true,
       userId: this.authService.currentUserValue.id
-    }).subscribe( ()=>{},()=>{},() => this.subscribed = true);
+    }).subscribe(() => {
+    }, () => {
+    }, () => this.subscribed = true);
   }
-  unsubscribe(){
+
+  unsubscribe() {
     this.subService.deleteEventSubscription(this.currentEvent.id, this.authService.currentUserValue.id)
-      .subscribe(()=>{}, ()=>{}, ()=> this.subscribed = false);
+      .subscribe(() => {
+      }, () => {
+      }, () => this.subscribed = false);
   }
 
   editRedirect() {
-    this.router.navigate(['app/events/'+ this.currentEvent.id.toString() + '/edit']);
+    this.router.navigate(['app/events/' + this.currentEvent.id.toString() + '/edit']);
   }
 
-  canEdit(owner_id){
-    if(!!this.authService.currentUserValue) {
+  canEdit(owner_id?) {
+    if (!!this.authService.currentUserValue) {
       let head = false;
       this.authService.currentUserValue.roles.forEach((x) => {
-        head = head || x.name === "ROLE_moderator" || x.name === "ROLE_admin";
+        head = head || x.name === 'ROLE_moderator' || x.name === 'ROLE_admin';
       });
       // console.log(owner_id);
       // console.log(this.authService.currentUserValue.id);
       // console.log(this.authService.currentUserValue.id == owner_id);
       head = head || this.authService.currentUserValue.id == owner_id;
       return head;
-    }else{
+    } else {
       return false;
     }
   }

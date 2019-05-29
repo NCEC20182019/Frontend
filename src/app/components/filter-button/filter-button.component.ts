@@ -1,5 +1,5 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-filter-button',
@@ -17,11 +17,11 @@ export class FilterButtonComponent implements OnInit {
   ngOnInit() {
   }
 
-  thisPage(){
-    return this.router.isActive("app/events", false);
+  thisPage() {
+    return this.router.isActive('app/events', false);
   }
 
-  onClick(){
+  onClick() {
     this.filter.emit();
   }
 
