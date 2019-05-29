@@ -10,31 +10,30 @@ body {
     overflow: hidden;
 }
 
-div.cdk-overlay-pane{
+.cdk-overlay-pane{
     margin-bottom: auto;
     margin-top: auto;
 }
 
-div.cdk-overlay-pane{
+.cdk-overlay-pane{
     width: auto;
 }
 
-div.si-content-wrapper{
+.si-content-wrapper{
   width: 50px !important;
   padding: 0;
   height: 50px !important;
   border-radius: 50px;
 }
 
-div.si-frame{
+.si-frame{
   width: 75px;
   margin: 0;
   flex: none;
 }
 
-div.si-wrapper-top{
-    width: 75px;
-    margin: 0;
+.si-wrapper-top{
+    cursor: pointer;
 }
 
 .si-float-wrapper{
