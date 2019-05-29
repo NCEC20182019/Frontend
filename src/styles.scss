@@ -20,16 +20,13 @@ div.cdk-overlay-pane{
 }
 
 div.si-content-wrapper{
-  width: 50px !important;
-  padding: 0;
-  height: 50px !important;
-  border-radius: 50px;
+    width: 75px;
+    margin: 0;
 }
 
 div.si-frame{
-  width: 75px;
-  margin: 0;
-  flex: none;
+    width: 75px;
+    margin: 0;
 }
 
 div.si-wrapper-top{
@@ -49,12 +46,4 @@ tr.mat-header-row{
   height: 0 !important;
   padding: 0;
   margin: 0;
-}
-
-.si-close-button{
-  display: none;
-}
-
-.si-pointer-top{
-  border-width: 10px !important;
 }
