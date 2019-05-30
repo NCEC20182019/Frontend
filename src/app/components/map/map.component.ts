@@ -16,6 +16,8 @@ export class MapComponent implements OnInit {
   @Input() areas: any[];
   @Output() onOverArea: EventEmitter<any> = new EventEmitter();
 
+  @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
+
   @ViewChild('coordFilter') myCircle;
   @ViewChild('map') map: AgmMap;
   @Input() center: any = 'city';
@@ -61,6 +63,7 @@ export class MapComponent implements OnInit {
       latitude: event.coords.lat,
       longitude: event.coords.lng,
     };
+    this.markerPlaced.emit(this.currentMarker);
   }
 
   onCreateArea($event) {
