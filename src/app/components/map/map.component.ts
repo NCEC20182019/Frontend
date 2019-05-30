@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {ILocation} from '../../models/ilocation';
 import {IEvent} from '../../models/ievent';
 import {AgmMap} from "@agm/core";
+import {PanControlOptions} from "@agm/core/services/google-maps-types";
 
 @Component({
   selector: 'app-map',
@@ -18,6 +19,9 @@ export class MapComponent implements OnInit {
   @ViewChild('coordFilter') myCircle;
   @ViewChild('map') map: AgmMap;
   @Input() center: any = 'city';
+
+  panControl: PanControlOptions;
+
 
   userLocation: ILocation = {
     id: null,
@@ -133,12 +137,4 @@ export class MapComponent implements OnInit {
       };
     }
   }
-
-  // test(event) {
-  //   if(event.lat == 74.34200706814497) {
-  //     this.map.longitude = 39.1843000;
-  //     this.map.latitude = 51.6720400;
-  //   }
-  //   console.log(event);
-  // }
 }

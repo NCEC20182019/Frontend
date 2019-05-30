@@ -1,21 +1,24 @@
 <div class="map-container" id="map-container">
     <agm-map #map (mapClick)="onChooseLocation($event); onCreateArea($event)"
-                               id="map" 
+                               id="map"
                                [latitude]="51.6720400"
                                [longitude]="39.1843000"
                                [zoom]='zoom'>
 <!--                              [minZoom]='minZoom'-->
 
             <ng-container *ngFor="let event of Events">
-                    <agm-snazzy-info-window *ngIf="event.location.longitude != 0"
-                      [closeOnMapClick]="false"
-                      [latitude]="event.location.latitude"
-                      [longitude]="event.location.longitude"
-                      [isOpen]="true">
-                        <ng-template>
-                              <img [routerLink]="event.id" [src]="event.image_url ? event.image_url : '../../../assets/no_image.png'">
-                        </ng-template>
-                    </agm-snazzy-info-window>
+
+                <agm-snazzy-info-window *ngIf="event.location.longitude != 0"
+                  [panOnOpen]="false"
+                                        [closeOnMapClick]="false"
+                                        [latitude]="event.location.latitude"
+                                        [longitude]="event.location.longitude"
+                                        [isOpen]="true">
+                  <ng-template>
+                    <img [routerLink]="event.id" [src]="event.image_url ? event.image_url : '../../../assets/no_image.png'">
+                  </ng-template>
+                </agm-snazzy-info-window>
+
             </ng-container>
 
             <agm-marker *ngIf="userLocation.latitude != 0 || userLocation.longitude != 0"
