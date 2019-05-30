@@ -38,7 +38,7 @@
                 </agm-info-window>
             </agm-marker>
 
-            <agm-circle #coordFilter *ngIf="filter"
+            <agm-circle #coordFilter *ngIf="filter && filterArea"
                         [latitude]="filterArea.latitude"
                         [longitude]="filterArea.longitude"
                         [radius]="filterArea.radius"
