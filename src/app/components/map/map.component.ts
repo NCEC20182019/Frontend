@@ -12,7 +12,6 @@ export class MapComponent implements OnInit {
   @Input() Events: IEvent[] = [];
   @Input() filter: boolean;
   @Input() areas: any[];
-  @Output() markerPlaced: EventEmitter<ILocation> = new EventEmitter();
   @Output() onOverArea: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('coordFilter') myCircle;
@@ -32,7 +31,8 @@ export class MapComponent implements OnInit {
 
   @Input() public currentMarker: any;
 
-  public zoom = 12;
+  public zoom = 13;
+  public minZoom = 9;
 
 
   constructor() { }
@@ -51,8 +51,6 @@ export class MapComponent implements OnInit {
       latitude: event.coords.lat,
       longitude: event.coords.lng,
     };
-
-    this.markerPlaced.emit(this.currentMarker);
   }
 
   onCreateArea($event) {

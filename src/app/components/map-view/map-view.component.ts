@@ -35,7 +35,6 @@ export class MapViewComponent implements OnInit, OnDestroy {
 
   @Output() private filterSubmit = false;
   private spinner: boolean = true;
-  markerPlaced = new EventEmitter();
   eventSubscription: Subscription;
 
 
@@ -93,10 +92,6 @@ export class MapViewComponent implements OnInit, OnDestroy {
   redirectTo(_id){
     console.log(_id);
     this.router.navigate([_id], { relativeTo: this.route })
-  }
-
-  onMarkerPlaced(event){
-    this.markerPlaced.emit(event);
   }
 
   spinnerCheck(){
