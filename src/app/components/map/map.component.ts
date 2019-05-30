@@ -47,12 +47,12 @@ export class MapComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.userLocation.latitude = position.coords.latitude;
         this.userLocation.longitude = position.coords.longitude;
-        this.filterArea = {
-          latitude: this.userLocation.latitude ? this.userLocation.latitude : 51.6720400,
-          longitude: this.userLocation.longitude ? this.userLocation.longitude : 39.1843000,
-          radius: 5000
-        };
       });
+      this.filterArea = {
+        latitude: this.map.latitude ? this.map.latitude : 51.6720400,
+        longitude: this.map.longitude ? this.map.longitude : 39.1843000,
+        radius: 5000
+      };
     }
   }
 

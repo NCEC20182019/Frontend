@@ -1,8 +1,8 @@
 <div class="map-container" id="map-container">
     <agm-map #map (mapClick)="onChooseLocation($event); onCreateArea($event)"
                                id="map"
-                               [latitude]="51.6720400"
-                               [longitude]="39.1843000"
+                               [latitude]="whereToCenter().ltd"
+                               [longitude]="whereToCenter().lng"
                                [zoom]='zoom'>
 <!--                              [minZoom]='minZoom'-->
 
@@ -38,7 +38,7 @@
                 </agm-info-window>
             </agm-marker>
 
-            <agm-circle #coordFilter *ngIf="filter && filterArea"
+            <agm-circle #coordFilter *ngIf="filter"
                         [latitude]="filterArea.latitude"
                         [longitude]="filterArea.longitude"
                         [radius]="filterArea.radius"
