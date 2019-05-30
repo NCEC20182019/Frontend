@@ -1,33 +1,21 @@
 <div class="map-container" id="map-container">
-    <agm-map (mapClick)="onChooseLocation($event); onCreateArea($event)"
+    <agm-map #map (mapClick)="onChooseLocation($event); onCreateArea($event)"
                                id="map" 
-                               [latitude]="whereToCenter().ltd"
-                               [longitude]="whereToCenter().lng"
+                               [latitude]="51.6720400"
+                               [longitude]="39.1843000"
                                [zoom]='zoom'>
 <!--                              [minZoom]='minZoom'-->
 
             <ng-container *ngFor="let event of Events">
-
-                <agm-marker *ngIf="event.location"
-                            [latitude]="event.location.latitude"
-                            [longitude]="event.location.longitude"
-                >
-
-                    <agm-snazzy-info-window
-                      [isOpen]="true"
-                      [closeOnMapClick]="false">
+                    <agm-snazzy-info-window *ngIf="event.location.longitude != 0"
+                      [closeOnMapClick]="false"
+                      [latitude]="event.location.latitude"
+                      [longitude]="event.location.longitude"
+                      [isOpen]="true">
                         <ng-template>
-                              <img [src]="event.image_url ? event.image_url :'../../../assets/no_image.png'">
+                              <img [routerLink]="event.id" [src]="event.image_url ? event.image_url : '../../../assets/no_image.png'">
                         </ng-template>
                     </agm-snazzy-info-window>
-
-                </agm-marker>
-<!--              <agm-info-window *ngIf="event.location" [latitude]="event.location.latitude" [longitude]="event.location.longitude">-->
-<!--                  <div [routerLink]="event.id">-->
-<!--                    <img [src]="event.image_url">-->
-<!--                    <span>{{event.title}}</span>-->
-<!--                  </div>-->
-<!--              </agm-info-window>-->
             </ng-container>
 
             <agm-marker *ngIf="userLocation.latitude != 0 || userLocation.longitude != 0"
@@ -39,13 +27,13 @@
                 </agm-info-window>
             </agm-marker>
 
-<!--            <agm-marker *ngIf="currentMarker"-->
-<!--                        [latitude]="currentMarker.latitude"-->
-<!--                        [longitude]="currentMarker.longitude">-->
-<!--                <agm-info-window>-->
-<!--                    Этот маркер поставили вы-->
-<!--                </agm-info-window>-->
-<!--            </agm-marker>-->
+            <agm-marker *ngIf="currentMarker"
+                        [latitude]="currentMarker.latitude"
+                        [longitude]="currentMarker.longitude">
+                <agm-info-window>
+                    Этот маркер поставили вы
+                </agm-info-window>
+            </agm-marker>
 
             <agm-circle #coordFilter *ngIf="filter"
                         [latitude]="filterArea.latitude"

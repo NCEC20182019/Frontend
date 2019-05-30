@@ -20,11 +20,13 @@
   </div>
 
   <div *ngIf="!!liveActions" class="live-actions">
-    <ul *ngIf="!!liveActions.length">
-      <li class="action" *ngFor="let action of liveActions">
-        {{action}}
-      </li>
-    </ul>
+    <mat-card *ngFor="let action of liveActions" class="my-style card">
+      <mat-card-header>
+        <img mat-card-avatar class="my-style" [src]="action.url_to_pic_from_tweet ? action.url_to_pic_from_tweet : '../../../assets/no_image.png'">
+        <mat-card-title class="my-style">{{action.text_from_tweet}}</mat-card-title>
+        <mat-card-subtitle class="my-style" (click)="redirectToTweet(action.url_to_tweet)">{{action.url_to_tweet}}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
     <span *ngIf="!liveActions.length" class="live-actions-span">Нет информации о данном событии</span>
   </div>
 </div>

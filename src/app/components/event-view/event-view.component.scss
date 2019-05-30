@@ -55,6 +55,8 @@ app-map{
   width: 30%;
   background: white;
   box-shadow: 0 0 7px rgba(0,0,0,0.4);
+  overflow-y: auto;
+  float: right;
 }
 
 #main{
@@ -112,3 +114,34 @@ h4{
 
   color: rgba(0,0,0,0.5);
 }
+
+.cards {
+  flex-grow: 1;
+  //height: 100%;
+  overflow-y: auto;
+}
+
+.card {
+  cursor: pointer;
+}
+
+mat-card.my-style {
+  border-radius: 0 !important;
+  padding: 7px !important;
+}
+
+.my-style .mat-card-subtitle {
+  margin-bottom: 10px;
+}
+
+.my-style .mat-card-title {
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.my-style .mat-card-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 20%;
+}
+

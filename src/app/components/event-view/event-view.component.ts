@@ -2,13 +2,12 @@ import {Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core'
 import { IEvent } from '../../models/ievent';
 import { DataService } from 'src/app/services/data.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-// import { MapOverlayService } from 'src/app/services/map.overlay';
-import { Overlay } from '@angular/cdk/overlay';
-import { MapComponent } from '../map/map.component';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService} from "../../services/authentication.service";
-import {SubscriptionService} from "../../services/subscription.service";
-import {UpdateService} from "../../services/update.service";
+import {Overlay} from '@angular/cdk/overlay';
+import {FormBuilder} from '@angular/forms';
+import {AuthenticationService} from '../../services/authentication.service';
+import {SubscriptionService} from '../../services/subscription.service';
+import {UpdateService} from '../../services/update.service';
+import {Update} from "../../models/update";
 
 @Component({
   selector: 'app-event-view',
@@ -45,12 +44,14 @@ export class EventViewComponent implements OnInit {
     this.dataService.getEvent(_id)
       .subscribe((event) => {
         this.currentEvent = event;
-        this.subService.isSubscribed(this.currentEvent.id, this.authService.currentUserValue.id)
-          .subscribe(
-            (data) => this.subscribed = data
-          );
+        if(this.authService.currentUserValue) {
+          this.subService.isSubscribed(this.currentEvent.id, this.authService.currentUserValue.id)
+            .subscribe(
+              (data) => this.subscribed = data
+            );
+        }
         this.updateService.getUpdates(this.currentEvent.id)
-          .subscribe((actions: any[]) => {
+          .subscribe((actions: Update[]) => {
             this.liveActions = actions;
             console.log(this.liveActions);
           })
@@ -108,5 +109,9 @@ export class EventViewComponent implements OnInit {
     }else{
       return false;
     }
+  }
+
+  redirectToTweet(url_to_tweet: string) {
+    window.location.href = url_to_tweet;
   }
 }

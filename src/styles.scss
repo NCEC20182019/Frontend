@@ -27,7 +27,8 @@ body {
 }
 
 .si-frame{
-  width: 75px;
+  max-width: 60px;
+  max-height: 60px;
   margin: 0;
   flex: none;
 }
