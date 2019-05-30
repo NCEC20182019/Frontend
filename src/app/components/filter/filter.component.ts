@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {DataService} from "../../services/data.service";
+import {DataService} from '../../services/data.service';
+import {MatCheckboxChange} from "@angular/material";
 
 @Component({
   selector: 'app-filter',
@@ -7,6 +8,15 @@ import {DataService} from "../../services/data.service";
   styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
+
+
+  constructor(
+    private dataService: DataService
+  ) {
+    this.minDate = new Date();
+    this.maxDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDay());
+    this.typeList = [];
+  }
 
   @ViewChild('listElement') ul;
 
@@ -18,16 +28,14 @@ export class FilterComponent implements OnInit {
   @Output() coordFilterEvent = new EventEmitter();
   @Output() submit = new EventEmitter();
 
-  coordFilter: boolean = false;
+  // coordFilter = false;
 
-
-  constructor(
-    private dataService: DataService
-  ) {
-    this.minDate = new Date();
-    this.maxDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDay());
-    this.typeList = [];
-  }
+  private filterForm = {
+    dateFrom: Date,
+    dateTo: Date,
+    area: {},
+    types: []
+  };
 
   ngOnInit() {
     this.loadTypeList();
@@ -39,44 +47,39 @@ export class FilterComponent implements OnInit {
     );
   }
 
-  changeMinDate(event){
-    this.minDate = event.value;
+  changeMinDate(event) {
+    this.filterForm.dateFrom = event.value;
+    // this.minDate = event.value;
   }
 
-  changeMaxDate(event){
-    this.maxDate = event.value;
+  changeMaxDate(event) {
+    this.filterForm.dateTo = event.value;
+    // this.maxDate = event.value;
   }
 
-  closeEm(){
+  closeEm() {
     this.close.emit();
   }
 
-  coordFilterChange(checked: boolean){
-    this.coordFilter = !checked;
-    this.coordFilterEvent.emit(this.coordFilter);
+  coordFilterChange($event: MatCheckboxChange) {
+    this.coordFilterEvent.emit($event.checked);
   }
 
-  private filterForm = {
-    dateFrom: this.minDate,
-    dateTo: this.maxDate,
-    area: {
-      center: {
-        ltd: 0,
-        lng: 0
-      },
-      radius: 0
-    },
-    types: []
-  };
-
-  onSubmit(){
-    this.ul.nativeElement.childNodes.forEach((li) =>{
-      if(li.childNodes[0].firstChild.firstChild.firstChild.attributes[4].value !== "false") {
-        this.filterForm.types.push(li.childNodes[0].textContent.trim());
+  onSubmit() {
+    // get selected types
+    this.ul.nativeElement.childNodes.forEach((li) => {
+      if (li.childNodes[0]) {
+        if (li.childNodes[0].firstChild.firstChild.firstChild.attributes[4].value !== 'false') {
+          this.filterForm.types.push(li.childNodes[0].textContent.trim());
+        }
       }
     });
-    this.filterForm.dateFrom=this.minDate;
-    this.filterForm.dateTo=this.maxDate;
+
+    // get dates
+    // this.filterForm.dateFrom = this.minDate;
+    // this.filterForm.dateTo = this.maxDate;
+
     this.submit.emit(this.filterForm);
+    // this.closeEm();
   }
 }

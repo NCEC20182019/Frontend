@@ -48,12 +48,14 @@
             </agm-marker>
 
             <agm-circle #coordFilter *ngIf="filter"
-                [latitude]="userLocation.latitude  ? userLocation.latitude  : 51.6720400"
-                [longitude]="userLocation.longitude ? userLocation.longitude : 39.1843000"
-                [radius]="5000"
-                [fillColor]="'red'"
-                [circleDraggable]="true"
-                [editable]="true">
+                        [latitude]="filterArea.latitude"
+                        [longitude]="filterArea.longitude"
+                        [radius]="filterArea.radius"
+                        [fillColor]="'red'"
+                        [circleDraggable]="true"
+                        [editable]="true"
+                        (radiusChange)="onFilterAreaChange($event)"
+                        (centerChange)="onFilterAreaChange($event)">
             </agm-circle>
 
       <div *ngFor="let ar of areas; let i = index">

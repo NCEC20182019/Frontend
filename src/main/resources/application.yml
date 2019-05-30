@@ -35,6 +35,9 @@ zuul:
     connect-timeout-millis: 30000
     socket-timeout-millis: 30000
   routes:
+    event_updates:
+      path: /updates/**
+      url: http://localhost:8092/updates
     events:
       path: /events/**
       url: http://localhost:8092/events

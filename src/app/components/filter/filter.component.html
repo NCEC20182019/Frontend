@@ -33,7 +33,7 @@
   </div>
 
   <div class="place-filter">
-      <mat-checkbox #coordFilter (click)="coordFilterChange(coordFilter.checked)" color="primary">Фильтровать по месту на карте</mat-checkbox>
+    <mat-checkbox (change)="coordFilterChange($event)" color="primary">Фильтровать по месту на карте</mat-checkbox>
   </div>
 
   <button mat-raised-button (click)="onSubmit()" color="primary">Показать</button>

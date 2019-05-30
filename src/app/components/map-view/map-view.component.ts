@@ -3,10 +3,9 @@ import {IEvent} from '../../models/ievent';
 import {DataService} from 'src/app/services/data.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MapComponent} from '../map/map.component';
-import {ILocation} from "../../models/ilocation";
-import {FilterComponent} from "../filter/filter.component";
-import {EventlistComponent} from "../eventlist/eventlist.component";
-import {Subscription} from "rxjs";
+import {FilterComponent} from '../filter/filter.component';
+import {EventlistComponent} from '../eventlist/eventlist.component';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-map-view',
@@ -19,22 +18,12 @@ export class MapViewComponent implements OnInit, OnDestroy {
   @ViewChild('filter') filterCmp: FilterComponent;
   @ViewChild('eventlist') eventlistCmp: EventlistComponent;
 
-  private filterForm: {
-    dateFrom: Date,
-    dateTo: Date,
-    area: {
-      center: ILocation,
-      radius: number
-    },
-    types: string[]
-  };
-
   private filter: boolean;
+  private isFiltering = false;
   @Output() coordFilter;
   @Output() Events: IEvent[] = [];
 
-  @Output() private filterSubmit = false;
-  private spinner: boolean = true;
+  // private spinner = true;
   markerPlaced = new EventEmitter();
   eventSubscription: Subscription;
 
@@ -49,7 +38,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
     this.eventSubscription = this.dataService.eventList$
       .subscribe(events => {
         this.toEvents(events);
-        this.eventlistCmp.ngOnInit();
+        this.eventlistCmp.ngOnChanges({});
       });
 
   }
@@ -59,18 +48,19 @@ export class MapViewComponent implements OnInit, OnDestroy {
   }
 
   toEvents(events: IEvent[]) {
-    if (!this.Events.length) {
+    if (!this.Events.length || this.isFiltering) {
+      // this.isFiltered = false;
       this.Events = events;
       return;
     }
 
-    for (let event of events) {
-      let index = this.Events.findIndex(e => e.id === event.id);
-      if (index !== -1) {
+    for (const event of events) {
+      const index = this.Events.findIndex(e => e.id === event.id);
+      if (index >= 0) {
         this.Events[index] = event;
       } else {
         this.Events.push(event);
-        console.log(this.Events);
+        // console.log(this.Events);
       }
     }
     // events.forEach((event, i) => {
@@ -90,52 +80,62 @@ export class MapViewComponent implements OnInit, OnDestroy {
   }
 
   /** Method of redirecting to single Event page */
-  redirectTo(_id){
+  redirectTo(_id) {
     console.log(_id);
-    this.router.navigate([_id], { relativeTo: this.route })
+    this.router.navigate([_id], {relativeTo: this.route});
   }
 
-  onMarkerPlaced(event){
+  onMarkerPlaced(event) {
     this.markerPlaced.emit(event);
   }
 
-  spinnerCheck(){
-    setTimeout(() => {
-      this.spinner = false
-    }, 5000);
-    this.spinner = this.Events.length != 0;
-  }
+  // spinnerCheck() {
+  //   setTimeout(() => {
+  //     this.spinner = false;
+  //   }, 5000);
+  //   this.spinner = this.Events.length !== 0;
+  // }
 
-  onFilter(){
+  // if true - open filter window and close eventlist
+  onFilter() {
     this.filter = true;
-  }
-  
-  onFilterClose(){
-    this.filter = false;
+    this.isFiltering = true;
   }
 
-  changeCoordFilter(event){
+  // close filter window and open eventlist
+  onFilterClose() {
+    this.filter = false;
+    this.coordFilter = false;
+  }
+
+  changeCoordFilter(event) {
     this.coordFilter = event;
   }
 
-  onFilterSubmit(event){
-    this.filterForm = event;
-    this.filterForm.area = this.mapCmp.getBounds();
-    this.getEvents();
+  onFilterSubmit($event) {
+    if (this.coordFilter) {
+      $event.area = this.mapCmp.getBounds();
+    }
+    this.dataService.getFilteredEvents($event);
+    // this.coordFilter = false;
+    // console.log($event);
+    this.onFilterClose();
   }
 
-  onPageChanged() {
-    this.getEvents();
-  }
-
-  filterFormIsEmpty(): boolean {
-    return !this.filterForm;
-  }
+  // onPageChanged() {
+  //   this.getEvents();
+  // }
+  //
+  // filterFormIsEmpty(): boolean {
+  //   // return !this.filterForm;
+  //   return false;
+  // }
 
   onFilterCleared() {
-    this.filterForm = null;
-    //TODO rewrite this
-    this.filterCmp = null; //new FilterComponent();
+    // this.filterForm = null;
+    // TODO rewrite this
+    // this.filterCmp = null; // new FilterComponent();
+    this.isFiltering = false;
     this.getEvents();
   }
 }
