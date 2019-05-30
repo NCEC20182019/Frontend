@@ -37,7 +37,7 @@ export class MapComponent implements OnInit {
 
   @Input() public currentMarker: any;
 
-  public zoom = 9;
+  public zoom = 12;
   public minZoom = 9;
 
   constructor() { }
